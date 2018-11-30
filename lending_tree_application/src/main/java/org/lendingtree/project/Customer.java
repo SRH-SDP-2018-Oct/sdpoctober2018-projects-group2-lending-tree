@@ -13,7 +13,7 @@ public class Customer extends User {
     public String identificationNumber;
     public float rating;
 
-    public void getUserInputCustomer() throws SQLException{
+    public void registerNewCustomer() throws SQLException{
         Scanner userInput = new Scanner(System.in);
         System.out.println("Please enter your Last Name: ");
         lastName = userInput.nextLine();
