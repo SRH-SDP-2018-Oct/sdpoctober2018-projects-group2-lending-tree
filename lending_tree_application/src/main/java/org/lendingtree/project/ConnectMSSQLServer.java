@@ -54,99 +54,30 @@ public class ConnectMSSQLServer {
         Customer customerFromDb = new Customer();
 
         customerFromDb.id = getCustomerId(customerEmail);
-        customerFromDb.customerTypeId = getCustomerTypeId(customerFromDb.id);
+        customerFromDb.customerTypeId = Integer.parseInt(getCustomerColumnValue(customerFromDb.dbColumnCustomerTypeId, customerFromDb.id));
         customerFromDb.customerType = getCustomerType(customerFromDb.customerTypeId);
-        customerFromDb.lastName = getCustomerLastName(customerFromDb.id);
-        customerFromDb.firstName = getCustomerFirstName(customerFromDb.id);
-        customerFromDb.address = getCustomerAddress(customerFromDb.id);
+        customerFromDb.lastName = getCustomerColumnValue(customerFromDb.dbColumnCustomerLastName, customerFromDb.id);
+        customerFromDb.firstName = getCustomerColumnValue(customerFromDb.dbColumnCustomerFirstName, customerFromDb.id);
+        customerFromDb.address = getCustomerColumnValue(customerFromDb.dbColumnCustomerAddress, customerFromDb.id);
         customerFromDb.email = customerEmail;
-        customerFromDb.phone = getCustomerPhone(customerFromDb.id);
-        customerFromDb.currentExpenses = getCustomerCurrentExpenses(customerFromDb.id);
-        customerFromDb.paySlip = getCustomerPaySlip(customerFromDb.id);
-        customerFromDb.taxDetails = getCustomerTaxDetails(customerFromDb.id);
-        customerFromDb.identificationNumber = getCustomerIdentificationNumber(customerFromDb.id);
-        customerFromDb.rating = getCustomerRating(customerFromDb.id);
-        customerFromDb.password = getCustomerPassword(customerFromDb.id);
+        customerFromDb.phone = getCustomerColumnValue(customerFromDb.dbColumnCustomerPhone, customerFromDb.id);
+        customerFromDb.currentExpenses = Integer.parseInt(getCustomerColumnValue(customerFromDb.dbColumnCustomerCurrentExpenses, customerFromDb.id));
+        customerFromDb.paySlip = Integer.parseInt(getCustomerColumnValue(customerFromDb.dbColumnCustomerPaySlip, customerFromDb.id));
+        customerFromDb.taxDetails = Integer.parseInt(getCustomerColumnValue(customerFromDb.dbColumnCustomerTaxDetails, customerFromDb.id));
+        customerFromDb.identificationNumber = getCustomerColumnValue(customerFromDb.dbColumnCustomerIdentificationNumber, customerFromDb.id);
+        customerFromDb.rating = Float.parseFloat(getCustomerColumnValue(customerFromDb.dbColumnCustomerRating, customerFromDb.id));
+        customerFromDb.password = getCustomerColumnValue(customerFromDb.dbColumnCustomerPassword, customerFromDb.id);
 
         return customerFromDb;
     }
 
-    public static int getCustomerTypeId(int customerId) throws SQLException{
+    public static String getCustomerColumnValue(String columnName, int customerId) throws SQLException{
         Statement dbStatement = databaseConnection.createStatement();
-        ResultSet dbResultSet = dbStatement.executeQuery("SELECT customer_type_id FROM customer WHERE customer_id = " + customerId);
-        dbResultSet.next();
-        return Integer.parseInt(dbResultSet.getString(1));
-    }
-
-    public static String getCustomerLastName(int customerId) throws SQLException{
-        Statement dbStatement = databaseConnection.createStatement();
-        ResultSet dbResultSet = dbStatement.executeQuery("SELECT customer_last_name FROM customer WHERE customer_id = " + customerId);
+        ResultSet dbResultSet = dbStatement.executeQuery("SELECT " + columnName + " FROM customer WHERE customer_id = " + customerId);
         dbResultSet.next();
         return dbResultSet.getString(1);
     }
 
-    public static String getCustomerFirstName(int customerId) throws SQLException{
-        Statement dbStatement = databaseConnection.createStatement();
-        ResultSet dbResultSet = dbStatement.executeQuery("SELECT customer_first_name FROM customer WHERE customer_id = " + customerId);
-        dbResultSet.next();
-        return dbResultSet.getString(1);
-    }
-
-    public static String getCustomerAddress(int customerId) throws SQLException{
-        Statement dbStatement = databaseConnection.createStatement();
-        ResultSet dbResultSet = dbStatement.executeQuery("SELECT customer_address FROM customer WHERE customer_id = " + customerId);
-        dbResultSet.next();
-        return dbResultSet.getString(1);
-    }
-
-    public static String getCustomerPhone(int customerId) throws SQLException{
-        Statement dbStatement = databaseConnection.createStatement();
-        ResultSet dbResultSet = dbStatement.executeQuery("SELECT customer_phone FROM customer WHERE customer_id = " + customerId);
-        dbResultSet.next();
-        return dbResultSet.getString(1);
-    }
-
-    public static int getCustomerCurrentExpenses(int customerId) throws SQLException{
-        Statement dbStatement = databaseConnection.createStatement();
-        ResultSet dbResultSet = dbStatement.executeQuery("SELECT customer_current_expenses FROM customer WHERE customer_id = " + customerId);
-        dbResultSet.next();
-        return Integer.parseInt(dbResultSet.getString(1));
-    }
-
-    public static int getCustomerPaySlip(int customerId) throws SQLException{
-        Statement dbStatement = databaseConnection.createStatement();
-        ResultSet dbResultSet = dbStatement.executeQuery("SELECT customer_pay_slip FROM customer WHERE customer_id = " + customerId);
-        dbResultSet.next();
-        return Integer.parseInt(dbResultSet.getString(1));
-    }
-
-    public static int getCustomerTaxDetails(int customerId) throws SQLException{
-        Statement dbStatement = databaseConnection.createStatement();
-        ResultSet dbResultSet = dbStatement.executeQuery("SELECT customer_tax_details FROM customer WHERE customer_id = " + customerId);
-        dbResultSet.next();
-        return Integer.parseInt(dbResultSet.getString(1));
-    }
-
-    public static String getCustomerIdentificationNumber(int customerId) throws SQLException{
-        Statement dbStatement = databaseConnection.createStatement();
-        ResultSet dbResultSet = dbStatement.executeQuery("SELECT customer_identification_number FROM customer WHERE customer_id = " + customerId);
-        dbResultSet.next();
-        return dbResultSet.getString(1);
-    }
-
-    public static float getCustomerRating(int customerId) throws SQLException{
-        Statement dbStatement = databaseConnection.createStatement();
-        ResultSet dbResultSet = dbStatement.executeQuery("SELECT customer_rating FROM customer WHERE customer_id = " + customerId);
-        dbResultSet.next();
-        return Float.parseFloat(dbResultSet.getString(1));
-    }
-
-    public static String getCustomerPassword(int customerId) throws SQLException{
-        Statement dbStatement = databaseConnection.createStatement();
-        ResultSet dbResultSet = dbStatement.executeQuery("SELECT customer_password FROM customer WHERE customer_id = " + customerId);
-        dbResultSet.next();
-        return dbResultSet.getString(1);
-    }
 
     public static int insertCustomer(Customer newCustomer) throws SQLException {
         executeSqlUpdate("INSERT INTO customer (customer_type_id, customer_last_name, customer_first_name, customer_address, customer_email, customer_phone, customer_current_expenses, customer_pay_slip, customer_tax_details, customer_identification_number, customer_rating, customer_password) " +

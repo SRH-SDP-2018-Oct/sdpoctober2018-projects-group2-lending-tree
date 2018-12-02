@@ -12,6 +12,19 @@ public class Customer extends User {
     public int taxDetails;
     public String identificationNumber;
     public float rating;
+    public static final String dbColumnCustomerId = "customer_id";
+    public static final String dbColumnCustomerTypeId = "customer_type_id";
+    public static final String dbColumnCustomerLastName = "customer_last_name";
+    public static final String dbColumnCustomerFirstName = "customer_first_name";
+    public static final String dbColumnCustomerAddress = "customer_address";
+    public static final String dbColumnCustomerEmail = "customer_email";
+    public static final String dbColumnCustomerPhone = "customer_phone";
+    public static final String dbColumnCustomerCurrentExpenses = "customer_current_expenses";
+    public static final String dbColumnCustomerPaySlip = "customer_pay_slip";
+    public static final String dbColumnCustomerTaxDetails = "customer_tax_details";
+    public static final String dbColumnCustomerIdentificationNumber = "customer_identification_number";
+    public static final String dbColumnCustomerRating = "customer_rating";
+    public static final String dbColumnCustomerPassword = "customer_password";
 
     public void registerNewCustomer() throws SQLException{
         Scanner userInput = new Scanner(System.in);
