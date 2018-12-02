@@ -15,15 +15,15 @@ public class ConnectMSSQLServer {
     public static Connection getConnection() {
         try {
             DriverManager.registerDriver(new com.microsoft.sqlserver.jdbc.SQLServerDriver());
-            databaseConnection = DriverManager.getConnection(databaseURL, databaseUserName,
-                    databaseUserPassword);
+            databaseConnection = DriverManager.getConnection(databaseURL, databaseUserName, databaseUserPassword);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return databaseConnection;
     }
 
-    public static void executeSqlUpdate(String sentence) throws SQLException {
+    private static void executeSqlUpdate(String sentence) throws SQLException {
+        //System.out.println(sentence);
         Statement dbStatement = databaseConnection.createStatement();
         dbStatement.executeUpdate(sentence);
     }
@@ -80,8 +80,39 @@ public class ConnectMSSQLServer {
 
 
     public static int insertCustomer(Customer newCustomer) throws SQLException {
-        executeSqlUpdate("INSERT INTO customer (customer_type_id, customer_last_name, customer_first_name, customer_address, customer_email, customer_phone, customer_current_expenses, customer_pay_slip, customer_tax_details, customer_identification_number, customer_rating, customer_password) " +
-                "VALUES (" + newCustomer.customerTypeId + ", '" + newCustomer.lastName + "', '" + newCustomer.firstName + "', '" + newCustomer.address + "', '" + newCustomer.email + "', '" + newCustomer.phone + "', " + newCustomer.currentExpenses + ", " + newCustomer.paySlip + ", " + newCustomer.taxDetails + ", '" + newCustomer.identificationNumber + "', " +newCustomer.rating + ", '" + newCustomer.password + "')");
+        executeSqlUpdate("INSERT INTO customer (" +
+                newCustomer.dbColumnCustomerTypeId + ", " +
+                newCustomer.dbColumnCustomerLastName+ ", " +
+                newCustomer.dbColumnCustomerFirstName + ", " +
+                newCustomer.dbColumnCustomerAddress + ", " +
+                newCustomer.dbColumnCustomerEmail + ", " +
+                newCustomer.dbColumnCustomerPhone + ", " +
+                newCustomer.dbColumnCustomerCurrentExpenses + ", " +
+                newCustomer.dbColumnCustomerPaySlip + ", " +
+                newCustomer.dbColumnCustomerTaxDetails + ", " +
+                newCustomer.dbColumnCustomerIdentificationNumber + ", " +
+                newCustomer.dbColumnCustomerRating + ", " +
+                newCustomer.dbColumnCustomerPassword + ") " +
+                "VALUES (" +
+                newCustomer.customerTypeId + ", '" +
+                newCustomer.lastName + "', '" +
+                newCustomer.firstName + "', '" +
+                newCustomer.address + "', '" +
+                newCustomer.email + "', '" +
+                newCustomer.phone + "', " +
+                newCustomer.currentExpenses + ", " +
+                newCustomer.paySlip + ", " +
+                newCustomer.taxDetails + ", '" +
+                newCustomer.identificationNumber + "', " +
+                newCustomer.rating + ", '" +
+                newCustomer.password + "')");
         return getCustomerId(newCustomer.email);
+    }
+
+    public static void updateCostumerValue(String columnName, String newValue, int customerId) throws SQLException{
+        executeSqlUpdate("UPDATE customer SET " +
+                columnName + " = '" +
+                newValue + "' WHERE customer_id = " +
+                customerId);
     }
 }
