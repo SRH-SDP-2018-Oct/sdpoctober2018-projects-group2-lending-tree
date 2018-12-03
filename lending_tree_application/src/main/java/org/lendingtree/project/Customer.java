@@ -5,11 +5,11 @@ import java.util.Scanner;
 
 public class Customer extends User {
     public String customerType;
-    public int customerTypeId;
+    public int customerTypeId = 0;
     public String address;
-    public int currentExpenses;
-    public int paySlip;
-    public int taxDetails;
+    public int currentExpenses = 0;
+    public int paySlip = 0;
+    public int taxDetails = 0;
     public String identificationNumber;
     public float rating;
     public static final String dbColumnCustomerId = "customer_id";
@@ -28,34 +28,82 @@ public class Customer extends User {
 
     public void registerNewCustomer() throws SQLException{
         Scanner userInput = new Scanner(System.in);
-        System.out.println("Please enter your Last Name: ");
-        lastName = userInput.nextLine();
-        System.out.println(lastName);
-        System.out.println("Please enter your First Name: ");
-        firstName = userInput.nextLine();
-        System.out.println(firstName);
-        ConnectMSSQLServer.listCustomerTypes();
-        System.out.println("Please select a number for the customer type: ");
-        customerTypeId = Integer.parseInt(userInput.nextLine());
-        System.out.println(customerTypeId);
+        int maxCustomerTypeValue;
+        String passwordConfirmation;
+
+        do{
+            System.out.println("Please enter your Last Name: ");
+            lastName = userInput.nextLine();
+        }while (!confirmUserInputString(lastName));
+
+        do{
+            System.out.println("Please enter your First Name: ");
+            firstName = userInput.nextLine();
+        }while (!confirmUserInputString(firstName));
+
+        maxCustomerTypeValue = ConnectMSSQLServer.listCustomerTypes();
+
+        do{
+            System.out.println("Please select a valid number for the customer type: ");
+            while(!userInput.hasNextInt()) {
+                System.out.println("That is not a valid selection");
+                userInput.next();
+            }
+            customerTypeId = userInput.nextInt();
+        } while(customerTypeId < 1 || customerTypeId > maxCustomerTypeValue);
+
         customerType = ConnectMSSQLServer.getCustomerType(customerTypeId);
-        System.out.println(customerType);
-        System.out.println("Please enter your email address: ");
-        email = userInput.nextLine();
-        System.out.println("Please enter your home address: ");
-        address = userInput.nextLine();
-        System.out.println("Please enter your phone number: ");
-        phone = userInput.nextLine();
-        currentExpenses = 0;
-        paySlip = 0;
-        taxDetails = 0;
-        System.out.println("Please enter your national identification number: ");
-        identificationNumber = userInput.nextLine();
-        System.out.println("Please enter your credit rating: ");
-        rating = Float.parseFloat(userInput.nextLine());
-        System.out.println("Please enter a password for your account: ");
-        password = userInput.nextLine();
+        System.out.println("You selected: " + customerType);
+
+        do{
+            System.out.println("Please enter your email address: ");
+            email = userInput.nextLine();
+        }while (!confirmUserInputString(email));
+
+        do{
+            System.out.println("Please enter your home address: ");
+            address = userInput.nextLine();
+        }while (!confirmUserInputString(address));
+
+        do{
+            System.out.println("Please enter your phone number: ");
+            phone = userInput.nextLine();
+        }while (!confirmUserInputString(phone));
+
+        do{
+            System.out.println("Please enter your national identification number: ");
+            identificationNumber = userInput.nextLine();
+        }while (!confirmUserInputString(identificationNumber));
+
+        do{
+            System.out.println("Please select a valid number for the customer rating: ");
+            while(!userInput.hasNextFloat()) {
+                System.out.println("That is not a valid selection");
+                userInput.next();
+            }
+            rating = userInput.nextFloat();
+        } while(rating < 0);
+        System.out.println("Your customer rating is: " + rating);
+
+        do{
+            System.out.println("Please enter your password: ");
+            password = userInput.nextLine();
+            System.out.println("Please enter your password again to confirm: ");
+            passwordConfirmation = userInput.nextLine();
+        }while (password.compareTo(passwordConfirmation) != 0);
+
+        ConnectMSSQLServer.insertCustomer(this);
     }
 
+    private Boolean confirmUserInputString(String input){
+        char userConfirmation;
+        Scanner userInput = new Scanner(System.in);
+        do{
+            System.out.println("You entered: " + input);
+            System.out.println("Is this correct? Y/N");
+            userConfirmation = userInput.next().charAt(0);
+        } while (userConfirmation != 'Y');
+        return true;
+    }
 
 }

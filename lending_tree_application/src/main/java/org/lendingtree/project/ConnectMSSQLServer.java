@@ -12,7 +12,7 @@ public class ConnectMSSQLServer {
         databaseConnection = getConnection();
     }
 
-    public static Connection getConnection() {
+    private static Connection getConnection() {
         try {
             DriverManager.registerDriver(new com.microsoft.sqlserver.jdbc.SQLServerDriver());
             databaseConnection = DriverManager.getConnection(databaseURL, databaseUserName, databaseUserPassword);
@@ -28,24 +28,27 @@ public class ConnectMSSQLServer {
         dbStatement.executeUpdate(sentence);
     }
 
-    public static void listCustomerTypes() throws SQLException{
+    public static int listCustomerTypes() throws SQLException{
         Statement dbStatement = databaseConnection.createStatement();
+        int maxValueCustomerType = 0;
         ResultSet dbResultSet = dbStatement.executeQuery("SELECT * FROM customer_type");
         while (dbResultSet.next()) {
             System.out.println(dbResultSet.getString(1) + ". " + dbResultSet.getString(2));
+            maxValueCustomerType++;
         }
+        return  maxValueCustomerType;
     }
 
     public static int getCustomerId(String customerEmail) throws SQLException{
         Statement dbStatement = databaseConnection.createStatement();
-        ResultSet dbResultSet = dbStatement.executeQuery("SELECT customer_id FROM customer WHERE customer_email = '" + customerEmail + "'");
+        ResultSet dbResultSet = dbStatement.executeQuery("SELECT " + Customer.dbColumnCustomerId + " FROM customer WHERE " + Customer.dbColumnCustomerEmail + " = '" + customerEmail + "'");
         dbResultSet.next();
         return Integer.parseInt(dbResultSet.getString(1));
     }
 
     public static String getCustomerType(int searchCustomerTypeId) throws SQLException{
         Statement dbStatement = databaseConnection.createStatement();
-        ResultSet dbResultSet = dbStatement.executeQuery("SELECT customer_type_description FROM customer_type WHERE customer_type_id = " + searchCustomerTypeId);
+        ResultSet dbResultSet = dbStatement.executeQuery("SELECT customer_type_description FROM customer_type WHERE " + Customer.dbColumnCustomerTypeId + " = " + searchCustomerTypeId);
         dbResultSet.next();
         return dbResultSet.getString(1);
     }
@@ -73,7 +76,7 @@ public class ConnectMSSQLServer {
 
     public static String getCustomerColumnValue(String columnName, int customerId) throws SQLException{
         Statement dbStatement = databaseConnection.createStatement();
-        ResultSet dbResultSet = dbStatement.executeQuery("SELECT " + columnName + " FROM customer WHERE customer_id = " + customerId);
+        ResultSet dbResultSet = dbStatement.executeQuery("SELECT " + columnName + " FROM customer WHERE " + Customer.dbColumnCustomerId + " = " + customerId);
         dbResultSet.next();
         return dbResultSet.getString(1);
     }
@@ -106,13 +109,14 @@ public class ConnectMSSQLServer {
                 newCustomer.identificationNumber + "', " +
                 newCustomer.rating + ", '" +
                 newCustomer.password + "')");
-        return getCustomerId(newCustomer.email);
+        newCustomer.id = getCustomerId(newCustomer.email);
+        return newCustomer.id;
     }
 
     public static void updateCostumerValue(String columnName, String newValue, int customerId) throws SQLException{
         executeSqlUpdate("UPDATE customer SET " +
                 columnName + " = '" +
-                newValue + "' WHERE customer_id = " +
+                newValue + "' WHERE " + Customer.dbColumnCustomerId + " = " +
                 customerId);
     }
 }

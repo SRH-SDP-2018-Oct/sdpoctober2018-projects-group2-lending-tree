@@ -3,141 +3,115 @@ package org.lendingtree.project;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Scanner;
+
 public class CustomerTest {
+
     @Test
-    public void testDatabaseInput() {
-        Customer dbInputCustomer = new Customer();
-        Customer dbOutputCustomer;
+    public void registerUserTest() {
+        Customer newCustomer = new Customer();
+        String firstName = "Cassie";
+        String lastName = "Alentorn Vejar";
+        String password = "test_cassie_password";
+        float rating = 15;
+        String identificationNumber = "AA134567";
+        int taxDetails = 1;
+        int paySlip = 0;
+        int currentExpenses = 1;
+        String phone = "+56912345678";
+        String address = "Los Militares 1234, Santiago, Chile";
+        int customerTypeId = 3;
+        String customerType = "HOME";
+        String email = "cassie@mail.com";
+        int id = 1;
 
-        try {
-            dbInputCustomer.firstName = "Cassie";
-            dbInputCustomer.lastName = "Alentorn Vejar";
-            dbInputCustomer.password = "test_cassie_password";
-            dbInputCustomer.rating = 15;
-            dbInputCustomer.identificationNumber = "AA134567";
-            dbInputCustomer.taxDetails = 1;
-            dbInputCustomer.paySlip = 0;
-            dbInputCustomer.currentExpenses = 1;
-            dbInputCustomer.phone = "+56912345678";
-            dbInputCustomer.address = "Los Militares 1234, Santiago, Chile";
-            dbInputCustomer.customerTypeId = 3;
-            dbInputCustomer.customerType = ConnectMSSQLServer.getCustomerType(dbInputCustomer.customerTypeId);
-            dbInputCustomer.email = "cassie@mail.com";
 
-            dbInputCustomer.id = ConnectMSSQLServer.insertCustomer(dbInputCustomer);
-            dbOutputCustomer = ConnectMSSQLServer.getCustomer(dbInputCustomer.email);
 
-            Assert.assertEquals(dbInputCustomer.firstName, dbOutputCustomer.firstName);
-            Assert.assertEquals(dbInputCustomer.lastName, dbOutputCustomer.lastName);
-            Assert.assertEquals(dbInputCustomer.password, dbOutputCustomer.password);
-            // Assert.assertEquals(dbInputCustomer.rating, dbOutputCustomer.rating);
-            Assert.assertEquals(dbInputCustomer.identificationNumber, dbOutputCustomer.identificationNumber);
-            Assert.assertEquals(dbInputCustomer.taxDetails, dbOutputCustomer.taxDetails);
-            Assert.assertEquals(dbInputCustomer.paySlip, dbOutputCustomer.paySlip);
-            Assert.assertEquals(dbInputCustomer.currentExpenses, dbOutputCustomer.currentExpenses);
-            Assert.assertEquals(dbInputCustomer.phone, dbOutputCustomer.phone);
-            Assert.assertEquals(dbInputCustomer.address, dbOutputCustomer.address);
-            Assert.assertEquals(dbInputCustomer.customerType, dbOutputCustomer.customerType);
-            Assert.assertEquals(dbInputCustomer.customerTypeId, dbOutputCustomer.customerTypeId);
-            Assert.assertEquals(dbInputCustomer.email, dbOutputCustomer.email);
-            Assert.assertEquals(dbInputCustomer.id, dbOutputCustomer.id);
+
+        try{
+            newCustomer.taxDetails = taxDetails;
+            newCustomer.paySlip = paySlip;
+            newCustomer.currentExpenses = currentExpenses;
+
+            int maxCustomerTypeValue;
+            String passwordConfirmation;
+
+            do{
+                System.out.println("Please enter your Last Name: ");
+                newCustomer.lastName = lastName;
+            }while (!confirmUserInputString(newCustomer.lastName));
+
+            do{
+                System.out.println("Please enter your First Name: ");
+                newCustomer.firstName = firstName;
+            }while (!confirmUserInputString(newCustomer.firstName));
+
+            maxCustomerTypeValue = ConnectMSSQLServer.listCustomerTypes();
+            System.out.println("Maximum id of Customer Type is: " + maxCustomerTypeValue);
+
+            newCustomer.customerTypeId = customerTypeId;
+
+            newCustomer.customerType = ConnectMSSQLServer.getCustomerType(newCustomer.customerTypeId);
+            System.out.println("You selected: " + newCustomer.customerType);
+
+            do{
+                System.out.println("Please enter your email address: ");
+                newCustomer.email = email;
+            }while (!confirmUserInputString(newCustomer.email));
+
+            do{
+                System.out.println("Please enter your home address: ");
+                newCustomer.address = address;
+            }while (!confirmUserInputString(newCustomer.address));
+
+            do{
+                System.out.println("Please enter your phone number: ");
+                newCustomer.phone = phone;
+            }while (!confirmUserInputString(newCustomer.phone));
+
+            do{
+                System.out.println("Please enter your national identification number: ");
+                newCustomer.identificationNumber = identificationNumber;
+            }while (!confirmUserInputString(newCustomer.identificationNumber));
+
+            System.out.println("Please select a valid number for the customer rating: ");
+
+            newCustomer.rating = rating;
+
+            System.out.println("Your customer rating is: " + newCustomer.rating);
+
+            do{
+                System.out.println("Please enter your password: ");
+                newCustomer.password = password;
+                System.out.println("Please enter your password again to confirm: ");
+                passwordConfirmation = password;
+            }while (newCustomer.password.compareTo(passwordConfirmation) != 0);
+
+            id = ConnectMSSQLServer.insertCustomer(newCustomer);
+            System.out.println("");
+
+            Assert.assertEquals(firstName, newCustomer.firstName);
+            Assert.assertEquals(lastName, newCustomer.lastName);
+            Assert.assertEquals(password, newCustomer.password);
+            // Assert.assertEquals(rating, newCustomer.rating);
+            System.out.println("Input: " + rating + " --- Customer: " + newCustomer.rating);
+            Assert.assertEquals(identificationNumber, newCustomer.identificationNumber);
+            Assert.assertEquals(taxDetails, newCustomer.taxDetails);
+            Assert.assertEquals(paySlip, newCustomer.paySlip);
+            Assert.assertEquals(currentExpenses, newCustomer.currentExpenses);
+            Assert.assertEquals(phone, newCustomer.phone);
+            Assert.assertEquals(address, newCustomer.address);
+            Assert.assertEquals(customerType, newCustomer.customerType);
+            Assert.assertEquals(customerTypeId, newCustomer.customerTypeId);
+            Assert.assertEquals(email, newCustomer.email);
+            Assert.assertEquals(id, newCustomer.id);
         }
-        catch(Exception e){
+        catch (Exception e){
             e.printStackTrace();
         }
     }
-
-    @Test
-    public void testDataBaseOutput() {
-        Customer dbInputCustomer = new Customer();
-        Customer dbOutputCustomer;
-
-        try {
-            dbInputCustomer.firstName = "Cassie";
-            dbInputCustomer.lastName = "Alentorn Vejar";
-            dbInputCustomer.password = "test_cassie_password";
-            dbInputCustomer.rating = 15;
-            dbInputCustomer.identificationNumber = "AA134567";
-            dbInputCustomer.taxDetails = 1;
-            dbInputCustomer.paySlip = 0;
-            dbInputCustomer.currentExpenses = 1;
-            dbInputCustomer.phone = "+56912345678";
-            dbInputCustomer.address = "Los Militares 1234, Santiago, Chile";
-            dbInputCustomer.customerTypeId = 3;
-            dbInputCustomer.customerType = ConnectMSSQLServer.getCustomerType(dbInputCustomer.customerTypeId);
-            dbInputCustomer.email = "cassie@mail.com";
-            dbInputCustomer.id = 4;
-
-            dbOutputCustomer = ConnectMSSQLServer.getCustomer(dbInputCustomer.email);
-
-            Assert.assertEquals(dbInputCustomer.firstName, dbOutputCustomer.firstName);
-            Assert.assertEquals(dbInputCustomer.lastName, dbOutputCustomer.lastName);
-            Assert.assertEquals(dbInputCustomer.password, dbOutputCustomer.password);
-            // Assert.assertEquals(dbInputCustomer.rating, dbOutputCustomer.rating);
-            Assert.assertEquals(dbInputCustomer.identificationNumber, dbOutputCustomer.identificationNumber);
-            Assert.assertEquals(dbInputCustomer.taxDetails, dbOutputCustomer.taxDetails);
-            Assert.assertEquals(dbInputCustomer.paySlip, dbOutputCustomer.paySlip);
-            Assert.assertEquals(dbInputCustomer.currentExpenses, dbOutputCustomer.currentExpenses);
-            Assert.assertEquals(dbInputCustomer.phone, dbOutputCustomer.phone);
-            Assert.assertEquals(dbInputCustomer.address, dbOutputCustomer.address);
-            Assert.assertEquals(dbInputCustomer.customerType, dbOutputCustomer.customerType);
-            Assert.assertEquals(dbInputCustomer.customerTypeId, dbOutputCustomer.customerTypeId);
-            Assert.assertEquals(dbInputCustomer.email, dbOutputCustomer.email);
-            Assert.assertEquals(dbInputCustomer.id, dbOutputCustomer.id);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Test
-    public void customerUpdateTest(){
-        Customer dbInputCustomer = new Customer();
-        Customer dbOutputCustomer;
-        String newAddressValue = "Odenwaldstr. 123, Heidelberg, Germany";
-        int newTaxDetailsValue = 1;
-
-        try {
-            dbInputCustomer.firstName = "Cassie";
-            dbInputCustomer.lastName = "Alentorn Vejar";
-            dbInputCustomer.password = "test_cassie_password";
-            dbInputCustomer.rating = 15;
-            dbInputCustomer.identificationNumber = "AA134567";
-            dbInputCustomer.taxDetails = 0;
-            dbInputCustomer.paySlip = 0;
-            dbInputCustomer.currentExpenses = 1;
-            dbInputCustomer.phone = "+56912345678";
-            dbInputCustomer.address = "Los Militares 1234, Santiago, Chile";
-            dbInputCustomer.customerTypeId = 3;
-            dbInputCustomer.customerType = ConnectMSSQLServer.getCustomerType(dbInputCustomer.customerTypeId);
-            dbInputCustomer.email = "cassie@mail.com";
-
-            dbInputCustomer.id = ConnectMSSQLServer.insertCustomer(dbInputCustomer);
-            dbOutputCustomer = ConnectMSSQLServer.getCustomer(dbInputCustomer.email);
-
-            System.out.println(dbOutputCustomer.address);
-            System.out.println(dbOutputCustomer.taxDetails);
-
-            Assert.assertEquals(dbInputCustomer.address, dbOutputCustomer.address);
-            Assert.assertEquals(dbInputCustomer.taxDetails, dbOutputCustomer.taxDetails);
-
-
-            dbInputCustomer.address = newAddressValue;
-            dbInputCustomer.taxDetails = newTaxDetailsValue;
-
-            ConnectMSSQLServer.updateCostumerValue(dbInputCustomer.dbColumnCustomerAddress, dbInputCustomer.address, dbInputCustomer.id);
-            ConnectMSSQLServer.updateCostumerValue(dbInputCustomer.dbColumnCustomerTaxDetails, String.valueOf(dbInputCustomer.taxDetails), dbInputCustomer.id);
-
-            dbOutputCustomer = ConnectMSSQLServer.getCustomer(dbInputCustomer.email);
-
-            System.out.println(dbOutputCustomer.address);
-            System.out.println(dbOutputCustomer.taxDetails);
-
-            Assert.assertEquals(dbInputCustomer.address, dbOutputCustomer.address);
-            Assert.assertEquals(dbInputCustomer.taxDetails, dbOutputCustomer.taxDetails);
-
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
+    private Boolean confirmUserInputString(String input){
+        System.out.println("You entered: " + input);
+        return true;
     }
 }
