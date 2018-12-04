@@ -3,8 +3,6 @@ package org.lendingtree.project;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.Scanner;
-
 public class CustomerTest {
 
     @Test
@@ -88,7 +86,6 @@ public class CustomerTest {
             }while (newCustomer.password.compareTo(passwordConfirmation) != 0);
 
             id = ConnectMSSQLServer.insertCustomer(newCustomer);
-            System.out.println("");
 
             Assert.assertEquals(firstName, newCustomer.firstName);
             Assert.assertEquals(lastName, newCustomer.lastName);

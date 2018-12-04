@@ -2,11 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dbce0cc8-a74e-4a60-8c02-222736094d8d" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/lendingtree/project/EncryptionTools.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/lendingtree/project/EncryptionToolsTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/lendingtree/project/ConnectMSSQLServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/lendingtree/project/ConnectMSSQLServer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/lendingtree/project/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/lendingtree/project/Customer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/lendingtree/project/ConnectMSSQLServerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/lendingtree/project/ConnectMSSQLServerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/lendingtree/project/CustomerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/lendingtree/project/CustomerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/lendingtree/project/Customer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/lendingtree/project/Customer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/org/lendingtree/project/CustomerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/org/lendingtree/project/CustomerTest.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -20,68 +22,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/org/lendingtree/project/User.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="27" selection-start-line="8" selection-start-column="27" selection-end-line="8" selection-end-column="27" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/org/lendingtree/project/Customer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="282">
-              <caret line="92" column="58" selection-start-line="92" selection-start-column="58" selection-end-line="92" selection-end-column="58" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/org/lendingtree/project/Representative.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="40" selection-start-line="4" selection-start-column="40" selection-end-line="4" selection-end-column="40" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/org/lendingtree/project/App.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="42" selection-start-line="7" selection-start-column="29" selection-end-line="7" selection-end-column="42" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/org/lendingtree/project/AppTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="42" selection-start-line="2" selection-end-line="2" selection-end-column="42" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/org/lendingtree/project/ConnectMSSQLServer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="523">
-              <caret line="112" column="30" selection-start-line="112" selection-start-column="30" selection-end-line="112" selection-end-column="30" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/org/lendingtree/project/ConnectMSSQLServerTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-272">
-              <caret line="20" column="48" lean-forward="true" selection-start-line="20" selection-start-column="48" selection-end-line="20" selection-end-column="48" />
+            <state relative-caret-position="418">
+              <caret line="112" column="5" lean-forward="true" selection-start-line="112" selection-start-column="5" selection-end-line="112" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -92,8 +37,29 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/org/lendingtree/project/CustomerTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="231">
-              <caret line="90" column="32" selection-start-line="90" selection-start-column="32" selection-end-line="90" selection-end-column="32" />
+            <state relative-caret-position="34">
+              <caret line="2" selection-start-line="2" selection-end-line="3" selection-end-column="22" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/org/lendingtree/project/EncryptionTools.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="578">
+              <caret line="34" column="1" selection-start-line="34" selection-start-column="1" selection-end-line="34" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/org/lendingtree/project/EncryptionToolsTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -123,9 +89,15 @@
         <option value="$PROJECT_DIR$/src/main/java/org/lendingtree/project/User.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/lendingtree/project/App.java" />
         <option value="$PROJECT_DIR$/src/test/java/org/lendingtree/project/ConnectMSSQLServerTest.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/lendingtree/project/Customer.java" />
-        <option value="$PROJECT_DIR$/src/test/java/org/lendingtree/project/CustomerTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/lendingtree/project/ConnectMSSQLServer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/lendingtree/project/EncryptedPassword.java" />
+        <option value="$PROJECT_DIR$/src/test/java/org/lendingtree/project/CustomerTest.java" />
+        <option value="$PROJECT_DIR$/src/test/java/org/lendingtree/project/EncryptPasswordTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/lendingtree/project/EncryptPassword.java" />
+        <option value="$PROJECT_DIR$/src/test/java/org/lendingtree/project/EncyptionTools.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/lendingtree/project/Customer.java" />
+        <option value="$PROJECT_DIR$/src/test/java/org/lendingtree/project/EncryptionToolsTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/lendingtree/project/EncryptionTools.java" />
       </list>
     </option>
   </component>
@@ -139,10 +111,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
+    <option name="x" value="-1928" />
     <option name="y" value="-8" />
     <option name="width" value="1936" />
-    <option name="height" value="1096" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -218,7 +190,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1543876442403" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1543921337498" />
     <property name="last_opened_file_path" value="$USER_HOME$/AppData/Local/GitHubDesktop/app-1.5.0/resources/app/git/mingw64/bin/git.exe" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
@@ -234,20 +206,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.CustomerTest.registerUserTest">
-    <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.lendingtree.project.App" />
-      <module name="lending_tree_application" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.lendingtree.project.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="JUnit.EncryptionToolsTest">
     <configuration name="CustomerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="lending_tree_application" />
       <extension name="coverage">
@@ -294,7 +253,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CustomerTest.testDatabaseInput" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="EncryptPasswordTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="lending_tree_application" />
       <extension name="coverage">
         <pattern>
@@ -303,20 +262,32 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="org.lendingtree.project" />
-      <option name="MAIN_CLASS_NAME" value="org.lendingtree.project.CustomerTest" />
-      <option name="METHOD_NAME" value="testDatabaseInput" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="MAIN_CLASS_NAME" value="org.lendingtree.project.EncryptPasswordTest" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EncryptionToolsTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="lending_tree_application" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.lendingtree.project.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.lendingtree.project" />
+      <option name="MAIN_CLASS_NAME" value="org.lendingtree.project.EncryptionToolsTest" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.EncryptionToolsTest" />
+        <item itemvalue="JUnit.EncryptPasswordTest" />
         <item itemvalue="JUnit.CustomerTest.registerUserTest" />
         <item itemvalue="JUnit.CustomerTest" />
         <item itemvalue="JUnit.CustomerTest.customerUpdateTest" />
-        <item itemvalue="JUnit.CustomerTest.testDatabaseInput" />
-        <item itemvalue="Application.App" />
       </list>
     </recent_temporary>
   </component>
@@ -334,15 +305,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="CustomerTest_registerUserTest - 2018.12.03 at 22h 34m 15s.xml">
-      <configuration name="CustomerTest.registerUserTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="CustomerTest_registerUserTest - 2018.12.03 at 22h 42m 57s.xml">
-      <configuration name="CustomerTest.registerUserTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="CustomerTest_registerUserTest - 2018.12.03 at 22h 43m 22s.xml">
-      <configuration name="CustomerTest.registerUserTest" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="CustomerTest_registerUserTest - 2018.12.03 at 22h 45m 05s.xml">
       <configuration name="CustomerTest.registerUserTest" configurationId="JUnit" />
     </history-entry>
@@ -364,9 +326,18 @@
     <history-entry file="CustomerTest_registerUserTest - 2018.12.03 at 23h 26m 52s.xml">
       <configuration name="CustomerTest.registerUserTest" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="CustomerTest_registerUserTest - 2018.12.03 at 23h 32m 05s.xml">
+      <configuration name="CustomerTest.registerUserTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="EncryptPasswordTest - 2018.12.04 at 11h 40m 21s.xml">
+      <configuration name="EncryptPasswordTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="EncryptionToolsTest - 2018.12.04 at 11h 59m 18s.xml">
+      <configuration name="EncryptionToolsTest" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-1928" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Favorites" sideWeight="0.50080776" side_tool="true" weight="0.25" />
@@ -423,6 +394,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/microsoft/sqlserver/mssql-jdbc/6.1.0.jre8/mssql-jdbc-6.1.0.jre8-sources.jar!/com/microsoft/sqlserver/jdbc/SQLServerException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="205" selection-start-line="205" selection-end-line="205" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/lendingtree/project/App.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="42" selection-start-line="7" selection-start-column="29" selection-end-line="7" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/lendingtree/project/ConnectMSSQLServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="523">
+          <caret line="112" column="30" selection-start-line="112" selection-start-column="30" selection-end-line="112" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/lendingtree/project/User.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -437,10 +429,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/microsoft/sqlserver/mssql-jdbc/6.1.0.jre8/mssql-jdbc-6.1.0.jre8-sources.jar!/com/microsoft/sqlserver/jdbc/SQLServerException.java">
+    <entry file="file://$PROJECT_DIR$/src/test/java/org/lendingtree/project/ConnectMSSQLServerTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="205" selection-start-line="205" selection-end-line="205" />
+        <state relative-caret-position="340">
+          <caret line="20" column="48" lean-forward="true" selection-start-line="20" selection-start-column="48" selection-end-line="20" selection-end-column="48" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -451,47 +446,71 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/lendingtree/project/App.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/lendingtree/project/EncryptedPassword.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="42" selection-start-line="7" selection-start-column="29" selection-end-line="7" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/org/lendingtree/project/ConnectMSSQLServerTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-272">
-          <caret line="20" column="48" lean-forward="true" selection-start-line="20" selection-start-column="48" selection-end-line="20" selection-end-column="48" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/lendingtree/project/Customer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="282">
-          <caret line="92" column="58" selection-start-line="92" selection-start-column="58" selection-end-line="92" selection-end-column="58" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state>
+          <caret selection-end-line="27" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/org/lendingtree/project/CustomerTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="90" column="32" selection-start-line="90" selection-start-column="32" selection-end-line="90" selection-end-column="32" />
+        <state relative-caret-position="34">
+          <caret line="2" selection-start-line="2" selection-end-line="3" selection-end-column="22" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/lendingtree/project/ConnectMSSQLServer.java">
+    <entry file="file://$PROJECT_DIR$/src/test/java/org/lendingtree/project/EncyptionTools.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="523">
-          <caret line="112" column="30" selection-start-line="112" selection-start-column="30" selection-end-line="112" selection-end-column="30" />
+        <state relative-caret-position="493">
+          <caret line="29" selection-start-line="29" selection-end-line="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/org/lendingtree/project/EncryptPasswordTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" lean-forward="true" selection-end-line="51" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/lendingtree/project/EncryptPassword.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="24" column="40" selection-start-line="24" selection-start-column="40" selection-end-line="24" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/org/lendingtree/project/EncryptionToolsTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/lendingtree/project/EncryptionTools.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="578">
+          <caret line="34" column="1" selection-start-line="34" selection-start-column="1" selection-end-line="34" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/lendingtree/project/Customer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="112" column="5" lean-forward="true" selection-start-line="112" selection-start-column="5" selection-end-line="112" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

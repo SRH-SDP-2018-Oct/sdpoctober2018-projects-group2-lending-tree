@@ -29,7 +29,7 @@ public class Customer extends User {
     public void registerNewCustomer() throws SQLException{
         Scanner userInput = new Scanner(System.in);
         int maxCustomerTypeValue;
-        String passwordConfirmation;
+        String passwordConfirmation = "";
 
         do{
             System.out.println("Please enter your Last Name: ");
@@ -86,10 +86,16 @@ public class Customer extends User {
         System.out.println("Your customer rating is: " + rating);
 
         do{
-            System.out.println("Please enter your password: ");
-            password = userInput.nextLine();
-            System.out.println("Please enter your password again to confirm: ");
-            passwordConfirmation = userInput.nextLine();
+            try{
+                System.out.println("Please enter your password: ");
+                password = EncryptionTools.encryptPassword(userInput.nextLine());
+                System.out.println("Please enter your password again to confirm: ");
+                passwordConfirmation = EncryptionTools.encryptPassword(userInput.nextLine());
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+
         }while (password.compareTo(passwordConfirmation) != 0);
 
         ConnectMSSQLServer.insertCustomer(this);
