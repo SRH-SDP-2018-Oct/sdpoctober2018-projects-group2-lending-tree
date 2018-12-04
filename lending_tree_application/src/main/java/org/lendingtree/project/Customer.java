@@ -26,7 +26,7 @@ public class Customer extends User {
     public static final String dbColumnCustomerRating = "customer_rating";
     public static final String dbColumnCustomerPassword = "customer_password";
 
-    public void registerNewCustomer() throws SQLException{
+    public void register() throws SQLException{
         Scanner userInput = new Scanner(System.in);
         int maxCustomerTypeValue;
         String passwordConfirmation = "";
@@ -110,6 +110,38 @@ public class Customer extends User {
             userConfirmation = userInput.next().charAt(0);
         } while (userConfirmation != 'Y');
         return true;
+    }
+
+    public Customer login() {
+        Scanner userInput = new Scanner(System.in);
+        String message = "Login successful.";
+        Customer loginCustomer = new Customer();
+        int remainingAttempts = 3;
+        String userInputPassword = new String();
+
+        System.out.println("Please enter the user email: ");
+        loginCustomer.email = userInput.nextLine();
+        try {
+            loginCustomer = ConnectMSSQLServer.getCustomer(loginCustomer.email);
+            do{
+                if(remainingAttempts < 3)
+                    System.out.println("Invalid password, please try again. " + remainingAttempts + " remaining attempts");
+                remainingAttempts--;
+                System.out.println("Please enter the user password: ");
+                userInputPassword = EncryptionTools.encryptPassword(userInput.nextLine());
+            }while(remainingAttempts > 0 && userInputPassword.compareTo(loginCustomer.password)!=0);
+
+        } catch (Exception e) {
+            message = "Invalid email address. User does not exist.";
+            System.out.println(message);
+            return null;
+        }
+
+        if(userInputPassword.compareTo(loginCustomer.password)!=0)
+            message = "Invalid password. No attempts remaining.";
+
+        System.out.println(message);
+        return  loginCustomer;
     }
 
 }

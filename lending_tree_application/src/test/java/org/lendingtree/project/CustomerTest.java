@@ -80,16 +80,16 @@ public class CustomerTest {
 
             do{
                 System.out.println("Please enter your password: ");
-                newCustomer.password = password;
+                newCustomer.password = EncryptionTools.encryptPassword(password);
                 System.out.println("Please enter your password again to confirm: ");
-                passwordConfirmation = password;
+                passwordConfirmation = EncryptionTools.encryptPassword(password);
             }while (newCustomer.password.compareTo(passwordConfirmation) != 0);
 
             id = ConnectMSSQLServer.insertCustomer(newCustomer);
 
             Assert.assertEquals(firstName, newCustomer.firstName);
             Assert.assertEquals(lastName, newCustomer.lastName);
-            Assert.assertEquals(password, newCustomer.password);
+            Assert.assertEquals(EncryptionTools.encryptPassword(password), newCustomer.password);
             // Assert.assertEquals(rating, newCustomer.rating);
             System.out.println("Input: " + rating + " --- Customer: " + newCustomer.rating);
             Assert.assertEquals(identificationNumber, newCustomer.identificationNumber);
@@ -110,5 +110,108 @@ public class CustomerTest {
     private Boolean confirmUserInputString(String input){
         System.out.println("You entered: " + input);
         return true;
+    }
+
+    @Test
+    public void loginTest() {
+        String correctEmail = "cassie@mail.com";
+        String incorrectEmail = "nocassie@mail.com";
+        String passwordAttempt[] = new String[4];
+
+        String message = "Login successful.";
+        Customer loginCustomer = new Customer();
+        int remainingAttempts = 3;
+        String userInputPassword = new String();
+        int currentPasswordAttempt = 0;
+
+        passwordAttempt[0] = "test_fail";
+        passwordAttempt[1] = "test_fail2";
+        passwordAttempt[2] = "test_cassie_passworD";
+        passwordAttempt[3] = "test_cassie_password"; //correct password
+        loginCustomer.id = 0;
+
+        System.out.println("Please enter the user email: ");
+        loginCustomer.email = incorrectEmail;
+        System.out.println(loginCustomer.email);
+        try {
+            loginCustomer = ConnectMSSQLServer.getCustomer(loginCustomer.email);
+            do{
+                if(remainingAttempts < 3)
+                    System.out.println("Invalid password, please try again. " + remainingAttempts + " remaining attempts");
+                remainingAttempts--;
+                System.out.println("Please enter the user password: ");
+                userInputPassword = EncryptionTools.encryptPassword(passwordAttempt[currentPasswordAttempt]);
+                System.out.println("Input password: " + userInputPassword);
+                System.out.println("Remaining attempts: " + remainingAttempts);
+                System.out.println("Current password attempt: " + currentPasswordAttempt);
+                currentPasswordAttempt++;
+            }while(remainingAttempts > 0 && userInputPassword.compareTo(loginCustomer.password)!=0);
+
+        } catch (Exception e) {
+            message = "Invalid user. Email not found";
+        }
+
+        System.out.println(message);
+
+        remainingAttempts = 3;
+        currentPasswordAttempt = 0;
+        message = "Login successful.";
+        loginCustomer.email = correctEmail;
+        System.out.println("===================== NEW SCENARIO ==================");
+        System.out.println(loginCustomer.email);
+        try {
+            loginCustomer = ConnectMSSQLServer.getCustomer(loginCustomer.email);
+            do{
+                if(remainingAttempts < 3)
+                    System.out.println("Invalid password, please try again. " + remainingAttempts + " remaining attempts");
+                remainingAttempts--;
+                System.out.println("Please enter the user password: ");
+                userInputPassword = EncryptionTools.encryptPassword(passwordAttempt[currentPasswordAttempt]);
+                System.out.println("Input password: " + userInputPassword);
+                System.out.println("Remaining attempts: " + remainingAttempts);
+                System.out.println("Current password attempt: " + currentPasswordAttempt);
+                currentPasswordAttempt++;
+            }while(remainingAttempts > 0 && userInputPassword.compareTo(loginCustomer.password)!=0);
+
+        } catch (Exception e) {
+            message = "Invalid email address. User does not exist.";
+        }
+
+        if(userInputPassword.compareTo(loginCustomer.password)!=0)
+            message = "Invalid password. No attempts remaining.";
+
+        System.out.println(message);
+
+        remainingAttempts = 4;
+        currentPasswordAttempt = 0;
+        message = "Login successful.";
+        loginCustomer.email = correctEmail;
+        System.out.println("===================== NEW SCENARIO ==================");
+        System.out.println(loginCustomer.email);
+        try {
+            loginCustomer = ConnectMSSQLServer.getCustomer(loginCustomer.email);
+            do{
+                if(remainingAttempts < 3)
+                    System.out.println("Invalid password, please try again. " + remainingAttempts + " remaining attempts");
+                remainingAttempts--;
+                System.out.println("Please enter the user password: ");
+                userInputPassword = EncryptionTools.encryptPassword(passwordAttempt[currentPasswordAttempt]);
+                System.out.println("Input password: " + userInputPassword);
+                System.out.println("Remaining attempts: " + remainingAttempts);
+                System.out.println("Current password attempt: " + currentPasswordAttempt);
+                currentPasswordAttempt++;
+            }while(remainingAttempts > 0 && userInputPassword.compareTo(loginCustomer.password)!=0);
+
+        } catch (Exception e) {
+            message = "Invalid email address. User does not exist.";
+        }
+
+        if(userInputPassword.compareTo(loginCustomer.password)!=0)
+            message = "Invalid password. No attempts remaining.";
+
+        System.out.println(message);
+
+        Assert.assertEquals(loginCustomer.password,userInputPassword);
+
     }
 }
