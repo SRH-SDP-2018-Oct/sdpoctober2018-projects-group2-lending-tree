@@ -3,7 +3,6 @@ package org.lendingtree.project;
 import org.junit.Assert;
 import org.junit.Test;
 
-
 public class ConnectMSSQLServerTest {
     @Test
     public void testDatabaseInput() {
@@ -11,37 +10,37 @@ public class ConnectMSSQLServerTest {
         Customer dbOutputCustomer;
 
         try {
-            dbInputCustomer.firstName = "Cassie";
-            dbInputCustomer.lastName = "Alentorn Vejar";
-            dbInputCustomer.password = "test_cassie_password";
-            dbInputCustomer.rating = 15;
-            dbInputCustomer.identificationNumber = "AA134567";
-            dbInputCustomer.taxDetails = 1;
-            dbInputCustomer.paySlip = 0;
-            dbInputCustomer.currentExpenses = 1;
-            dbInputCustomer.phone = "+56912345678";
-            dbInputCustomer.address = "Los Militares 1234, Santiago, Chile";
-            dbInputCustomer.customerTypeId = 3;
-            dbInputCustomer.customerType = ConnectMSSQLServer.getCustomerType(dbInputCustomer.customerTypeId);
-            dbInputCustomer.email = "cassie@mail.com";
+            dbInputCustomer.setFirstName("Cassie");
+            dbInputCustomer.setLastName("Alentorn Vejar");
+            dbInputCustomer.setPassword("test_cassie_password");
+            dbInputCustomer.setRating(15f);
+            dbInputCustomer.setIdentificationNumber("AA134567");
+            dbInputCustomer.setTaxDetails(1);
+            dbInputCustomer.setPaySlip(0);
+            dbInputCustomer.setCurrentExpenses(1);
+            dbInputCustomer.setPhone("+56912345678");
+            dbInputCustomer.setAddress("Los Militares 1234, Santiago, Chile");
+            dbInputCustomer.setCustomerTypeId(3);
+            dbInputCustomer.setCustomerType(CustomerDatabase.getCustomerType(dbInputCustomer.getCustomerTypeId()));
+            dbInputCustomer.setEmail("cassie@mail.com");
 
-            dbInputCustomer.id = ConnectMSSQLServer.insertCustomer(dbInputCustomer);
-            dbOutputCustomer = ConnectMSSQLServer.getCustomer(dbInputCustomer.email);
+            dbInputCustomer.setId(CustomerDatabase.insert(dbInputCustomer));
+            dbOutputCustomer = CustomerDatabase.getCustomer(dbInputCustomer.getEmail());
 
-            Assert.assertEquals(dbInputCustomer.firstName, dbOutputCustomer.firstName);
-            Assert.assertEquals(dbInputCustomer.lastName, dbOutputCustomer.lastName);
-            Assert.assertEquals(dbInputCustomer.password, dbOutputCustomer.password);
-            // Assert.assertEquals(dbInputCustomer.rating, dbOutputCustomer.rating);
-            Assert.assertEquals(dbInputCustomer.identificationNumber, dbOutputCustomer.identificationNumber);
-            Assert.assertEquals(dbInputCustomer.taxDetails, dbOutputCustomer.taxDetails);
-            Assert.assertEquals(dbInputCustomer.paySlip, dbOutputCustomer.paySlip);
-            Assert.assertEquals(dbInputCustomer.currentExpenses, dbOutputCustomer.currentExpenses);
-            Assert.assertEquals(dbInputCustomer.phone, dbOutputCustomer.phone);
-            Assert.assertEquals(dbInputCustomer.address, dbOutputCustomer.address);
-            Assert.assertEquals(dbInputCustomer.customerType, dbOutputCustomer.customerType);
-            Assert.assertEquals(dbInputCustomer.customerTypeId, dbOutputCustomer.customerTypeId);
-            Assert.assertEquals(dbInputCustomer.email, dbOutputCustomer.email);
-            Assert.assertEquals(dbInputCustomer.id, dbOutputCustomer.id);
+            Assert.assertEquals(dbInputCustomer.getFirstName(), dbOutputCustomer.getFirstName());
+            Assert.assertEquals(dbInputCustomer.getLastName(), dbOutputCustomer.getLastName());
+            Assert.assertEquals(dbInputCustomer.getPassword(), dbOutputCustomer.getPassword());
+            // Assert.assertEquals(dbInputCustomer.getRating(), dbOutputCustomer.getRating());
+            Assert.assertEquals(dbInputCustomer.getIdentificationNumber(), dbOutputCustomer.getIdentificationNumber());
+            Assert.assertEquals(dbInputCustomer.getTaxDetails(), dbOutputCustomer.getTaxDetails());
+            Assert.assertEquals(dbInputCustomer.getPaySlip(), dbOutputCustomer.getPaySlip());
+            Assert.assertEquals(dbInputCustomer.getCurrentExpenses(), dbOutputCustomer.getCurrentExpenses());
+            Assert.assertEquals(dbInputCustomer.getPhone(), dbOutputCustomer.getPhone());
+            Assert.assertEquals(dbInputCustomer.getAddress(), dbOutputCustomer.getAddress());
+            Assert.assertEquals(dbInputCustomer.getCustomerType(), dbOutputCustomer.getCustomerType());
+            Assert.assertEquals(dbInputCustomer.getCustomerTypeId(), dbOutputCustomer.getCustomerTypeId());
+            Assert.assertEquals(dbInputCustomer.getEmail(), dbOutputCustomer.getEmail());
+            Assert.assertEquals(dbInputCustomer.getId(), dbOutputCustomer.getId());
         }
         catch(Exception e){
             e.printStackTrace();
@@ -54,37 +53,38 @@ public class ConnectMSSQLServerTest {
         Customer dbOutputCustomer;
 
         try {
-            dbInputCustomer.firstName = "Cassie";
-            dbInputCustomer.lastName = "Alentorn Vejar";
-            dbInputCustomer.password = "test_cassie_password";
-            dbInputCustomer.rating = 15;
-            dbInputCustomer.identificationNumber = "AA134567";
-            dbInputCustomer.taxDetails = 1;
-            dbInputCustomer.paySlip = 0;
-            dbInputCustomer.currentExpenses = 1;
-            dbInputCustomer.phone = "+56912345678";
-            dbInputCustomer.address = "Los Militares 1234, Santiago, Chile";
-            dbInputCustomer.customerTypeId = 3;
-            dbInputCustomer.customerType = ConnectMSSQLServer.getCustomerType(dbInputCustomer.customerTypeId);
-            dbInputCustomer.email = "cassie@mail.com";
-            dbInputCustomer.id = 4;
+            dbInputCustomer.setFirstName("Cassie");
+            dbInputCustomer.setLastName("Alentorn Vejar");
+            dbInputCustomer.setPassword("test_cassie_password");
+            dbInputCustomer.setRating(15f);
+            dbInputCustomer.setIdentificationNumber("AA134567");
+            dbInputCustomer.setTaxDetails(1);
+            dbInputCustomer.setPaySlip(0);
+            dbInputCustomer.setCurrentExpenses(1);
+            dbInputCustomer.setPhone("+56912345678");
+            dbInputCustomer.setAddress("Los Militares 1234, Santiago, Chile");
+            dbInputCustomer.setCustomerTypeId(3);
+            dbInputCustomer.setCustomerType(CustomerDatabase.getCustomerType(dbInputCustomer.getCustomerTypeId()));
+            dbInputCustomer.setEmail("cassie@mail.com");
+            dbInputCustomer.setId(4);
 
-            dbOutputCustomer = ConnectMSSQLServer.getCustomer(dbInputCustomer.email);
+            dbOutputCustomer = CustomerDatabase.getCustomer(dbInputCustomer.getEmail());
 
-            Assert.assertEquals(dbInputCustomer.firstName, dbOutputCustomer.firstName);
-            Assert.assertEquals(dbInputCustomer.lastName, dbOutputCustomer.lastName);
-            Assert.assertEquals(dbInputCustomer.password, dbOutputCustomer.password);
-            // Assert.assertEquals(dbInputCustomer.rating, dbOutputCustomer.rating);
-            Assert.assertEquals(dbInputCustomer.identificationNumber, dbOutputCustomer.identificationNumber);
-            Assert.assertEquals(dbInputCustomer.taxDetails, dbOutputCustomer.taxDetails);
-            Assert.assertEquals(dbInputCustomer.paySlip, dbOutputCustomer.paySlip);
-            Assert.assertEquals(dbInputCustomer.currentExpenses, dbOutputCustomer.currentExpenses);
-            Assert.assertEquals(dbInputCustomer.phone, dbOutputCustomer.phone);
-            Assert.assertEquals(dbInputCustomer.address, dbOutputCustomer.address);
-            Assert.assertEquals(dbInputCustomer.customerType, dbOutputCustomer.customerType);
-            Assert.assertEquals(dbInputCustomer.customerTypeId, dbOutputCustomer.customerTypeId);
-            Assert.assertEquals(dbInputCustomer.email, dbOutputCustomer.email);
-            Assert.assertEquals(dbInputCustomer.id, dbOutputCustomer.id);
+            Assert.assertEquals(dbInputCustomer.getFirstName(), dbOutputCustomer.getFirstName());
+            Assert.assertEquals(dbInputCustomer.getLastName(), dbOutputCustomer.getLastName());
+            Assert.assertEquals(dbInputCustomer.getPassword(), dbOutputCustomer.getPassword());
+            // Assert.assertEquals(dbInputCustomer.getRating(), dbOutputCustomer.getRating());
+            Assert.assertEquals(dbInputCustomer.getIdentificationNumber(), dbOutputCustomer.getIdentificationNumber());
+            Assert.assertEquals(dbInputCustomer.getTaxDetails(), dbOutputCustomer.getTaxDetails());
+            Assert.assertEquals(dbInputCustomer.getPaySlip(), dbOutputCustomer.getPaySlip());
+            Assert.assertEquals(dbInputCustomer.getCurrentExpenses(), dbOutputCustomer.getCurrentExpenses());
+            Assert.assertEquals(dbInputCustomer.getPhone(), dbOutputCustomer.getPhone());
+            Assert.assertEquals(dbInputCustomer.getAddress(), dbOutputCustomer.getAddress());
+            Assert.assertEquals(dbInputCustomer.getCustomerType(), dbOutputCustomer.getCustomerType());
+            Assert.assertEquals(dbInputCustomer.getCustomerTypeId(), dbOutputCustomer.getCustomerTypeId());
+            Assert.assertEquals(dbInputCustomer.getEmail(), dbOutputCustomer.getEmail());
+            Assert.assertEquals(dbInputCustomer.getId(), dbOutputCustomer.getId());
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -98,43 +98,43 @@ public class ConnectMSSQLServerTest {
         int newTaxDetailsValue = 1;
 
         try {
-            dbInputCustomer.firstName = "Cassie";
-            dbInputCustomer.lastName = "Alentorn Vejar";
-            dbInputCustomer.password = "test_cassie_password";
-            dbInputCustomer.rating = 15;
-            dbInputCustomer.identificationNumber = "AA134567";
-            dbInputCustomer.taxDetails = 0;
-            dbInputCustomer.paySlip = 0;
-            dbInputCustomer.currentExpenses = 1;
-            dbInputCustomer.phone = "+56912345678";
-            dbInputCustomer.address = "Los Militares 1234, Santiago, Chile";
-            dbInputCustomer.customerTypeId = 3;
-            dbInputCustomer.customerType = ConnectMSSQLServer.getCustomerType(dbInputCustomer.customerTypeId);
-            dbInputCustomer.email = "cassie@mail.com";
+            dbInputCustomer.setFirstName("Cassie");
+            dbInputCustomer.setLastName("Alentorn Vejar");
+            dbInputCustomer.setPassword("test_cassie_password");
+            dbInputCustomer.setRating(15f);
+            dbInputCustomer.setIdentificationNumber("AA134567");
+            dbInputCustomer.setTaxDetails(1);
+            dbInputCustomer.setPaySlip(0);
+            dbInputCustomer.setCurrentExpenses(1);
+            dbInputCustomer.setPhone("+56912345678");
+            dbInputCustomer.setAddress("Los Militares 1234, Santiago, Chile");
+            dbInputCustomer.setCustomerTypeId(3);
+            dbInputCustomer.setCustomerType(CustomerDatabase.getCustomerType(dbInputCustomer.getCustomerTypeId()));
+            dbInputCustomer.setEmail("cassie@mail.com");
 
-            dbInputCustomer.id = ConnectMSSQLServer.insertCustomer(dbInputCustomer);
-            dbOutputCustomer = ConnectMSSQLServer.getCustomer(dbInputCustomer.email);
+            dbInputCustomer.setId(CustomerDatabase.insert(dbInputCustomer));
+            dbOutputCustomer = CustomerDatabase.getCustomer(dbInputCustomer.getEmail());
 
-            System.out.println(dbOutputCustomer.address);
-            System.out.println(dbOutputCustomer.taxDetails);
+            System.out.println(dbOutputCustomer.getAddress());
+            System.out.println(dbOutputCustomer.getTaxDetails());
 
-            Assert.assertEquals(dbInputCustomer.address, dbOutputCustomer.address);
-            Assert.assertEquals(dbInputCustomer.taxDetails, dbOutputCustomer.taxDetails);
+            Assert.assertEquals(dbInputCustomer.getAddress(), dbOutputCustomer.getAddress());
+            Assert.assertEquals(dbInputCustomer.getTaxDetails(), dbOutputCustomer.getTaxDetails());
 
 
-            dbInputCustomer.address = newAddressValue;
-            dbInputCustomer.taxDetails = newTaxDetailsValue;
+            dbInputCustomer.setAddress(newAddressValue);
+            dbInputCustomer.setTaxDetails(newTaxDetailsValue);
 
-            ConnectMSSQLServer.updateCostumerValue(dbInputCustomer.dbColumnCustomerAddress, dbInputCustomer.address, dbInputCustomer.id);
-            ConnectMSSQLServer.updateCostumerValue(dbInputCustomer.dbColumnCustomerTaxDetails, String.valueOf(dbInputCustomer.taxDetails), dbInputCustomer.id);
+            CustomerDatabase.update("customer_address", dbInputCustomer.getAddress(), dbInputCustomer.getId());
+            CustomerDatabase.update("customer_tax_details", String.valueOf(dbInputCustomer.getTaxDetails()), dbInputCustomer.getId());
 
-            dbOutputCustomer = ConnectMSSQLServer.getCustomer(dbInputCustomer.email);
+            dbOutputCustomer = CustomerDatabase.getCustomer(dbInputCustomer.getEmail());
 
-            System.out.println(dbOutputCustomer.address);
-            System.out.println(dbOutputCustomer.taxDetails);
+            System.out.println(dbOutputCustomer.getAddress());
+            System.out.println(dbOutputCustomer.getTaxDetails());
 
-            Assert.assertEquals(dbInputCustomer.address, dbOutputCustomer.address);
-            Assert.assertEquals(dbInputCustomer.taxDetails, dbOutputCustomer.taxDetails);
+            Assert.assertEquals(dbInputCustomer.getAddress(), dbOutputCustomer.getAddress());
+            Assert.assertEquals(dbInputCustomer.getTaxDetails(), dbOutputCustomer.getTaxDetails());
 
         }
         catch(Exception e){

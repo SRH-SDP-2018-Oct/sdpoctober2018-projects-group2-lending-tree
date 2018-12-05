@@ -4,28 +4,81 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Customer extends User {
-    public String customerType;
-    public int customerTypeId = 0;
-    public String address;
-    public int currentExpenses = 0;
-    public int paySlip = 0;
-    public int taxDetails = 0;
-    public String identificationNumber;
-    public float rating;
-    public static final String dbColumnCustomerId = "customer_id";
-    public static final String dbColumnCustomerTypeId = "customer_type_id";
-    public static final String dbColumnCustomerLastName = "customer_last_name";
-    public static final String dbColumnCustomerFirstName = "customer_first_name";
-    public static final String dbColumnCustomerAddress = "customer_address";
-    public static final String dbColumnCustomerEmail = "customer_email";
-    public static final String dbColumnCustomerPhone = "customer_phone";
-    public static final String dbColumnCustomerCurrentExpenses = "customer_current_expenses";
-    public static final String dbColumnCustomerPaySlip = "customer_pay_slip";
-    public static final String dbColumnCustomerTaxDetails = "customer_tax_details";
-    public static final String dbColumnCustomerIdentificationNumber = "customer_identification_number";
-    public static final String dbColumnCustomerRating = "customer_rating";
-    public static final String dbColumnCustomerPassword = "customer_password";
+    private String customerType;
+    private int customerTypeId = 0;
+    private String address;
+    private int currentExpenses = 0;
+    private int paySlip = 0;
+    private int taxDetails = 0;
+    private String identificationNumber;
+    private float rating;
 
+    public String getCustomerType(){
+        return this.customerType;
+    }
+
+    public int getCustomerTypeId(){
+        return this.customerTypeId;
+    }
+
+    public String getAddress(){
+        return this.address;
+    }
+
+    public int getCurrentExpenses(){
+        return this.currentExpenses;
+    }
+
+    public int getPaySlip(){
+        return this.paySlip;
+    }
+
+    public int getTaxDetails(){
+        return this.taxDetails;
+    }
+
+    public String getIdentificationNumber(){
+        return this.identificationNumber;
+    }
+
+    public Float getRating(){
+        return this.rating;
+    }
+
+    public void setCustomerType(String newCustomerType){
+        this.customerType = newCustomerType;
+    }
+
+    public void setCustomerTypeId(int newCustomerTypeId){
+        this.customerTypeId = newCustomerTypeId;
+    }
+
+    public void setAddress(String newAddress){
+        this.address = newAddress;
+    }
+
+    public void setCurrentExpenses(int newCurrentExpenses){
+        this.currentExpenses = newCurrentExpenses;
+    }
+
+    public void setPaySlip(int newPaySlip){
+        this.paySlip = newPaySlip;
+    }
+
+    public void setTaxDetails(int newTaxDetails){
+        this.taxDetails = newTaxDetails;
+    }
+
+    public void setIdentificationNumber(String newIdentificationNumber){
+        this.identificationNumber = newIdentificationNumber;
+    }
+
+    public void setRating(Float newRating){
+        this.rating = newRating;
+    }
+
+
+    @Override
     public void register() throws SQLException{
         Scanner userInput = new Scanner(System.in);
         int maxCustomerTypeValue;
@@ -33,15 +86,15 @@ public class Customer extends User {
 
         do{
             System.out.println("Please enter your Last Name: ");
-            lastName = userInput.nextLine();
-        }while (!confirmUserInputString(lastName));
+            this.setLastName(userInput.nextLine());
+        }while (!confirmUserInputString(getLastName()));
 
         do{
             System.out.println("Please enter your First Name: ");
-            firstName = userInput.nextLine();
-        }while (!confirmUserInputString(firstName));
+            this.setFirstName(userInput.nextLine());
+        }while (!confirmUserInputString(this.getFirstName()));
 
-        maxCustomerTypeValue = ConnectMSSQLServer.listCustomerTypes();
+        maxCustomerTypeValue = CustomerDatabase.listCustomerTypes();
 
         do{
             System.out.println("Please select a valid number for the customer type: ");
@@ -52,28 +105,34 @@ public class Customer extends User {
             customerTypeId = userInput.nextInt();
         } while(customerTypeId < 1 || customerTypeId > maxCustomerTypeValue);
 
-        customerType = ConnectMSSQLServer.getCustomerType(customerTypeId);
+        customerType = CustomerDatabase.getCustomerType(customerTypeId);
         System.out.println("You selected: " + customerType);
 
         do{
             System.out.println("Please enter your email address: ");
-            email = userInput.nextLine();
-        }while (!confirmUserInputString(email));
+            this.setEmail(userInput.nextLine());
+
+            while (CustomerDatabase.checkEmail(this.getEmail())){
+                System.out.println("Email already in use, please enter a new one: ");
+                this.setEmail(userInput.nextLine());
+            }
+
+        }while (!confirmUserInputString(this.getEmail()));
 
         do{
             System.out.println("Please enter your home address: ");
-            address = userInput.nextLine();
-        }while (!confirmUserInputString(address));
+            this.address = userInput.nextLine();
+        }while (!confirmUserInputString(this.address));
 
         do{
             System.out.println("Please enter your phone number: ");
-            phone = userInput.nextLine();
-        }while (!confirmUserInputString(phone));
+            this.setPhone(userInput.nextLine());
+        }while (!confirmUserInputString(this.getPhone()));
 
         do{
             System.out.println("Please enter your national identification number: ");
-            identificationNumber = userInput.nextLine();
-        }while (!confirmUserInputString(identificationNumber));
+            this.identificationNumber = userInput.nextLine();
+        }while (!confirmUserInputString(this.identificationNumber));
 
         do{
             System.out.println("Please select a valid number for the customer rating: ");
@@ -81,14 +140,14 @@ public class Customer extends User {
                 System.out.println("That is not a valid selection");
                 userInput.next();
             }
-            rating = userInput.nextFloat();
-        } while(rating < 0);
-        System.out.println("Your customer rating is: " + rating);
+            this.rating = userInput.nextFloat();
+        } while(this.rating < 0);
+        System.out.println("Your customer rating is: " + this.rating);
 
         do{
             try{
                 System.out.println("Please enter your password: ");
-                password = EncryptionTools.encryptPassword(userInput.nextLine());
+                this.setPassword(EncryptionTools.encryptPassword(userInput.nextLine()));
                 System.out.println("Please enter your password again to confirm: ");
                 passwordConfirmation = EncryptionTools.encryptPassword(userInput.nextLine());
             }
@@ -96,9 +155,9 @@ public class Customer extends User {
                 e.printStackTrace();
             }
 
-        }while (password.compareTo(passwordConfirmation) != 0);
+        }while (this.getPassword().compareTo(passwordConfirmation) != 0);
 
-        ConnectMSSQLServer.insertCustomer(this);
+        CustomerDatabase.insert(this);
     }
 
     private Boolean confirmUserInputString(String input){
@@ -112,7 +171,8 @@ public class Customer extends User {
         return true;
     }
 
-    public Customer login() {
+    @Override
+    public User login() {
         Scanner userInput = new Scanner(System.in);
         String message = "Login successful.";
         Customer loginCustomer = new Customer();
@@ -120,16 +180,16 @@ public class Customer extends User {
         String userInputPassword = new String();
 
         System.out.println("Please enter the user email: ");
-        loginCustomer.email = userInput.nextLine();
+        loginCustomer.setEmail(userInput.nextLine());
         try {
-            loginCustomer = ConnectMSSQLServer.getCustomer(loginCustomer.email);
+            loginCustomer = CustomerDatabase.getCustomer(loginCustomer.getEmail());
             do{
                 if(remainingAttempts < 3)
                     System.out.println("Invalid password, please try again. " + remainingAttempts + " remaining attempts");
                 remainingAttempts--;
                 System.out.println("Please enter the user password: ");
                 userInputPassword = EncryptionTools.encryptPassword(userInput.nextLine());
-            }while(remainingAttempts > 0 && userInputPassword.compareTo(loginCustomer.password)!=0);
+            }while(remainingAttempts > 0 && userInputPassword.compareTo(loginCustomer.getPassword())!=0);
 
         } catch (Exception e) {
             message = "Invalid email address. User does not exist.";
@@ -137,7 +197,7 @@ public class Customer extends User {
             return null;
         }
 
-        if(userInputPassword.compareTo(loginCustomer.password)!=0)
+        if(userInputPassword.compareTo(loginCustomer.getPassword())!=0)
             message = "Invalid password. No attempts remaining.";
 
         System.out.println(message);

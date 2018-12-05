@@ -27,81 +27,92 @@ public class CustomerTest {
 
 
         try{
-            newCustomer.taxDetails = taxDetails;
-            newCustomer.paySlip = paySlip;
-            newCustomer.currentExpenses = currentExpenses;
+            newCustomer.setTaxDetails(taxDetails);
+            newCustomer.setPaySlip(paySlip);
+            newCustomer.setCurrentExpenses(currentExpenses);
 
             int maxCustomerTypeValue;
             String passwordConfirmation;
 
             do{
                 System.out.println("Please enter your Last Name: ");
-                newCustomer.lastName = lastName;
-            }while (!confirmUserInputString(newCustomer.lastName));
+                newCustomer.setLastName(lastName);
+            }while (!confirmUserInputString(newCustomer.getLastName()));
 
             do{
                 System.out.println("Please enter your First Name: ");
-                newCustomer.firstName = firstName;
-            }while (!confirmUserInputString(newCustomer.firstName));
+                newCustomer.setFirstName(firstName);
+            }while (!confirmUserInputString(newCustomer.getFirstName()));
 
-            maxCustomerTypeValue = ConnectMSSQLServer.listCustomerTypes();
+            maxCustomerTypeValue = CustomerDatabase.listCustomerTypes();
             System.out.println("Maximum id of Customer Type is: " + maxCustomerTypeValue);
 
-            newCustomer.customerTypeId = customerTypeId;
+            newCustomer.setCustomerTypeId(customerTypeId);
 
-            newCustomer.customerType = ConnectMSSQLServer.getCustomerType(newCustomer.customerTypeId);
-            System.out.println("You selected: " + newCustomer.customerType);
+            newCustomer.setCustomerType(CustomerDatabase.getCustomerType(newCustomer.getCustomerTypeId()));
+            System.out.println("You selected: " + newCustomer.getCustomerType());
 
             do{
                 System.out.println("Please enter your email address: ");
-                newCustomer.email = email;
-            }while (!confirmUserInputString(newCustomer.email));
+                newCustomer.setEmail(email);
+                System.out.println(newCustomer.getEmail());
+
+                if(CustomerDatabase.checkEmail(newCustomer.getEmail())) System.out.println("Mail existe en la base de datos");
+                else System.out.println("Mail no existe en la base de datos");
+
+                while(CustomerDatabase.checkEmail(newCustomer.getEmail())){
+                    System.out.println("Email already in use, please enter a new one: ");
+                    newCustomer.setEmail("other@mail.com");
+                    System.out.println("other@mail.com");
+                }
+
+            }while (!confirmUserInputString(newCustomer.getEmail()));
 
             do{
                 System.out.println("Please enter your home address: ");
-                newCustomer.address = address;
-            }while (!confirmUserInputString(newCustomer.address));
+                newCustomer.setAddress(address);
+            }while (!confirmUserInputString(newCustomer.getAddress()));
 
             do{
                 System.out.println("Please enter your phone number: ");
-                newCustomer.phone = phone;
-            }while (!confirmUserInputString(newCustomer.phone));
+                newCustomer.setPhone(phone);
+            }while (!confirmUserInputString(newCustomer.getPhone()));
 
             do{
                 System.out.println("Please enter your national identification number: ");
-                newCustomer.identificationNumber = identificationNumber;
-            }while (!confirmUserInputString(newCustomer.identificationNumber));
+                newCustomer.setIdentificationNumber(identificationNumber);
+            }while (!confirmUserInputString(newCustomer.getIdentificationNumber()));
 
             System.out.println("Please select a valid number for the customer rating: ");
 
-            newCustomer.rating = rating;
+            newCustomer.setRating(rating);
 
-            System.out.println("Your customer rating is: " + newCustomer.rating);
+            System.out.println("Your customer rating is: " + newCustomer.getRating());
 
             do{
                 System.out.println("Please enter your password: ");
-                newCustomer.password = EncryptionTools.encryptPassword(password);
+                newCustomer.setPassword(EncryptionTools.encryptPassword(password));
                 System.out.println("Please enter your password again to confirm: ");
                 passwordConfirmation = EncryptionTools.encryptPassword(password);
-            }while (newCustomer.password.compareTo(passwordConfirmation) != 0);
+            }while (newCustomer.getPassword().compareTo(passwordConfirmation) != 0);
 
-            id = ConnectMSSQLServer.insertCustomer(newCustomer);
+            id = CustomerDatabase.insert(newCustomer);
 
-            Assert.assertEquals(firstName, newCustomer.firstName);
-            Assert.assertEquals(lastName, newCustomer.lastName);
-            Assert.assertEquals(EncryptionTools.encryptPassword(password), newCustomer.password);
-            // Assert.assertEquals(rating, newCustomer.rating);
-            System.out.println("Input: " + rating + " --- Customer: " + newCustomer.rating);
-            Assert.assertEquals(identificationNumber, newCustomer.identificationNumber);
-            Assert.assertEquals(taxDetails, newCustomer.taxDetails);
-            Assert.assertEquals(paySlip, newCustomer.paySlip);
-            Assert.assertEquals(currentExpenses, newCustomer.currentExpenses);
-            Assert.assertEquals(phone, newCustomer.phone);
-            Assert.assertEquals(address, newCustomer.address);
-            Assert.assertEquals(customerType, newCustomer.customerType);
-            Assert.assertEquals(customerTypeId, newCustomer.customerTypeId);
-            Assert.assertEquals(email, newCustomer.email);
-            Assert.assertEquals(id, newCustomer.id);
+            Assert.assertEquals(firstName, newCustomer.getFirstName());
+            Assert.assertEquals(lastName, newCustomer.getLastName());
+            Assert.assertEquals(EncryptionTools.encryptPassword(password), newCustomer.getPassword());
+            // Assert.assertEquals(rating, newCustomer.getRating);
+            System.out.println("Input: " + rating + " --- Customer: " + newCustomer.getRating());
+            Assert.assertEquals(identificationNumber, newCustomer.getIdentificationNumber());
+            Assert.assertEquals(taxDetails, newCustomer.getTaxDetails());
+            Assert.assertEquals(paySlip, newCustomer.getPaySlip());
+            Assert.assertEquals(currentExpenses, newCustomer.getCurrentExpenses());
+            Assert.assertEquals(phone, newCustomer.getPhone());
+            Assert.assertEquals(address, newCustomer.getAddress());
+            Assert.assertEquals(customerType, newCustomer.getCustomerType());
+            Assert.assertEquals(customerTypeId, newCustomer.getCustomerTypeId());
+            Assert.assertEquals(email, newCustomer.getEmail());
+            Assert.assertEquals(id, newCustomer.getId());
         }
         catch (Exception e){
             e.printStackTrace();
@@ -128,13 +139,13 @@ public class CustomerTest {
         passwordAttempt[1] = "test_fail2";
         passwordAttempt[2] = "test_cassie_passworD";
         passwordAttempt[3] = "test_cassie_password"; //correct password
-        loginCustomer.id = 0;
+        loginCustomer.setId(0);
 
         System.out.println("Please enter the user email: ");
-        loginCustomer.email = incorrectEmail;
-        System.out.println(loginCustomer.email);
+        loginCustomer.setEmail(incorrectEmail);
+        System.out.println(loginCustomer.getEmail());
         try {
-            loginCustomer = ConnectMSSQLServer.getCustomer(loginCustomer.email);
+            loginCustomer = CustomerDatabase.getCustomer(loginCustomer.getEmail());
             do{
                 if(remainingAttempts < 3)
                     System.out.println("Invalid password, please try again. " + remainingAttempts + " remaining attempts");
@@ -145,7 +156,7 @@ public class CustomerTest {
                 System.out.println("Remaining attempts: " + remainingAttempts);
                 System.out.println("Current password attempt: " + currentPasswordAttempt);
                 currentPasswordAttempt++;
-            }while(remainingAttempts > 0 && userInputPassword.compareTo(loginCustomer.password)!=0);
+            }while(remainingAttempts > 0 && userInputPassword.compareTo(loginCustomer.getPassword())!=0);
 
         } catch (Exception e) {
             message = "Invalid user. Email not found";
@@ -153,14 +164,14 @@ public class CustomerTest {
 
         System.out.println(message);
 
+        System.out.println("===================== NEW SCENARIO ==================");
         remainingAttempts = 3;
         currentPasswordAttempt = 0;
         message = "Login successful.";
-        loginCustomer.email = correctEmail;
-        System.out.println("===================== NEW SCENARIO ==================");
-        System.out.println(loginCustomer.email);
+        loginCustomer.setEmail(correctEmail);
+        System.out.println(loginCustomer.getEmail());
         try {
-            loginCustomer = ConnectMSSQLServer.getCustomer(loginCustomer.email);
+            loginCustomer = CustomerDatabase.getCustomer(loginCustomer.getEmail());
             do{
                 if(remainingAttempts < 3)
                     System.out.println("Invalid password, please try again. " + remainingAttempts + " remaining attempts");
@@ -171,27 +182,30 @@ public class CustomerTest {
                 System.out.println("Remaining attempts: " + remainingAttempts);
                 System.out.println("Current password attempt: " + currentPasswordAttempt);
                 currentPasswordAttempt++;
-            }while(remainingAttempts > 0 && userInputPassword.compareTo(loginCustomer.password)!=0);
+            }while(remainingAttempts > 0 && userInputPassword.compareTo(loginCustomer.getPassword())!=0);
 
         } catch (Exception e) {
             message = "Invalid email address. User does not exist.";
         }
 
-        if(userInputPassword.compareTo(loginCustomer.password)!=0)
+        if(userInputPassword.compareTo(loginCustomer.getPassword())!=0)
             message = "Invalid password. No attempts remaining.";
 
         System.out.println(message);
 
+        System.out.println("===================== NEW SCENARIO ==================");
         remainingAttempts = 4;
         currentPasswordAttempt = 0;
         message = "Login successful.";
-        loginCustomer.email = correctEmail;
-        System.out.println("===================== NEW SCENARIO ==================");
-        System.out.println(loginCustomer.email);
+        loginCustomer.setEmail(correctEmail);
+        System.out.println(loginCustomer.getEmail());
         try {
-            loginCustomer = ConnectMSSQLServer.getCustomer(loginCustomer.email);
+            loginCustomer = CustomerDatabase.getCustomer(loginCustomer.getEmail());
+            System.out.println(loginCustomer.getFirstName());
+            System.out.println(loginCustomer.getLastName());
+            System.out.println(loginCustomer.getPassword());
             do{
-                if(remainingAttempts < 3)
+                if(remainingAttempts < 4)
                     System.out.println("Invalid password, please try again. " + remainingAttempts + " remaining attempts");
                 remainingAttempts--;
                 System.out.println("Please enter the user password: ");
@@ -200,18 +214,18 @@ public class CustomerTest {
                 System.out.println("Remaining attempts: " + remainingAttempts);
                 System.out.println("Current password attempt: " + currentPasswordAttempt);
                 currentPasswordAttempt++;
-            }while(remainingAttempts > 0 && userInputPassword.compareTo(loginCustomer.password)!=0);
+            }while(remainingAttempts > 0 && userInputPassword.compareTo(loginCustomer.getPassword())!=0);
 
         } catch (Exception e) {
             message = "Invalid email address. User does not exist.";
         }
 
-        if(userInputPassword.compareTo(loginCustomer.password)!=0)
+        if(userInputPassword.compareTo(loginCustomer.getPassword())!=0)
             message = "Invalid password. No attempts remaining.";
 
         System.out.println(message);
 
-        Assert.assertEquals(loginCustomer.password,userInputPassword);
+        Assert.assertEquals(loginCustomer.getPassword(),userInputPassword);
 
     }
 }
