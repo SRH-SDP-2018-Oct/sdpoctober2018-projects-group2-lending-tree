@@ -82,17 +82,8 @@ public class Customer extends User {
     public void register() throws SQLException{
         Scanner userInput = new Scanner(System.in);
         int maxCustomerTypeValue;
-        String passwordConfirmation = "";
 
-        do{
-            System.out.println("Please enter your Last Name: ");
-            this.setLastName(userInput.nextLine());
-        }while (!confirmUserInputString(this.lastName));
-
-        do{
-            System.out.println("Please enter your First Name: ");
-            this.setFirstName(userInput.nextLine());
-        }while (!confirmUserInputString(this.firstName));
+        super.register();
 
         maxCustomerTypeValue = CustomerDatabase.listCustomerTypes();
 
@@ -112,27 +103,15 @@ public class Customer extends User {
             System.out.println("Please enter your email address: ");
             this.setEmail(userInput.nextLine());
 
-            while (CustomerDatabase.checkEmail(this.email)){
+            while (CustomerDatabase.checkEmail(this.getEmail())){
                 System.out.println("Email already in use, please enter a new one: ");
                 this.setEmail(userInput.nextLine());
             }
 
-        }while (!confirmUserInputString(this.email));
+        }while (!confirmUserInputString(this.getEmail()));
 
-        do{
-            System.out.println("Please enter your home address: ");
-            this.address = userInput.nextLine();
-        }while (!confirmUserInputString(this.address));
-
-        do{
-            System.out.println("Please enter your phone number: ");
-            this.setPhone(userInput.nextLine());
-        }while (!confirmUserInputString(this.phone));
-
-        do{
-            System.out.println("Please enter your national identification number: ");
-            this.identificationNumber = userInput.nextLine();
-        }while (!confirmUserInputString(this.identificationNumber));
+        address = getUserInput("home address:");
+        identificationNumber = getUserInput("national identification number:");
 
         do{
             System.out.println("Please select a valid number for the customer rating: ");
@@ -144,31 +123,7 @@ public class Customer extends User {
         } while(this.rating < 0);
         System.out.println("Your customer rating is: " + this.rating);
 
-        do{
-            try{
-                System.out.println("Please enter your password: ");
-                this.setPassword(EncryptionTools.encryptPassword(userInput.nextLine()));
-                System.out.println("Please enter your password again to confirm: ");
-                passwordConfirmation = EncryptionTools.encryptPassword(userInput.nextLine());
-            }
-            catch (Exception e){
-                e.printStackTrace();
-            }
-
-        }while (this.getPassword().compareTo(passwordConfirmation) != 0);
-
         CustomerDatabase.insert(this);
-    }
-
-    private Boolean confirmUserInputString(String input){
-        char userConfirmation;
-        Scanner userInput = new Scanner(System.in);
-        do{
-            System.out.println("You entered: " + input);
-            System.out.println("Is this correct? Y/N");
-            userConfirmation = userInput.next().charAt(0);
-        } while (userConfirmation != 'Y');
-        return true;
     }
 
     @Override

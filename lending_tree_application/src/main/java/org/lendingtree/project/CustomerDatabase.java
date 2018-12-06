@@ -103,7 +103,7 @@ public class CustomerDatabase {
         insertCustomer.setInt(8, newCustomer.getPaySlip());
         insertCustomer.setInt(9, newCustomer.getTaxDetails());
         insertCustomer.setString(10, newCustomer.getIdentificationNumber());
-        insertCustomer.setFloat(11, newCustomer.getRating());
+        insertCustomer.setDouble(11, newCustomer.getRating());
         insertCustomer.setString(12, newCustomer.getPassword());
 
         insertCustomer.executeUpdate();
