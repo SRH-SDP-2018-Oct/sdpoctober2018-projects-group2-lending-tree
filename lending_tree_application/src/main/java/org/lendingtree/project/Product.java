@@ -6,8 +6,8 @@ public class Product {
     private int productTypeId;
     private String productDescription;
     private int representativeId;
-    private float productAmount;
-    private float productInterestRate;
+    private Double productAmount;
+    private Double productInterestRate;
     private int productNumberOfPayments;
     private String productAvailabilityFrom;
     private String productAvailabilityTo;
@@ -45,19 +45,19 @@ public class Product {
         this.representativeId = representativeId;
     }
 
-    public float getProductAmount() {
+    public Double getProductAmount() {
         return productAmount;
     }
 
-    public void setProductAmount(float productAmount) {
+    public void setProductAmount(Double productAmount) {
         this.productAmount = productAmount;
     }
 
-    public float getProductInterestRate() {
+    public Double getProductInterestRate() {
         return productInterestRate;
     }
 
-    public void setProductInterestRate(float productInterestRate) {
+    public void setProductInterestRate(Double productInterestRate) {
         this.productInterestRate = productInterestRate;
     }
 
@@ -85,7 +85,7 @@ public class Product {
         this.productAvailabilityTo = productAvailabilityTo;
     }
 
-    public boolean isProductActiveStatus() {
+    public boolean getProductActiveStatus() {
         return productActiveStatus;
     }
 
