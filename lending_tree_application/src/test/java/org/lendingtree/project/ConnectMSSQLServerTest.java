@@ -3,6 +3,14 @@ package org.lendingtree.project;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+
 public class ConnectMSSQLServerTest {
     @Test
     public void testDatabaseInput() {
@@ -138,6 +146,44 @@ public class ConnectMSSQLServerTest {
 
         }
         catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void getDatabaseUrlFromFileTest(){
+        String content = "";
+        String filePath = "C:\\Users\\Gaston\\Documents\\GitHub\\sdpoctober2018-projects-group2-lending-tree\\lending_tree_application\\database_config.txt";
+        try
+        {
+            content = new String ( Files.readAllBytes( Paths.get(filePath) ) );
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        System.out.println(content);
+
+        Assert.assertEquals("jdbc:sqlserver://localhost:1433;DatabaseName=lendingtree;allowMultiQueries=true",content);
+    }
+
+    @Test
+    public void getDatabaseUrlFromFileTest2(){
+        String filePath = "C:\\Users\\Gaston\\Documents\\GitHub\\sdpoctober2018-projects-group2-lending-tree\\lending_tree_application\\database_config2.txt";
+        BufferedReader abc;
+        List<String> lines = new ArrayList<String>();
+        String line;
+        String data[] = new String[3];
+        try{
+            int stringArrayPosition = 0;
+            abc = new BufferedReader(new FileReader(filePath));
+            while((line = abc.readLine()) != null) {
+                lines.add(line);
+                data[stringArrayPosition] = line;
+                System.out.println(data[stringArrayPosition]);
+            }
+            abc.close();
+        }catch(IOException e){
             e.printStackTrace();
         }
     }

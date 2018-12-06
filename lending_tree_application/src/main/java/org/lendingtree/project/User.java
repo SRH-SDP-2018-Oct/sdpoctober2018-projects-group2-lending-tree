@@ -3,12 +3,12 @@ package org.lendingtree.project;
 import java.sql.SQLException;
 
 public abstract class User {
-    private int id;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String phone;
-    private String password;
+    protected int id;
+    protected String firstName;
+    protected String lastName;
+    protected String email;
+    protected String phone;
+    protected String password;
 
     public abstract void register() throws SQLException;
     public abstract User login() throws SQLException;

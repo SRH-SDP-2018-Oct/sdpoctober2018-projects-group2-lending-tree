@@ -87,12 +87,12 @@ public class Customer extends User {
         do{
             System.out.println("Please enter your Last Name: ");
             this.setLastName(userInput.nextLine());
-        }while (!confirmUserInputString(getLastName()));
+        }while (!confirmUserInputString(this.lastName));
 
         do{
             System.out.println("Please enter your First Name: ");
             this.setFirstName(userInput.nextLine());
-        }while (!confirmUserInputString(this.getFirstName()));
+        }while (!confirmUserInputString(this.firstName));
 
         maxCustomerTypeValue = CustomerDatabase.listCustomerTypes();
 
@@ -112,12 +112,12 @@ public class Customer extends User {
             System.out.println("Please enter your email address: ");
             this.setEmail(userInput.nextLine());
 
-            while (CustomerDatabase.checkEmail(this.getEmail())){
+            while (CustomerDatabase.checkEmail(this.email)){
                 System.out.println("Email already in use, please enter a new one: ");
                 this.setEmail(userInput.nextLine());
             }
 
-        }while (!confirmUserInputString(this.getEmail()));
+        }while (!confirmUserInputString(this.email));
 
         do{
             System.out.println("Please enter your home address: ");
@@ -127,7 +127,7 @@ public class Customer extends User {
         do{
             System.out.println("Please enter your phone number: ");
             this.setPhone(userInput.nextLine());
-        }while (!confirmUserInputString(this.getPhone()));
+        }while (!confirmUserInputString(this.phone));
 
         do{
             System.out.println("Please enter your national identification number: ");

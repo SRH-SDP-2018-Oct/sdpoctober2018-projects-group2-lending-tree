@@ -3,19 +3,19 @@ package org.lendingtree.project;
 import java.sql.*;
 
 public class CustomerDatabase {
-    private static final String dbColumnCustomerId = "customer_id";
-    private static final String dbColumnCustomerTypeId = "customer_type_id";
-    private static final String dbColumnCustomerLastName = "customer_last_name";
-    private static final String dbColumnCustomerFirstName = "customer_first_name";
-    private static final String dbColumnCustomerAddress = "customer_address";
-    private static final String dbColumnCustomerEmail = "customer_email";
-    private static final String dbColumnCustomerPhone = "customer_phone";
-    private static final String dbColumnCustomerCurrentExpenses = "customer_current_expenses";
-    private static final String dbColumnCustomerPaySlip = "customer_pay_slip";
-    private static final String dbColumnCustomerTaxDetails = "customer_tax_details";
-    private static final String dbColumnCustomerIdentificationNumber = "customer_identification_number";
-    private static final String dbColumnCustomerRating = "customer_rating";
-    private static final String dbColumnCustomerPassword = "customer_password";
+    private static final String COLUMN_CUSTOMER_ID = "customer_id";
+    private static final String COLUMN_CUSTOMER_TYPE_ID = "customer_type_id";
+    private static final String COLUMN_CUSTOMER_LAST_NAME = "customer_last_name";
+    private static final String COLUMN_CUSTOMER_FIRST_NAME = "customer_first_name";
+    private static final String COLUMN_CUSTOMER_ADDRESS = "customer_address";
+    private static final String COLUMN_CUSTOMER_EMAIL = "customer_email";
+    private static final String COLUMN_CUSTOMER_PHONE = "customer_phone";
+    private static final String COLUMN_CUSTOMER_CURRENT_EXPENSES = "customer_current_expenses";
+    private static final String COLUMN_CUSTOMER_PAY_SLIP = "customer_pay_slip";
+    private static final String COLUMN_CUSTOMER_TAX_DETAILS = "customer_tax_details";
+    private static final String COLUMN_CUSTOMER_IDENTIFICATION_NUMBER = "customer_identification_number";
+    private static final String COLUMN_CUSTOMER_RATING = "customer_rating";
+    private static final String COLUMN_CUSTOMER_PASSWORD = "customer_password";
 
     private static Connection databaseConnection = ConnectMSSQLServer.getConnection();
 
@@ -32,7 +32,7 @@ public class CustomerDatabase {
 
     public static int getCustomerId(String customerEmail) throws SQLException{
         PreparedStatement dbPreparedStatement;
-        String getCustomerIdString = "SELECT " + dbColumnCustomerId + " FROM customer WHERE " + dbColumnCustomerEmail + " = ?";
+        String getCustomerIdString = "SELECT " + COLUMN_CUSTOMER_ID + " FROM customer WHERE " + COLUMN_CUSTOMER_EMAIL + " = ?";
         dbPreparedStatement = databaseConnection.prepareStatement(getCustomerIdString);
         dbPreparedStatement.setString(1, customerEmail);
         ResultSet dbResultSet = dbPreparedStatement.executeQuery();
@@ -42,7 +42,7 @@ public class CustomerDatabase {
 
     public static String getCustomerType(int searchCustomerTypeId) throws SQLException{
         Statement dbStatement = databaseConnection.createStatement();
-        ResultSet dbResultSet = dbStatement.executeQuery("SELECT customer_type_description FROM customer_type WHERE " + dbColumnCustomerTypeId + " = " + searchCustomerTypeId);
+        ResultSet dbResultSet = dbStatement.executeQuery("SELECT customer_type_description FROM customer_type WHERE " + COLUMN_CUSTOMER_TYPE_ID + " = " + searchCustomerTypeId);
         dbResultSet.next();
         return dbResultSet.getString(1);
     }
@@ -51,26 +51,26 @@ public class CustomerDatabase {
         Customer customerFromDb = new Customer();
 
         customerFromDb.setId(getCustomerId(customerEmail));
-        customerFromDb.setCustomerTypeId(Integer.parseInt(getCustomerColumnValue(dbColumnCustomerTypeId, customerFromDb.getId())));
+        customerFromDb.setCustomerTypeId(Integer.parseInt(getCustomerColumnValue(COLUMN_CUSTOMER_TYPE_ID, customerFromDb.getId())));
         customerFromDb.setCustomerType(getCustomerType(customerFromDb.getCustomerTypeId()));
-        customerFromDb.setLastName(getCustomerColumnValue(dbColumnCustomerLastName, customerFromDb.getId()));
-        customerFromDb.setFirstName(getCustomerColumnValue(dbColumnCustomerFirstName, customerFromDb.getId()));
-        customerFromDb.setAddress(getCustomerColumnValue(dbColumnCustomerAddress, customerFromDb.getId()));
+        customerFromDb.setLastName(getCustomerColumnValue(COLUMN_CUSTOMER_LAST_NAME, customerFromDb.getId()));
+        customerFromDb.setFirstName(getCustomerColumnValue(COLUMN_CUSTOMER_FIRST_NAME, customerFromDb.getId()));
+        customerFromDb.setAddress(getCustomerColumnValue(COLUMN_CUSTOMER_ADDRESS, customerFromDb.getId()));
         customerFromDb.setEmail(customerEmail);
-        customerFromDb.setPhone(getCustomerColumnValue(dbColumnCustomerPhone, customerFromDb.getId()));
-        customerFromDb.setCurrentExpenses(Integer.parseInt(getCustomerColumnValue(dbColumnCustomerCurrentExpenses, customerFromDb.getId())));
-        customerFromDb.setPaySlip(Integer.parseInt(getCustomerColumnValue(dbColumnCustomerPaySlip, customerFromDb.getId())));
-        customerFromDb.setTaxDetails(Integer.parseInt(getCustomerColumnValue(dbColumnCustomerTaxDetails, customerFromDb.getId())));
-        customerFromDb.setIdentificationNumber(getCustomerColumnValue(dbColumnCustomerIdentificationNumber, customerFromDb.getId()));
-        customerFromDb.setRating(Float.parseFloat(getCustomerColumnValue(dbColumnCustomerRating, customerFromDb.getId())));
-        customerFromDb.setPassword(getCustomerColumnValue(dbColumnCustomerPassword, customerFromDb.getId()));
+        customerFromDb.setPhone(getCustomerColumnValue(COLUMN_CUSTOMER_PHONE, customerFromDb.getId()));
+        customerFromDb.setCurrentExpenses(Integer.parseInt(getCustomerColumnValue(COLUMN_CUSTOMER_CURRENT_EXPENSES, customerFromDb.getId())));
+        customerFromDb.setPaySlip(Integer.parseInt(getCustomerColumnValue(COLUMN_CUSTOMER_PAY_SLIP, customerFromDb.getId())));
+        customerFromDb.setTaxDetails(Integer.parseInt(getCustomerColumnValue(COLUMN_CUSTOMER_TAX_DETAILS, customerFromDb.getId())));
+        customerFromDb.setIdentificationNumber(getCustomerColumnValue(COLUMN_CUSTOMER_IDENTIFICATION_NUMBER, customerFromDb.getId()));
+        customerFromDb.setRating(Float.parseFloat(getCustomerColumnValue(COLUMN_CUSTOMER_RATING, customerFromDb.getId())));
+        customerFromDb.setPassword(getCustomerColumnValue(COLUMN_CUSTOMER_PASSWORD, customerFromDb.getId()));
 
         return customerFromDb;
     }
 
     public static String getCustomerColumnValue(String columnName, int customerId) throws SQLException{
         Statement dbStatement = databaseConnection.createStatement();
-        ResultSet dbResultSet = dbStatement.executeQuery("SELECT " + columnName + " FROM customer WHERE " + dbColumnCustomerId + " = " + customerId);
+        ResultSet dbResultSet = dbStatement.executeQuery("SELECT " + columnName + " FROM customer WHERE " + COLUMN_CUSTOMER_ID + " = " + customerId);
         dbResultSet.next();
         return dbResultSet.getString(1);
     }
@@ -79,18 +79,18 @@ public class CustomerDatabase {
     public static int insert(Customer newCustomer) throws SQLException {
         PreparedStatement insertCustomer;
         String insertString = "INSERT INTO customer (" +
-                dbColumnCustomerTypeId + ", " +
-                dbColumnCustomerLastName+ ", " +
-                dbColumnCustomerFirstName + ", " +
-                dbColumnCustomerAddress + ", " +
-                dbColumnCustomerEmail + ", " +
-                dbColumnCustomerPhone + ", " +
-                dbColumnCustomerCurrentExpenses + ", " +
-                dbColumnCustomerPaySlip + ", " +
-                dbColumnCustomerTaxDetails + ", " +
-                dbColumnCustomerIdentificationNumber + ", " +
-                dbColumnCustomerRating + ", " +
-                dbColumnCustomerPassword + ") " +
+                COLUMN_CUSTOMER_TYPE_ID + ", " +
+                COLUMN_CUSTOMER_LAST_NAME+ ", " +
+                COLUMN_CUSTOMER_FIRST_NAME + ", " +
+                COLUMN_CUSTOMER_ADDRESS + ", " +
+                COLUMN_CUSTOMER_EMAIL + ", " +
+                COLUMN_CUSTOMER_PHONE + ", " +
+                COLUMN_CUSTOMER_CURRENT_EXPENSES + ", " +
+                COLUMN_CUSTOMER_PAY_SLIP + ", " +
+                COLUMN_CUSTOMER_TAX_DETAILS + ", " +
+                COLUMN_CUSTOMER_IDENTIFICATION_NUMBER + ", " +
+                COLUMN_CUSTOMER_RATING + ", " +
+                COLUMN_CUSTOMER_PASSWORD + ") " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         insertCustomer = databaseConnection.prepareStatement(insertString);
         insertCustomer.setInt(1,newCustomer.getCustomerTypeId());
@@ -117,7 +117,7 @@ public class CustomerDatabase {
         PreparedStatement updateCustomer;
         String updateString = "UPDATE customer SET " +
                 columnName + " = '" +
-                newValue + "' WHERE " + dbColumnCustomerId + " = ?";
+                newValue + "' WHERE " + COLUMN_CUSTOMER_ID + " = ?";
         updateCustomer = databaseConnection.prepareStatement(updateString);
         updateCustomer.setInt(1, customerId);
 
@@ -127,7 +127,7 @@ public class CustomerDatabase {
     public static boolean checkEmail(String email){
         try{
             PreparedStatement checkIfMailExists;
-            String checkMailString = "SELECT " + dbColumnCustomerEmail + " FROM customer WHERE " + dbColumnCustomerEmail + " = ?";
+            String checkMailString = "SELECT " + COLUMN_CUSTOMER_EMAIL + " FROM customer WHERE " + COLUMN_CUSTOMER_EMAIL + " = ?";
             checkIfMailExists = databaseConnection.prepareStatement(checkMailString);
             checkIfMailExists.setString(1, email);
 

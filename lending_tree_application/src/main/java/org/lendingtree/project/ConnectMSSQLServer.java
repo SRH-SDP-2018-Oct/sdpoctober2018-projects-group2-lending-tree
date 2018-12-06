@@ -1,11 +1,13 @@
 package org.lendingtree.project;
 
 import java.sql.*;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class ConnectMSSQLServer {
-    private static String databaseURL = "jdbc:sqlserver://localhost:1433;DatabaseName=lendingtree;allowMultiQueries=true";
-    private static String databaseUserName = "sa";
-    private static String databaseUserPassword = "admin123";
+    private static final String DATABASE_CONFIGURATION_FILEPATH = "C:\\Users\\Gaston\\Documents\\GitHub\\sdpoctober2018-projects-group2-lending-tree\\lending_tree_application\\database_config.txt";
     private static Connection databaseConnection;
 
     static {
@@ -14,12 +16,33 @@ public class ConnectMSSQLServer {
 
     public static Connection getConnection() {
         try {
+            String databaseInfo[] = getDatabaseUrlFromFile();
             DriverManager.registerDriver(new com.microsoft.sqlserver.jdbc.SQLServerDriver());
-            databaseConnection = DriverManager.getConnection(databaseURL, databaseUserName, databaseUserPassword);
+            databaseConnection = DriverManager.getConnection(databaseInfo[0], databaseInfo[1], databaseInfo[2]);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return databaseConnection;
+    }
+
+    private static String[] getDatabaseUrlFromFile(){
+        BufferedReader bufferedReader;
+        List<String> lines = new ArrayList<String>();
+        String line;
+        String linesFromFile[] = new String[3];
+        try{
+            int stringArrayPosition = 0;
+            bufferedReader = new BufferedReader(new FileReader(DATABASE_CONFIGURATION_FILEPATH));
+            while((line = bufferedReader.readLine()) != null) {
+                lines.add(line);
+                linesFromFile[stringArrayPosition] = line;
+                stringArrayPosition++;
+            }
+            bufferedReader.close();
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+        return linesFromFile;
     }
 
 }
