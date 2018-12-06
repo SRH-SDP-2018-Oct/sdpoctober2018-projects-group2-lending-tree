@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dbce0cc8-a74e-4a60-8c02-222736094d8d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/lendingtree/project/ConnectMSSQLServerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/lendingtree/project/ConnectMSSQLServerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/lendingtree/project/ConnectMSSQLServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/lendingtree/project/ConnectMSSQLServer.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
+    <ignored path=".idea/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,7 +20,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/org/lendingtree/project/Customer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-840">
+            <state relative-caret-position="2210">
               <caret line="130" lean-forward="true" selection-start-line="130" selection-end-line="130" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -74,8 +75,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/org/lendingtree/project/CustomerTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
+            <state relative-caret-position="136">
+              <caret line="8" column="16" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -83,11 +84,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/org/lendingtree/project/ConnectMSSQLServer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="9" column="67" lean-forward="true" selection-start-line="9" selection-start-column="67" selection-end-line="9" selection-end-column="148" />
+            <state relative-caret-position="170">
+              <caret line="10" column="46" selection-start-line="10" selection-start-column="46" selection-end-line="10" selection-end-column="46" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1222#1230#0" expanded="true" />
@@ -96,11 +97,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/org/lendingtree/project/ConnectMSSQLServerTest.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="207">
-              <caret line="171" column="28" selection-start-line="171" selection-start-column="28" selection-end-line="171" selection-end-column="28" />
+              <caret line="171" column="50" lean-forward="true" selection-start-line="171" selection-start-column="26" selection-end-line="171" selection-end-column="50" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#8661#8669#0" expanded="true" />
@@ -154,10 +155,10 @@
         <option value="$PROJECT_DIR$/src/main/java/org/lendingtree/project/Representative.java" />
         <option value="$PROJECT_DIR$/src/test/java/org/lendingtree/project/CustomerTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/lendingtree/project/CustomerDatabase.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/lendingtree/project/ConnectMSSQLServer.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/lendingtree/project/User.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/lendingtree/project/Customer.java" />
         <option value="$PROJECT_DIR$/src/test/java/org/lendingtree/project/ConnectMSSQLServerTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/lendingtree/project/ConnectMSSQLServer.java" />
       </list>
     </option>
   </component>
@@ -250,9 +251,9 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1544092709730" />
-    <property name="last_opened_file_path" value="$USER_HOME$/AppData/Local/GitHubDesktop/app-1.5.0/resources/app/git/mingw64/bin/git.exe" />
-    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1544095668252" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/.idea" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Ignored.Files" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -369,15 +370,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="ConnectMSSQLServerTest_getDatabaseUrlFromFileTest - 2018.12.06 at 10h 48m 26s.xml">
-      <configuration name="ConnectMSSQLServerTest.getDatabaseUrlFromFileTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ConnectMSSQLServerTest_getDatabaseUrlFromFileTest2 - 2018.12.06 at 10h 59m 12s.xml">
-      <configuration name="ConnectMSSQLServerTest.getDatabaseUrlFromFileTest2" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ConnectMSSQLServerTest_getDatabaseUrlFromFileTest2 - 2018.12.06 at 11h 00m 25s.xml">
-      <configuration name="ConnectMSSQLServerTest.getDatabaseUrlFromFileTest2" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="ConnectMSSQLServerTest_getDatabaseUrlFromFileTest2 - 2018.12.06 at 11h 02m 46s.xml">
       <configuration name="ConnectMSSQLServerTest.getDatabaseUrlFromFileTest2" configurationId="JUnit" />
     </history-entry>
@@ -399,6 +391,15 @@
     <history-entry file="ConnectMSSQLServerTest_getDatabaseUrlFromFileTest2 - 2018.12.06 at 11h 35m 57s.xml">
       <configuration name="ConnectMSSQLServerTest.getDatabaseUrlFromFileTest2" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="ConnectMSSQLServerTest_getDatabaseUrlFromFileTest2 - 2018.12.06 at 11h 36m 18s.xml">
+      <configuration name="ConnectMSSQLServerTest.getDatabaseUrlFromFileTest2" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="ConnectMSSQLServerTest_getDatabaseUrlFromFileTest2 - 2018.12.06 at 11h 36m 34s.xml">
+      <configuration name="ConnectMSSQLServerTest.getDatabaseUrlFromFileTest2" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CustomerTest_registerUserTest - 2018.12.06 at 11h 38m 28s.xml">
+      <configuration name="CustomerTest.registerUserTest" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -411,14 +412,14 @@
       <window_info id="Capture Tool" />
       <window_info id="Learn" />
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49919224" visible="true" weight="0.25" />
-      <window_info id="Structure" order="1" sideWeight="0.50080776" side_tool="true" visible="true" weight="0.25" />
+      <window_info active="true" id="Structure" order="1" sideWeight="0.50080776" side_tool="true" visible="true" weight="0.25" />
       <window_info anchor="bottom" id="Version Control" />
       <window_info anchor="bottom" id="Terminal" weight="0.32936078" />
       <window_info anchor="bottom" id="Event Log" sideWeight="0.50053304" side_tool="true" weight="0.32936078" />
       <window_info anchor="bottom" id="Messages" weight="0.32936078" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49946696" visible="true" weight="0.32936078" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49946696" visible="true" weight="0.32936078" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3997833" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -554,17 +555,39 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/org/lendingtree/project/CustomerTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
+        <state relative-caret-position="136">
+          <caret line="8" column="16" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/org/lendingtree/project/ConnectMSSQLServerTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="171" column="50" lean-forward="true" selection-start-line="171" selection-start-column="26" selection-end-line="171" selection-end-column="50" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#8661#8669#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/lendingtree/project/User.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="44">
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+          <folding>
+            <element signature="e#1227#1228#0" expanded="true" />
+            <element signature="e#1270#1271#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/lendingtree/project/Customer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-840">
+        <state relative-caret-position="2210">
           <caret line="130" lean-forward="true" selection-start-line="130" selection-end-line="130" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -602,35 +625,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/lendingtree/project/User.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="44">
-          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-          <folding>
-            <element signature="e#1227#1228#0" expanded="true" />
-            <element signature="e#1270#1271#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/lendingtree/project/ConnectMSSQLServer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="9" column="67" lean-forward="true" selection-start-line="9" selection-start-column="67" selection-end-line="9" selection-end-column="148" />
+        <state relative-caret-position="170">
+          <caret line="10" column="46" selection-start-line="10" selection-start-column="46" selection-end-line="10" selection-end-column="46" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1222#1230#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/org/lendingtree/project/ConnectMSSQLServerTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="171" column="28" selection-start-line="171" selection-start-column="28" selection-end-line="171" selection-end-column="28" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#8661#8669#0" expanded="true" />
           </folding>
         </state>
       </provider>
