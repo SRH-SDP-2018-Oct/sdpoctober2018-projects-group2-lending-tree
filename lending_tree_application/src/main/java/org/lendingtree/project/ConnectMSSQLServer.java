@@ -7,7 +7,7 @@ import java.util.List;
 
 
 public class ConnectMSSQLServer {
-    private static final String DATABASE_CONFIGURATION_FILEPATH = "C:\\Users\\Gaston\\Documents\\GitHub\\sdpoctober2018-projects-group2-lending-tree\\lending_tree_application\\database_config.txt";
+    private static final String DATABASE_CONFIGURATION_FILEPATH = ".\\database_config.txt";
     private static Connection databaseConnection;
 
     static {

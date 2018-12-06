@@ -169,7 +169,7 @@ public class ConnectMSSQLServerTest {
 
     @Test
     public void getDatabaseUrlFromFileTest2(){
-        String filePath = "C:\\Users\\Gaston\\Documents\\GitHub\\sdpoctober2018-projects-group2-lending-tree\\lending_tree_application\\database_config2.txt";
+        String filePath = ".\\database_config.txt";
         BufferedReader abc;
         List<String> lines = new ArrayList<String>();
         String line;
