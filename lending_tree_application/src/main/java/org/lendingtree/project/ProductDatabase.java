@@ -2,6 +2,7 @@ package org.lendingtree.project;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ProductDatabase {
@@ -48,4 +49,40 @@ public class ProductDatabase {
         insertProduct.executeUpdate();
     }
 
+    public static void printProducts(int representativeId) throws SQLException {
+        PreparedStatement printProducts;
+        String printString = "SELECT * FROM product WHERE " +
+                COLUMN_PRODUCT_REPRESENTATIVE_ID + " = " + "?";
+        Boolean availableData = false;
+        int loopCount = 0;
+
+        printProducts = databaseConnection.prepareStatement(printString);
+
+        printProducts.setInt(1, representativeId);
+
+        ResultSet resultSet = printProducts.executeQuery();
+
+        while (resultSet.next()) {
+            loopCount++;
+            System.out.println("----------" + loopCount + "----------");
+            System.out.println("Product ID: " + "\t\t\t" + resultSet.getString(1));
+            System.out.println("Product type ID: " + "\t\t" + resultSet.getString(2)); //EXTRACT PRODUCT TYPE NAME
+            System.out.println("Description: " + "\t\t\t" + resultSet.getString(3));
+            System.out.println("Representative ID: " + "\t\t" + resultSet.getString(4)); //EXTRACT REPRESENTATIVE NAME
+            System.out.println("Amount: " + "\t\t\t\t" + resultSet.getString(5));
+            System.out.println("Interest rate: " + "\t\t\t" + resultSet.getString(6));
+            System.out.println("Number of payments: " + "\t" + resultSet.getString(7));
+            System.out.println("Available from: " + "\t\t" + resultSet.getString(8));
+            System.out.println("Available to: " + "\t\t\t" + resultSet.getString(9));
+            System.out.println("Status: " + "\t\t\t\t" + resultSet.getString(10)); //TRANSFORM TO YES OR NO
+            System.out.println("----------" + loopCount + "----------");
+            availableData = true;
+        }
+
+        if (availableData) {
+            System.out.println("\nNumber of records: " + loopCount + ".");
+        } else {
+            System.out.println("No data available.");
+        }
+    }
 }

@@ -40,4 +40,17 @@ public class ProductTest {
 
     }
 
+    @Test
+    public void printProductsTest() {
+
+        int representativeId = 2;
+
+        try {
+            ProductDatabase.printProducts(representativeId);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
 }
