@@ -30,7 +30,7 @@ public class ProductTest {
             newProduct.setProductAvailabilityTo(productAvailabilityTo);
             newProduct.setProductActiveStatus(productActiveStatus);
 
-            ProductDatabase.insertProduct(newProduct);
+            ProductDatabase.createProduct(newProduct);
 
             System.out.println("The product was added successfully.");
 
@@ -41,16 +41,62 @@ public class ProductTest {
     }
 
     @Test
-    public void printProductsTest() {
+    public void updateProductTest() {
+        Product product = new Product();
+        int productId = 4;
+        String productDescription = "Potato";
 
+        try {
+
+            product.setProductId(productId);
+            product.setProductDescription(productDescription);
+
+            ProductDatabase.updateProduct(product);
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void disableProductTest() {
+        Product product = new Product();
+        int productId = 3;
+        boolean activeStatus = false;
+
+        try {
+
+            product.setProductId(productId);
+            product.setProductActiveStatus(activeStatus);
+
+            ProductDatabase.disableProduct(product);
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void getProductFromRepresentativeTest() {
         int representativeId = 2;
 
         try {
-            ProductDatabase.printProducts(representativeId);
+            ProductDatabase.getProductFromRepresentative(representativeId);
         } catch (Exception e){
             e.printStackTrace();
         }
 
+    }
+
+    @Test
+    public void getAllActiveProductTest() {
+        boolean activeStatus = true;
+
+        try {
+            ProductDatabase.getAllActiveProduct(activeStatus);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
 }

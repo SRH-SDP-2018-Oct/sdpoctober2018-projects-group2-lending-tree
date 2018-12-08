@@ -7,9 +7,10 @@ public class ProductTypeTest {
     @Test
     public void getProductTypeDescriptionTest() {
         ProductType newProductType = new ProductType();
-        newProductType.setProductTypeId(1);
+        int productTypeId = 1;
 
         try {
+            newProductType.setProductTypeId(productTypeId);
             System.out.println(ProductTypeDatabase.getProductTypeDescription(newProductType.getProductTypeId()));
         } catch (Exception e){
             e.printStackTrace();
@@ -28,11 +29,13 @@ public class ProductTypeTest {
     @Test
     public void updateProductTypeDescriptionTest() {
         ProductType newProductType = new ProductType();
-        newProductType.setProductTypeId(1);
-        newProductType.setProductTypeDescription("Changed from the test");
+        int productTypeId = 1;
+        String productTypeDescription = "Changed from the test";
 
         try {
-            ProductTypeDatabase.updateProductTypeDescription(newProductType.getProductTypeId(), newProductType.getProductTypeDescription());
+            newProductType.setProductTypeId(productTypeId);
+            newProductType.setProductTypeDescription(productTypeDescription);
+            ProductTypeDatabase.updateProductTypeDescription(newProductType);
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -41,9 +44,10 @@ public class ProductTypeTest {
     @Test
     public void createProductTypeTest() {
         ProductType newProductType = new ProductType();
-        newProductType.setProductTypeDescription("New product type added from test");
+        String productTypeDescription = "New product type added from test";
 
         try {
+            newProductType.setProductTypeDescription(productTypeDescription);
             ProductTypeDatabase.createProductType(newProductType.getProductTypeDescription());
         } catch (Exception e){
             e.printStackTrace();
