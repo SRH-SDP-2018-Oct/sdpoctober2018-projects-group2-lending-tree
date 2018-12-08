@@ -9,19 +9,54 @@ public class PaymentHistoryTest {
 
 
     @Test
-    public void getPaymentHistory() {
-        int inputCustomerId = 1 ;
+    public void getPaymentHistoryYes() {
+
+        String inputYN = "Y";
 
 
 
 
-        try {
-            PaymentDisplayDatabase.displayPaymentHistory(inputCustomerId);
-            System.out.println("Successful");
+       try {
+             if (inputYN.equalsIgnoreCase("Y")) {
+                PaymentDisplayDatabase.displayPaymentHistoryAll();
+            }
 
 
         } catch (Exception e) {
             e.printStackTrace();
        }
+    }
+
+    @Test
+    public void getPaymentHistoryNo(){
+        int inputCustomerId =1;
+        String inputYN = "N";
+
+
+
+
+        try {
+            if(inputYN.equalsIgnoreCase("N")) {
+                PaymentDisplayDatabase.displayPaymentHistory(inputCustomerId);
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @Test
+    public void testCustomerPaymentHistory(){
+
+        PaymentHistory paymentHistory = new PaymentHistory();
+        int userId = 1;
+
+        try {
+            PaymentDisplayDatabase.displayPaymentHistoryCustomerDatabase(userId);
+        } catch (Exception exception){
+            exception.printStackTrace();
+        }
     }
 }
