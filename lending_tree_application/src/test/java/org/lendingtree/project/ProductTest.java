@@ -2,6 +2,8 @@ package org.lendingtree.project;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 public class ProductTest {
 
     @Test
@@ -94,6 +96,21 @@ public class ProductTest {
 
         try {
             ProductDatabase.getAllActiveProduct(activeStatus);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void getProductDetailsTest() {
+        ArrayList<Integer> productIds = new ArrayList<>();
+        productIds.add(2);
+        productIds.add(3);
+        productIds.add(4);
+        boolean activeStatus = true;
+
+        try {
+            ProductDatabase.getProductDetails(productIds, activeStatus);
         } catch (Exception e){
             e.printStackTrace();
         }
