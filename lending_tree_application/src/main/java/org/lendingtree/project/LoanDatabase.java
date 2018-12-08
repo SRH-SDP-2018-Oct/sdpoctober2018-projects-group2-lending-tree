@@ -19,20 +19,18 @@ public class LoanDatabase {
     public static void insertLoan (Loan newLoan) throws SQLException {
         PreparedStatement insertLoan;
         String insertString = "INSERT INTO loan (" +
-                COLUMN_LOAN_ID + ", " +
                 COLUMN_CUSTOMER_ID + ", " +
                 COLUMN_PRODUCT_ID + ", " +
                 COLUMN_LOAN_STATUS_ID + ", " +
                 COLUMN_LOAN_DATE_APPLIED + ") " +
-                "VALUES (?, ?, ?, ?, ?)";
+                "VALUES (?, ?, ?, ?)";
 
         insertLoan = databaseConnection.prepareStatement(insertString);
 
-        insertLoan.setInt(1, newLoan.getLoanId());
-        insertLoan.setInt(2, newLoan.getCustomerId());
-        insertLoan.setInt(3, newLoan.getProductId());
-        insertLoan.setInt(4, newLoan.getLoanStatusId());
-        insertLoan.setString(5, newLoan.getLoanDateApplied());
+        insertLoan.setInt(1, newLoan.getCustomerId());
+        insertLoan.setInt(2, newLoan.getProductId());
+        insertLoan.setInt(3, newLoan.getLoanStatusId());
+        insertLoan.setString(4, newLoan.getLoanDateApplied());
 
         insertLoan.executeUpdate();
     }
