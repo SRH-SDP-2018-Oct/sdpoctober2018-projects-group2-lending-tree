@@ -7,6 +7,7 @@ import java.sql.SQLException;
 
 public class ProductDatabase {
 
+    private static final String TABLE_PRODUCT = "product";
     private static final String COLUMN_PRODUCT_ID = "product_id";
     private static final String COLUMN_PRODUCT_TYPE_ID = "product_type_id";
     private static final String COLUMN_PRODUCT_DESCRIPTION = "product_description";
@@ -21,8 +22,8 @@ public class ProductDatabase {
     private static Connection databaseConnection = ConnectMSSQLServer.getConnection();
 
     public static void insertProduct(Product newProduct) throws SQLException {
-        PreparedStatement insertProduct;
-        String insertString = "INSERT INTO product (" +
+        PreparedStatement preparedStatement;
+        String query = "INSERT INTO " + TABLE_PRODUCT + " (" +
                 COLUMN_PRODUCT_TYPE_ID + ", " +
                 COLUMN_PRODUCT_DESCRIPTION+ ", " +
                 COLUMN_PRODUCT_REPRESENTATIVE_ID + ", " +
@@ -34,33 +35,33 @@ public class ProductDatabase {
                 COLUMN_PRODUCT_ACTIVE_STATUS + ") " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        insertProduct = databaseConnection.prepareStatement(insertString);
+        preparedStatement = databaseConnection.prepareStatement(query);
 
-        insertProduct.setInt(1, newProduct.getProductTypeId());
-        insertProduct.setString(2, newProduct.getProductDescription());
-        insertProduct.setInt(3, newProduct.getRepresentativeId());
-        insertProduct.setDouble(4, newProduct.getProductAmount());
-        insertProduct.setDouble(5, newProduct.getProductInterestRate());
-        insertProduct.setInt(6, newProduct.getProductNumberOfPayments());
-        insertProduct.setString(    7, newProduct.getProductAvailabilityFrom());
-        insertProduct.setString(8, newProduct.getProductAvailabilityTo());
-        insertProduct.setBoolean(9, newProduct.getProductActiveStatus());
+        preparedStatement.setInt(1, newProduct.getProductTypeId());
+        preparedStatement.setString(2, newProduct.getProductDescription());
+        preparedStatement.setInt(3, newProduct.getRepresentativeId());
+        preparedStatement.setDouble(4, newProduct.getProductAmount());
+        preparedStatement.setDouble(5, newProduct.getProductInterestRate());
+        preparedStatement.setInt(6, newProduct.getProductNumberOfPayments());
+        preparedStatement.setString(    7, newProduct.getProductAvailabilityFrom());
+        preparedStatement.setString(8, newProduct.getProductAvailabilityTo());
+        preparedStatement.setBoolean(9, newProduct.getProductActiveStatus());
 
-        insertProduct.executeUpdate();
+        preparedStatement.executeUpdate();
     }
 
     public static void printProducts(int representativeId) throws SQLException {
-        PreparedStatement printProducts;
-        String printString = "SELECT * FROM product WHERE " +
+        PreparedStatement preparedStatement;
+        String query = "SELECT * FROM " + TABLE_PRODUCT + " WHERE " +
                 COLUMN_PRODUCT_REPRESENTATIVE_ID + " = " + "?";
         Boolean availableData = false;
         int loopCount = 0;
 
-        printProducts = databaseConnection.prepareStatement(printString);
+        preparedStatement = databaseConnection.prepareStatement(query);
 
-        printProducts.setInt(1, representativeId);
+        preparedStatement.setInt(1, representativeId);
 
-        ResultSet resultSet = printProducts.executeQuery();
+        ResultSet resultSet = preparedStatement.executeQuery();
 
         while (resultSet.next()) {
             loopCount++;
