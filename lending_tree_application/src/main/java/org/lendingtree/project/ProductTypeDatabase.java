@@ -32,4 +32,18 @@ public class ProductTypeDatabase {
 
     }
 
+    public static void changeProductTypeDescription(int productTypeId, String productTypeDescription) throws SQLException {
+        PreparedStatement preparedStatement;
+        String query = "UPDATE " + TABLE_PRODUCT_TYPE +
+                " SET " + COLUMN_PRODUCT_TYPE_DESCRIPTION + " = ?" +
+                " WHERE " + COLUMN_PRODUCT_TYPE_ID + " = ?";
+
+        preparedStatement = databaseConnection.prepareStatement(query);
+
+        preparedStatement.setString(1, productTypeDescription);
+        preparedStatement.setInt(2, productTypeId);
+
+        preparedStatement.executeUpdate();
+    }
+
 }

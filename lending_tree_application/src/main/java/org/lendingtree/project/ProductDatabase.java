@@ -56,6 +56,7 @@ public class ProductDatabase {
                 COLUMN_PRODUCT_REPRESENTATIVE_ID + " = " + "?";
         Boolean availableData = false;
         int loopCount = 0;
+        String activeStatus = "Not available";
 
         preparedStatement = databaseConnection.prepareStatement(query);
 
@@ -64,20 +65,26 @@ public class ProductDatabase {
         ResultSet resultSet = preparedStatement.executeQuery();
 
         while (resultSet.next()) {
-            loopCount++;
-            System.out.println("----------" + loopCount + "----------");
-            System.out.println("Product ID: " + "\t\t\t" + resultSet.getString(1));
-            System.out.println("Product type ID: " + "\t\t" + resultSet.getString(2)); //EXTRACT PRODUCT TYPE NAME
-            System.out.println("Description: " + "\t\t\t" + resultSet.getString(3));
-            System.out.println("Representative ID: " + "\t\t" + resultSet.getString(4)); //EXTRACT REPRESENTATIVE NAME
-            System.out.println("Amount: " + "\t\t\t\t" + resultSet.getString(5));
-            System.out.println("Interest rate: " + "\t\t\t" + resultSet.getString(6));
-            System.out.println("Number of payments: " + "\t" + resultSet.getString(7));
-            System.out.println("Available from: " + "\t\t" + resultSet.getString(8));
-            System.out.println("Available to: " + "\t\t\t" + resultSet.getString(9));
-            System.out.println("Status: " + "\t\t\t\t" + resultSet.getString(10)); //TRANSFORM TO YES OR NO
-            System.out.println("----------" + loopCount + "----------");
-            availableData = true;
+                loopCount++;
+                System.out.println("----------" + loopCount + "----------");
+                System.out.println("Product ID: " + "\t\t\t" + resultSet.getInt(COLUMN_PRODUCT_ID));
+                System.out.println("Description: " + "\t\t\t" + resultSet.getString(COLUMN_PRODUCT_DESCRIPTION));
+                System.out.println("Product type ID: " + "\t\t" + resultSet.getInt(COLUMN_PRODUCT_TYPE_ID));
+                System.out.println("Product type: " + "\t\t\t" + ProductTypeDatabase.getProductTypeDescription(resultSet.getInt(COLUMN_PRODUCT_TYPE_ID)));
+                System.out.println("Representative ID: " + "\t\t" + resultSet.getInt(COLUMN_PRODUCT_REPRESENTATIVE_ID)); //ADD REPRESENTATIVE NAME AND INSTITUTION
+                System.out.println("Amount: " + "\t\t\t\t" + resultSet.getDouble(COLUMN_PRODUCT_AMOUNT));
+                System.out.println("Interest rate: " + "\t\t\t" + resultSet.getDouble(COLUMN_PRODUCT_INTEREST_RATE));
+                System.out.println("Number of payments: " + "\t" + resultSet.getInt(COLUMN_PRODUCT_NUMBER_OF_PAYMENTS));
+                System.out.println("Available from: " + "\t\t" + resultSet.getString(COLUMN_PRODUCT_AVAILABILITY_FROM));
+                System.out.println("Available to: " + "\t\t\t" + resultSet.getString(COLUMN_PRODUCT_AVAILABILITY_TO));
+                if (resultSet.getBoolean(COLUMN_PRODUCT_ACTIVE_STATUS)) {
+                    activeStatus = "Active";
+                } else {
+                    activeStatus = "Inactive";
+                }
+                System.out.println("Status: " + "\t\t\t\t" + activeStatus);
+                System.out.println("----------" + loopCount + "----------\n");
+                availableData = true;
         }
 
         if (availableData) {
