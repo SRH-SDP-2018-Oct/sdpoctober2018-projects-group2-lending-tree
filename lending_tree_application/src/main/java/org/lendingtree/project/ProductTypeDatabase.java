@@ -7,6 +7,7 @@ import java.sql.SQLException;
 
 public class ProductTypeDatabase {
 
+    private static final String TABLE_PRODUCT_TYPE = "product_type";
     private static final String COLUMN_PRODUCT_TYPE_ID = "product_type_id";
     private static final String COLUMN_PRODUCT_TYPE_DESCRIPTION = "product_type_description";
 
@@ -15,7 +16,7 @@ public class ProductTypeDatabase {
     public static String getProductTypeDescription(int productTypeId) throws SQLException {
         PreparedStatement preparedStatement;
         String query = "SELECT " + COLUMN_PRODUCT_TYPE_DESCRIPTION +
-                " FROM product_type WHERE " + COLUMN_PRODUCT_TYPE_ID + " = ?";
+                " FROM " + TABLE_PRODUCT_TYPE + " WHERE " + COLUMN_PRODUCT_TYPE_ID + " = ?";
 
         preparedStatement = databaseConnection.prepareStatement(query);
 
