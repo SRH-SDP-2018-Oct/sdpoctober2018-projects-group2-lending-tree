@@ -15,7 +15,16 @@ public class PaymentHistory {
     private String customerLastName;
     private String customerFirstName;
     private String inputYN;
+    private int loanID;
 
+
+    public int getLoanID() {
+        return loanID;
+    }
+
+    public void setLoanID(int loanID) {
+        this.loanID = loanID;
+    }
 
     public int getInputCustomerId() {
         return inputCustomerId;
