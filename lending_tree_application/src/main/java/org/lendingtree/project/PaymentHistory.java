@@ -17,9 +17,9 @@ public class PaymentHistory {
     private String inputYN;
 
 
-  /*  public int getInputCustomerId() {
+    public int getInputCustomerId() {
         return inputCustomerId;
-    }*/
+    }
 
     public void setInputCustomerId(int inputCustomerId) {
         this.inputCustomerId = inputCustomerId;
