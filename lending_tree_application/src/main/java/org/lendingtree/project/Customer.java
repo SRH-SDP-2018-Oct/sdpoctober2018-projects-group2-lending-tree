@@ -2,6 +2,7 @@ package org.lendingtree.project;
 
 import java.sql.SQLException;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class Customer extends User {
     private String customerType;
@@ -11,7 +12,8 @@ public class Customer extends User {
     private int paySlip = 0;
     private int taxDetails = 0;
     private String identificationNumber;
-    private float rating;
+    private Double rating;
+    private static Pattern REGEX_IDENTIFICATION_NUMBER = Pattern.compile("(?i)(^[a-z])((?![ .,'-]$)[a-z .,'-]){0,24}$");
 
     public String getCustomerType(){
         return this.customerType;
@@ -41,7 +43,7 @@ public class Customer extends User {
         return this.identificationNumber;
     }
 
-    public Float getRating(){
+    public Double getRating(){
         return this.rating;
     }
 
@@ -73,17 +75,14 @@ public class Customer extends User {
         this.identificationNumber = newIdentificationNumber;
     }
 
-    public void setRating(Float newRating){
+    public void setRating(Double newRating){
         this.rating = newRating;
     }
 
-
-    @Override
-    public void register() throws SQLException{
+    private int inputCustomerTypeId() throws SQLException{
         Scanner userInput = new Scanner(System.in);
         int maxCustomerTypeValue;
-
-        super.register();
+        int customerTypeId;
 
         maxCustomerTypeValue = CustomerDatabase.listCustomerTypes();
 
@@ -96,32 +95,23 @@ public class Customer extends User {
             customerTypeId = userInput.nextInt();
         } while(customerTypeId < 1 || customerTypeId > maxCustomerTypeValue);
 
-        customerType = CustomerDatabase.getCustomerType(customerTypeId);
+        return customerTypeId;
+    }
+
+
+
+    @Override
+    public void register() throws SQLException{
+
+        super.register();
+
+        this.customerTypeId = inputCustomerTypeId();
+        this.customerType = CustomerDatabase.getCustomerType(customerTypeId);
         System.out.println("You selected: " + customerType);
-
-        do{
-            System.out.println("Please enter your email address: ");
-            this.setEmail(userInput.nextLine());
-
-            while (CustomerDatabase.checkEmail(this.getEmail())){
-                System.out.println("Email already in use, please enter a new one: ");
-                this.setEmail(userInput.nextLine());
-            }
-
-        }while (!confirmUserInputString(this.getEmail()));
-
-        address = getUserInput("home address:");
-        identificationNumber = getUserInput("national identification number:");
-
-        do{
-            System.out.println("Please select a valid number for the customer rating: ");
-            while(!userInput.hasNextFloat()) {
-                System.out.println("That is not a valid selection");
-                userInput.next();
-            }
-            this.rating = userInput.nextFloat();
-        } while(this.rating < 0);
-        System.out.println("Your customer rating is: " + this.rating);
+        this.setEmail(InputValidationTools.inputEmail());
+        this.address = InputValidationTools.inputAddress();
+        this.identificationNumber = InputValidationTools.getUserInput("National Identification Number: ", REGEX_IDENTIFICATION_NUMBER);
+        this.rating = InputValidationTools.inputRating();
 
         CustomerDatabase.insert(this);
     }

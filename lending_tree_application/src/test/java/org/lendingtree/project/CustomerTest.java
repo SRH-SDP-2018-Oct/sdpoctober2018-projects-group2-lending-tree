@@ -11,7 +11,7 @@ public class CustomerTest {
         String firstName = "Cassie";
         String lastName = "Alentorn Vejar";
         String password = "test_cassie_password";
-        float rating = 15;
+        Double rating = 15.18;
         String identificationNumber = "AA134567";
         int taxDetails = 1;
         int paySlip = 0;
@@ -57,8 +57,8 @@ public class CustomerTest {
                 newCustomer.setEmail(email);
                 System.out.println(newCustomer.getEmail());
 
-                if(CustomerDatabase.checkEmail(newCustomer.getEmail())) System.out.println("Mail existe en la base de datos");
-                else System.out.println("Mail no existe en la base de datos");
+                if(CustomerDatabase.checkEmail(newCustomer.getEmail())) System.out.println("Mail exists in the database");
+                else System.out.println("Mail does not exists in the database");
 
                 while(CustomerDatabase.checkEmail(newCustomer.getEmail())){
                     System.out.println("Email already in use, please enter a new one: ");

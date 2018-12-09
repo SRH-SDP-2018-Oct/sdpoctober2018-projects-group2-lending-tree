@@ -62,7 +62,7 @@ public class CustomerDatabase {
         customerFromDb.setPaySlip(Integer.parseInt(getCustomerColumnValue(COLUMN_CUSTOMER_PAY_SLIP, customerFromDb.getId())));
         customerFromDb.setTaxDetails(Integer.parseInt(getCustomerColumnValue(COLUMN_CUSTOMER_TAX_DETAILS, customerFromDb.getId())));
         customerFromDb.setIdentificationNumber(getCustomerColumnValue(COLUMN_CUSTOMER_IDENTIFICATION_NUMBER, customerFromDb.getId()));
-        customerFromDb.setRating(Float.parseFloat(getCustomerColumnValue(COLUMN_CUSTOMER_RATING, customerFromDb.getId())));
+        customerFromDb.setRating(Double.parseDouble(getCustomerColumnValue(COLUMN_CUSTOMER_RATING, customerFromDb.getId())));
         customerFromDb.setPassword(getCustomerColumnValue(COLUMN_CUSTOMER_PASSWORD, customerFromDb.getId()));
 
         return customerFromDb;
