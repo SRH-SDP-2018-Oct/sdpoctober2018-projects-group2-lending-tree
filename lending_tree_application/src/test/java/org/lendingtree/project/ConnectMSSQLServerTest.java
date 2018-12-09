@@ -21,7 +21,7 @@ public class ConnectMSSQLServerTest {
             dbInputCustomer.setFirstName("Cassie");
             dbInputCustomer.setLastName("Alentorn Vejar");
             dbInputCustomer.setPassword("test_cassie_password");
-            dbInputCustomer.setRating(15f);
+            dbInputCustomer.setRating(15.12);
             dbInputCustomer.setIdentificationNumber("AA134567");
             dbInputCustomer.setTaxDetails(1);
             dbInputCustomer.setPaySlip(0);
@@ -64,7 +64,7 @@ public class ConnectMSSQLServerTest {
             dbInputCustomer.setFirstName("Cassie");
             dbInputCustomer.setLastName("Alentorn Vejar");
             dbInputCustomer.setPassword("test_cassie_password");
-            dbInputCustomer.setRating(15f);
+            dbInputCustomer.setRating(15.16);
             dbInputCustomer.setIdentificationNumber("AA134567");
             dbInputCustomer.setTaxDetails(1);
             dbInputCustomer.setPaySlip(0);
@@ -109,7 +109,7 @@ public class ConnectMSSQLServerTest {
             dbInputCustomer.setFirstName("Cassie");
             dbInputCustomer.setLastName("Alentorn Vejar");
             dbInputCustomer.setPassword("test_cassie_password");
-            dbInputCustomer.setRating(15f);
+            dbInputCustomer.setRating(15.17);
             dbInputCustomer.setIdentificationNumber("AA134567");
             dbInputCustomer.setTaxDetails(1);
             dbInputCustomer.setPaySlip(0);

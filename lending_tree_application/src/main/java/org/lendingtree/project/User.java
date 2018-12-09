@@ -1,9 +1,8 @@
 package org.lendingtree.project;
 
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
 import java.sql.SQLException;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public abstract class User {
     private int id;
@@ -12,6 +11,8 @@ public abstract class User {
     private String email;
     private String phone;
     private String password;
+    private static final Pattern REGEX_PHONE_VALIDATION = Pattern.compile("^(?=(?:[8-9]){1})(?=[0-9]{8}).*");
+    private static final Pattern REGEX_NAME_VALIDATION = Pattern.compile("(?i)(^[a-z])((?![ .,'-]$)[a-z .,'-]){0,24}$");
 
     public int getId(){
         return this.id;
@@ -61,16 +62,14 @@ public abstract class User {
         this.password = newPassword;
     }
 
+
     public void register() throws SQLException{
         Scanner userInput = new Scanner(System.in);
         String passwordConfirmation = " ";
 
-        lastName = getUserInput("Last Name:");
-        firstName = getUserInput("First Name:");
-        email = getUserInput("Email:");
-        do{
-            phone = getUserInput("phone:");
-        }while(!isValidEmailAddress(phone));
+        lastName = InputValidationTools.getUserInput("Last Name:", REGEX_NAME_VALIDATION);
+        firstName = InputValidationTools.getUserInput("First Name:", REGEX_NAME_VALIDATION);
+        phone = InputValidationTools.getUserInput("Phone:", REGEX_PHONE_VALIDATION);
 
         do{
             try{
@@ -87,38 +86,5 @@ public abstract class User {
     }
 
     public abstract User login() throws SQLException;
-
-    protected String getUserInput(String field){
-        Scanner scanner = new Scanner(System.in);
-        String userInput;
-        do{
-            System.out.println("Please enter your " + field + ":");
-            userInput = scanner.nextLine();
-        }while (!confirmUserInputString(userInput));
-        return userInput;
-    }
-
-    protected Boolean confirmUserInputString(String input){
-        char userConfirmation;
-        Scanner userInput = new Scanner(System.in);
-        do{
-            System.out.println("You entered: " + input);
-            System.out.println("Is this correct? Y/N");
-            userConfirmation = userInput.next().charAt(0);
-        } while (userConfirmation != 'Y');
-        return true;
-    }
-
-    private static boolean isValidEmailAddress(String email) {
-        boolean result = true;
-        try {
-            InternetAddress emailAddress = new InternetAddress(email);
-            emailAddress.validate();
-        } catch (AddressException ex) {
-            result = false;
-            System.out.println(email + " is not a valid email address, please try again");
-        }
-        return result;
-    }
 
 }
