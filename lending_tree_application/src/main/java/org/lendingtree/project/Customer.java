@@ -13,68 +13,52 @@ public class Customer extends User {
     private int taxDetails = 0;
     private String identificationNumber;
     private Double rating;
-    private static Pattern REGEX_IDENTIFICATION_NUMBER = Pattern.compile("(?i)(^[a-z])((?![ .,'-]$)[a-z .,'-]){0,24}$");
 
     public String getCustomerType(){
         return this.customerType;
     }
-
     public int getCustomerTypeId(){
         return this.customerTypeId;
     }
-
     public String getAddress(){
         return this.address;
     }
-
     public int getCurrentExpenses(){
         return this.currentExpenses;
     }
-
     public int getPaySlip(){
         return this.paySlip;
     }
-
     public int getTaxDetails(){
         return this.taxDetails;
     }
-
     public String getIdentificationNumber(){
         return this.identificationNumber;
     }
-
     public Double getRating(){
         return this.rating;
     }
-
     public void setCustomerType(String newCustomerType){
         this.customerType = newCustomerType;
     }
-
     public void setCustomerTypeId(int newCustomerTypeId){
         this.customerTypeId = newCustomerTypeId;
     }
-
     public void setAddress(String newAddress){
         this.address = newAddress;
     }
-
     public void setCurrentExpenses(int newCurrentExpenses){
         this.currentExpenses = newCurrentExpenses;
     }
-
     public void setPaySlip(int newPaySlip){
         this.paySlip = newPaySlip;
     }
-
     public void setTaxDetails(int newTaxDetails){
         this.taxDetails = newTaxDetails;
     }
-
     public void setIdentificationNumber(String newIdentificationNumber){
         this.identificationNumber = newIdentificationNumber;
     }
-
     public void setRating(Double newRating){
         this.rating = newRating;
     }
@@ -98,8 +82,6 @@ public class Customer extends User {
         return customerTypeId;
     }
 
-
-
     @Override
     public void register() throws SQLException{
 
@@ -110,7 +92,7 @@ public class Customer extends User {
         System.out.println("You selected: " + customerType);
         this.setEmail(InputValidationTools.inputEmail());
         this.address = InputValidationTools.inputAddress();
-        this.identificationNumber = InputValidationTools.getUserInput("National Identification Number: ", REGEX_IDENTIFICATION_NUMBER);
+        this.identificationNumber = InputValidationTools.inputIdentificationNumber();
         this.rating = InputValidationTools.inputRating();
 
         CustomerDatabase.insert(this);

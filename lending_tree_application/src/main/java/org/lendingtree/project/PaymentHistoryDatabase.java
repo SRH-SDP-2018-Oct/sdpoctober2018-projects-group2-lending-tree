@@ -111,6 +111,8 @@ public class PaymentHistoryDatabase {
 
         public static void displayPaymentHistoryCustomerDatabase(int userId){
             PaymentHistory newPaymentHistory = new PaymentHistory();
+            int loopCount = 0;
+            Boolean availableData = false;
             try{
                 String getPaymentHistoryCustomer =  " SELECT * FROM " +PAYMENT_HISTORY+
                                                     " INNER JOIN " +LOAN+ " ON " +PAYMENT_HISTORY+ " . " +LOAN_ID+
@@ -122,14 +124,22 @@ public class PaymentHistoryDatabase {
                 ResultSet dbResultSet = dbPreparedStatement.executeQuery();
                 System.out.println("Customer Last Name \t Customer First Name \t Payment Amount \t Payment Date \t Payment Type");
                 while(dbResultSet.next()){
-
+                    loopCount++;
+                    System.out.println("----------" + loopCount + "----------");
                     System.out.println("CUSTOMER LAST NAME: " + "" + dbResultSet.getString(CUSTOMER_LAST_NAME));
                     System.out.println("CUSTOMER FIRST NAME: " + "" + dbResultSet.getString(CUSTOMER_FIRST_NAME));
                     System.out.println("PAYMENT AMOUNT: " + "" + dbResultSet.getDouble(PAYMENT_AMOUNT));
                     System.out.println("PAYMENT DATE: " + "" + dbResultSet.getDate(PAYMENT_DATE));
                     System.out.println("PAYMENT TYPE: " + "" + dbResultSet.getString(PAYMENT_TYPE));
                     System.out.println("PAYMENT HISTORY ID: " + "" + dbResultSet.getString(PAYMENT_HISTORY_ID));
+                    System.out.println("----------" + loopCount + "----------\n");
+                    availableData = true;
 
+                }
+                if (availableData) {
+                    System.out.println("\nNumber of records: " + loopCount + ".");
+                } else {
+                    System.out.println("No data available.");
                 }
             }catch(Exception exception){
                 exception.printStackTrace();

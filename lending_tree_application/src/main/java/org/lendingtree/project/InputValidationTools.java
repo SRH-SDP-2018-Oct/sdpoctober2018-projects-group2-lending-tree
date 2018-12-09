@@ -1,7 +1,5 @@
 package org.lendingtree.project;
 
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -11,20 +9,26 @@ public class InputValidationTools {
     private static final Pattern REGEX_NUMBER_VALIDATION = Pattern.compile("^\\d");
     private static final Pattern REGEX_POSTAL_VALIDATION = Pattern.compile("^[0-9]{5}(?:-[0-9]{4})?$");
     private static final Pattern REGEX_EMAIL_VALIDATION = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+    private static final Pattern REGEX_PHONE_VALIDATION = Pattern.compile("^(?=(?:[8-9]){1})(?=[0-9]{8}).*");
+    private static final Pattern REGEX_IDENTIFICATION_NUMBER = Pattern.compile("(?i)(^[a-z])((?![ .,'-]$)[a-z .,'-]){0,24}$");
+    private static final Pattern REGEX_FINANCIAL_STATUS = Pattern.compile("(?i)(^[a-z])((?![ .,'-]$)[a-z .,'-]){0,24}$");
     private static final String STRING_SEPARATOR = ", ";
 
-    /* OBSOLETE
-    protected static boolean isValidEmailAddress(String email) {
-        boolean result = true;
-        try {
-            InternetAddress emailAddress = new InternetAddress(email);
-            emailAddress.validate();
-        } catch (AddressException ex) {
-            result = false;
-            System.out.println(email + " is not a valid email address, please try again");
-        }
-        return result;
-    }*/
+   protected static String inputFinancialStatus(){
+       return getUserInput("Institution Financial Status", REGEX_FINANCIAL_STATUS);
+   }
+
+   protected static String inputIdentificationNumber(){
+       return getUserInput("Identification Number", REGEX_IDENTIFICATION_NUMBER);
+   }
+
+   protected  static String inputName(String field){
+       return getUserInput(field, REGEX_NAME_VALIDATION);
+   }
+
+   protected  static String inputPhone(){
+       return getUserInput("Phone", REGEX_PHONE_VALIDATION);
+   }
 
     protected static String inputEmail(){
         return getUserInput("Email", REGEX_EMAIL_VALIDATION);
@@ -69,7 +73,7 @@ public class InputValidationTools {
         return true;
     }
 
-    protected static String getUserInput(String field, Pattern regex){
+    private static String getUserInput(String field, Pattern regex){
         Scanner scanner = new Scanner(System.in);
         String userInput;
         int numberOfTries = 0;

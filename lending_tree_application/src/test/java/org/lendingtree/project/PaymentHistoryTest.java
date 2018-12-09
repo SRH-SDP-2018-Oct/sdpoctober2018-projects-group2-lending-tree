@@ -18,7 +18,7 @@ public class PaymentHistoryTest {
 
        try {
              if (inputYN.equalsIgnoreCase("Y")) {
-                //PaymentDisplayDatabase.displayPaymentHistoryAll();
+                PaymentHistoryDatabase.displayPaymentHistoryAll();
             }
 
 
@@ -37,7 +37,7 @@ public class PaymentHistoryTest {
 
         try {
             if(inputYN.equalsIgnoreCase("N")) {
-                //PaymentDisplayDatabase.displayPaymentHistory(inputCustomerId);
+                PaymentHistoryDatabase.displayPaymentHistory(inputCustomerId);
             }
 
 
@@ -54,7 +54,7 @@ public class PaymentHistoryTest {
         int userId = 1;
 
         try {
-            //PaymentDisplayDatabase.displayPaymentHistoryCustomerDatabase(userId);
+            PaymentHistoryDatabase.displayPaymentHistoryCustomerDatabase(userId);
         } catch (Exception exception){
             exception.printStackTrace();
         }
