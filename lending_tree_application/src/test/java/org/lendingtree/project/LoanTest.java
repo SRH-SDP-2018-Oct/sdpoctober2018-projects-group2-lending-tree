@@ -54,4 +54,17 @@ public class LoanTest {
 
     }
 
+    @Test
+    public void printInstitutionLoansTest() {
+
+        int institutionId = 2;
+
+        try {
+            LoanDatabase.printInstitutionLoans(institutionId);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
 }

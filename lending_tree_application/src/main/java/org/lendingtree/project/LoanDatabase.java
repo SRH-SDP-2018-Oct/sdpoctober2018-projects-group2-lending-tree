@@ -136,4 +136,58 @@ public class LoanDatabase {
         }
     }
 
+    public static void printInstitutionLoans(int institutionId) throws SQLException {
+
+        PreparedStatement preparedStatementInstitution;
+
+        String queryInstitution = "SELECT institution_name " +
+                "FROM institution " +
+                "WHERE institution_id = " + "?";
+
+        preparedStatementInstitution = databaseConnection.prepareStatement(queryInstitution);
+
+        preparedStatementInstitution.setInt(1, institutionId);
+
+        PreparedStatement preparedStatementLoan;
+        String queryLoan = "SELECT * FROM loan " +
+                "JOIN product " +
+                "ON product.product_id=loan.product_id " +
+                "JOIN representative " +
+                "ON representative.representative_id=product.representative_id " +
+                "JOIN institution " +
+                "ON institution.institution_id=representative.institution_id " +
+                "WHERE institution.institution_id=?;";
+        Boolean availableData = false;
+        int loopCount = 0;
+
+        preparedStatementLoan = databaseConnection.prepareStatement(queryLoan);
+
+        preparedStatementLoan.setInt(1, institutionId);
+
+
+        ResultSet resultSetLoan = preparedStatementLoan.executeQuery();
+        ResultSet resultSetInstitution = preparedStatementInstitution.executeQuery();
+
+        resultSetInstitution.next();
+        System.out.println("Loans from Institution: " +resultSetInstitution.getString(1));
+
+        while (resultSetLoan.next()) {
+            loopCount++;
+            System.out.println("----------" + loopCount + "----------");
+            System.out.println("Loan ID: " + "\t\t\t" + resultSetLoan.getString(1));
+            System.out.println("Customer ID: " + "\t\t" + resultSetLoan.getString(2));
+            System.out.println("Product ID: " + "\t\t\t" + resultSetLoan.getString(3));
+            System.out.println("Loan Status ID: " + "\t\t" + resultSetLoan.getString(4));
+            System.out.println("Loan Date Applied: " + "\t\t\t\t" + resultSetLoan.getString(5));
+            System.out.println("----------" + loopCount + "----------");
+            availableData = true;
+        }
+
+        if (availableData) {
+            System.out.println("\nNumber of records: " + loopCount + ".");
+        } else {
+            System.out.println("No data available.");
+        }
+
+    }
 }
