@@ -2,6 +2,8 @@ package org.lendingtree.project;
 
 import org.junit.Test;
 
+import java.util.Date;
+
 
 public class PaymentHistoryTest {
 
@@ -18,7 +20,7 @@ public class PaymentHistoryTest {
 
        try {
              if (inputYN.equalsIgnoreCase("Y")) {
-                PaymentDisplayDatabase.displayPaymentHistoryAll();
+                PaymentHistoryDatabase.displayPaymentHistoryAll();
             }
 
 
@@ -29,6 +31,8 @@ public class PaymentHistoryTest {
 
     @Test
     public void getPaymentHistoryNo(){
+
+
         int inputCustomerId =1;
         String inputYN = "N";
 
@@ -37,7 +41,7 @@ public class PaymentHistoryTest {
 
         try {
             if(inputYN.equalsIgnoreCase("N")) {
-                PaymentDisplayDatabase.displayPaymentHistory(inputCustomerId);
+                PaymentHistoryDatabase.displayPaymentHistory(inputCustomerId);
             }
 
 
@@ -54,9 +58,34 @@ public class PaymentHistoryTest {
         int userId = 1;
 
         try {
-            PaymentDisplayDatabase.displayPaymentHistoryCustomerDatabase(userId);
+            PaymentHistoryDatabase.displayPaymentHistoryCustomerDatabase(userId);
         } catch (Exception exception){
             exception.printStackTrace();
         }
+    }
+
+    @Test
+    public void insertPaymentHistoryTest() {
+        PaymentHistory paymentHistory = new PaymentHistory();
+        int loanId = 1;
+        Double paymentAmount = 120.25;
+        Date paymentDate = new Date();
+        String paymentType = "Credit";
+
+        try {
+            //add
+            paymentHistory.setPaymentAmount(paymentAmount);
+            //add
+
+            PaymentHistoryDatabase.insertIntoPaymentHistory();
+
+        } catch (Exception exception){
+            exception.printStackTrace();
+        }
+    }
+
+    @Test
+    public void dateTest() {
+        System.out.println(new Date().getMonth());
     }
 }

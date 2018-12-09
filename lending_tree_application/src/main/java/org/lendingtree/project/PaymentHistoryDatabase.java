@@ -120,7 +120,6 @@ public class PaymentHistoryDatabase {
                                                     " = " +userId+ " ";
                 PreparedStatement dbPreparedStatement = databaseConnection.prepareStatement(getPaymentHistoryCustomer);
                 ResultSet dbResultSet = dbPreparedStatement.executeQuery();
-                System.out.println("Customer Last Name \t Customer First Name \t Payment Amount \t Payment Date \t Payment Type");
                 while(dbResultSet.next()){
 
                     System.out.println("CUSTOMER LAST NAME: " + "" + dbResultSet.getString(CUSTOMER_LAST_NAME));
