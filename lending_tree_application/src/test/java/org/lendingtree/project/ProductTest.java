@@ -116,4 +116,37 @@ public class ProductTest {
         }
     }
 
+    @Test
+    public void getAllProductTypeDescriptionTest() {
+        try {
+            ProductDatabase.getAllProductTypeDescription();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void updateProductTypeDescriptionTest() {
+        int productTypeId = 1;
+        String productTypeDescription = "Product type description";
+
+        try {
+            ProductDatabase.updateProductTypeDescription(productTypeId, productTypeDescription);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    /*
+    @Test
+    public void createProductTypeTest() {
+        String productTypeDescription = "New product type added from test";
+
+        try {
+            ProductDatabase.createProductType(productTypeDescription);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    */
 }

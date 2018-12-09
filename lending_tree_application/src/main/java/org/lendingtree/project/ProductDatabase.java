@@ -276,4 +276,56 @@ public class ProductDatabase {
             System.out.println("No data available.");
         }
     }
+
+    public static void getAllProductTypeDescription() throws SQLException {
+        PreparedStatement preparedStatement;
+        String query = "SELECT * FROM " + TABLE_PRODUCT_TYPE;
+        Boolean availableData = false;
+        int loopCount = 0;
+
+        preparedStatement = databaseConnection.prepareStatement(query);
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        while (resultSet.next()) {
+            loopCount++;
+            System.out.println(resultSet.getInt(COLUMN_PRODUCT_TYPE_ID) + ". " + resultSet.getString(COLUMN_PRODUCT_TYPE_DESCRIPTION));
+            availableData = true;
+        }
+
+        if (availableData) {
+            System.out.println("\nNumber of records: " + loopCount + ".");
+        } else {
+            System.out.println("No data available.");
+        }
+    }
+
+    public static void updateProductTypeDescription(int productTypeId, String productTypeDescription) throws SQLException {
+        PreparedStatement preparedStatement;
+        String query = "UPDATE " + TABLE_PRODUCT_TYPE +
+                " SET " + COLUMN_PRODUCT_TYPE_DESCRIPTION + " = ?" +
+                " WHERE " + COLUMN_PRODUCT_TYPE_ID + " = ?";
+
+        preparedStatement = databaseConnection.prepareStatement(query);
+
+        preparedStatement.setString(1, productTypeDescription);
+        preparedStatement.setInt(2, productTypeId);
+
+        preparedStatement.executeUpdate();
+    }
+
+    /*
+    public static void createProductType(String productTypeDescription) throws SQLException {
+        PreparedStatement preparedStatement;
+        String query = "INSERT INTO " + TABLE_PRODUCT_TYPE + " (" +
+                COLUMN_PRODUCT_TYPE_DESCRIPTION + ") " +
+                "VALUES (?)";
+
+        preparedStatement = databaseConnection.prepareStatement(query);
+
+        preparedStatement.setString(1, productTypeDescription);
+
+        preparedStatement.executeUpdate();
+    }
+    */
 }
