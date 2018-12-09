@@ -7,14 +7,12 @@ public class LoanTest {
     @Test
     public void createLoanTest() {
         Loan newLoan = new Loan();
-        //int loanId = 1;
         int customerId = 1;
-        int productId = 1;
+        int productId = 4;
         int loanStatusId = 1;
         String loanDateApplied = "01/01/2018";
 
         try {
-            //newLoan.setLoanId(loanId);
             newLoan.setCustomerId(customerId);
             newLoan.setProductId(productId);
             newLoan.setLoanStatusId(loanStatusId);
@@ -31,12 +29,25 @@ public class LoanTest {
     }
 
     @Test
-    public void printCustomerActiveLoansTest() {
+    public void printCustomerLoansTest() {
 
         int customerId = 1;
 
         try {
-            LoanDatabase.printLoans(customerId);
+            LoanDatabase.printCustomerLoans(customerId);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    @Test
+    public void printRepresentativeLoansTest() {
+
+        int representativeId = 1;
+
+        try {
+            LoanDatabase.printRepresentativeLoans(representativeId);
         } catch (Exception e){
             e.printStackTrace();
         }
