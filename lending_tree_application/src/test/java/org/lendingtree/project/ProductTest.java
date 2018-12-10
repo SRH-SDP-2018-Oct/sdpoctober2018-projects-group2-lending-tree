@@ -91,11 +91,38 @@ public class ProductTest {
     }
 
     @Test
-    public void getAllActiveProductTest() {
+    public void getAllActiveProductsTest() {
+        Product activeProduct = new Product();
         boolean activeStatus = true;
+        boolean filterOn = false;
 
         try {
-            ProductDatabase.getAllActiveProduct(activeStatus);
+            activeProduct.setProductActiveStatus(activeStatus);
+            ProductDatabase.getAllActiveProducts(activeProduct, filterOn);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void getAllActiveProductsWithParametersTest() {
+        Product searchProduct = new Product();
+        boolean activeStatus = true;
+        boolean filtersOn = true;
+        //int productId = 2;
+        String productDescription = "Test";
+        Double productAmount = 1.23;
+        Double productInterestRate = 0.1;
+        int productNumberOfPayments = 24;
+
+        try {
+            searchProduct.setProductActiveStatus(activeStatus);
+            //searchProduct.setProductId(productId);
+            searchProduct.setProductDescription(productDescription);
+            searchProduct.setProductAmount(productAmount);
+            searchProduct.setProductInterestRate(productInterestRate);
+            searchProduct.setProductNumberOfPayments(productNumberOfPayments);
+            ProductDatabase.getAllActiveProducts(searchProduct, filtersOn);
         } catch (Exception e){
             e.printStackTrace();
         }

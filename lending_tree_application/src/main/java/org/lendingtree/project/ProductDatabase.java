@@ -15,8 +15,9 @@ public class ProductDatabase {
     private static final String TABLE_INSTITUTION_DEPARTMENT = "institution_department";
     private static final String COLUMN_PRODUCT_ID = "product_id";
     private static final String COLUMN_PRODUCT_TYPE_ID = "product_type_id";
+    private static final String COLUMN_PRODUCT_TYPE_DESCRIPTION = "product_type_description";
     private static final String COLUMN_PRODUCT_DESCRIPTION = "product_description";
-    private static final String COLUMN_PRODUCT_REPRESENTATIVE_ID = "representative_id";
+    private static final String COLUMN_REPRESENTATIVE_ID = "representative_id";
     private static final String COLUMN_PRODUCT_AMOUNT = "product_amount";
     private static final String COLUMN_PRODUCT_INTEREST_RATE = "product_interest_rate";
     private static final String COLUMN_PRODUCT_NUMBER_OF_PAYMENTS = "product_number_of_payments";
@@ -28,7 +29,6 @@ public class ProductDatabase {
     private static final String COLUMN_INSTITUTION_RATING = "institution_rating";
     private static final String COLUMN_INSTITUTION_DEPARTMENT_ID = "institution_department_id";
     private static final String COLUMN_INSTITUTION_DEPARTMENT_DESCRIPTION = "institution_department_description";
-    private static final String COLUMN_PRODUCT_TYPE_DESCRIPTION = "product_type_description";
     private static final String COLUMN_REPRESENTATIVE_FIRST_NAME = "representative_first_name";
     private static final String COLUMN_REPRESENTATIVE_LAST_NAME = "representative_last_name";
     private static final String COLUMN_REPRESENTATIVE_EMAIL = "representative_email";
@@ -41,7 +41,7 @@ public class ProductDatabase {
         String query = "INSERT INTO " + TABLE_PRODUCT + " (" +
                 COLUMN_PRODUCT_TYPE_ID + ", " +
                 COLUMN_PRODUCT_DESCRIPTION+ ", " +
-                COLUMN_PRODUCT_REPRESENTATIVE_ID + ", " +
+                COLUMN_REPRESENTATIVE_ID + ", " +
                 COLUMN_PRODUCT_AMOUNT + ", " +
                 COLUMN_PRODUCT_INTEREST_RATE + ", " +
                 COLUMN_PRODUCT_NUMBER_OF_PAYMENTS + ", " +
@@ -101,15 +101,15 @@ public class ProductDatabase {
                 " ON " + TABLE_PRODUCT_TYPE + "." + COLUMN_PRODUCT_TYPE_ID + " = " +
                 TABLE_PRODUCT + "." + COLUMN_PRODUCT_TYPE_ID +
                 " INNER JOIN " + TABLE_REPRESENTATIVE +
-                " ON " + TABLE_REPRESENTATIVE + "." + COLUMN_PRODUCT_REPRESENTATIVE_ID + " = " +
-                TABLE_PRODUCT + "." + COLUMN_PRODUCT_REPRESENTATIVE_ID +
+                " ON " + TABLE_REPRESENTATIVE + "." + COLUMN_REPRESENTATIVE_ID + " = " +
+                TABLE_PRODUCT + "." + COLUMN_REPRESENTATIVE_ID +
                 " INNER JOIN " + TABLE_INSTITUTION_DEPARTMENT +
                 " ON " + TABLE_INSTITUTION_DEPARTMENT + "." + COLUMN_INSTITUTION_DEPARTMENT_ID + " = " +
                 TABLE_REPRESENTATIVE + "." + COLUMN_INSTITUTION_DEPARTMENT_ID +
                 " INNER JOIN " + TABLE_INSTITUTION +
                 " ON " + TABLE_INSTITUTION + "." + COLUMN_INSTITUTION_ID + " = " +
                 TABLE_REPRESENTATIVE + "." + COLUMN_INSTITUTION_ID +
-                " WHERE " + TABLE_PRODUCT + "." + COLUMN_PRODUCT_REPRESENTATIVE_ID + " = ?";
+                " WHERE " + TABLE_PRODUCT + "." + COLUMN_REPRESENTATIVE_ID + " = ?";
         Boolean availableData = false;
         int loopCount = 0;
         String activeStatus = "Not available";
@@ -127,7 +127,7 @@ public class ProductDatabase {
                 System.out.println("Description: " + "\t\t\t" + resultSet.getString(COLUMN_PRODUCT_DESCRIPTION));
                 System.out.println("Product type ID: " + "\t\t" + resultSet.getInt(COLUMN_PRODUCT_TYPE_ID));
                 System.out.println("Product type: " + "\t\t\t" + resultSet.getString(COLUMN_PRODUCT_TYPE_DESCRIPTION));
-                System.out.println("Representative ID: " + "\t\t" + resultSet.getInt(COLUMN_PRODUCT_REPRESENTATIVE_ID));
+                System.out.println("Representative ID: " + "\t\t" + resultSet.getInt(COLUMN_REPRESENTATIVE_ID));
                 System.out.println("Representative: " + "\t\t" + resultSet.getString(COLUMN_REPRESENTATIVE_FIRST_NAME) +
                         " " + resultSet.getString(COLUMN_REPRESENTATIVE_LAST_NAME));
                 System.out.println("Department ID: " + "\t\t\t" + resultSet.getInt(COLUMN_INSTITUTION_DEPARTMENT_ID));
@@ -156,25 +156,78 @@ public class ProductDatabase {
         }
     }
 
-    public static void getAllActiveProduct(boolean activeStatus) throws SQLException {
+    public static void getAllActiveProducts(Product searchProduct, boolean filtersOn) throws SQLException {
         PreparedStatement preparedStatement;
         String query = "SELECT * FROM " + TABLE_PRODUCT +
                 " INNER JOIN " + TABLE_PRODUCT_TYPE +
                 " ON " + TABLE_PRODUCT_TYPE + "." + COLUMN_PRODUCT_TYPE_ID + " = " +
                 TABLE_PRODUCT + "." + COLUMN_PRODUCT_TYPE_ID +
                 " INNER JOIN " + TABLE_REPRESENTATIVE +
-                " ON " + TABLE_REPRESENTATIVE + "." + COLUMN_PRODUCT_REPRESENTATIVE_ID + " = " +
-                TABLE_PRODUCT + "." + COLUMN_PRODUCT_REPRESENTATIVE_ID +
+                " ON " + TABLE_REPRESENTATIVE + "." + COLUMN_REPRESENTATIVE_ID + " = " +
+                TABLE_PRODUCT + "." + COLUMN_REPRESENTATIVE_ID +
                 " INNER JOIN " + TABLE_INSTITUTION +
                 " ON " + TABLE_INSTITUTION + "." + COLUMN_INSTITUTION_ID + " = " +
                 TABLE_REPRESENTATIVE + "." + COLUMN_INSTITUTION_ID +
                 " WHERE " + COLUMN_PRODUCT_ACTIVE_STATUS + " = ?";
         Boolean availableData = false;
         int loopCount = 0;
+        int filterCount = 1;
+        boolean filterProductId = false;
+        boolean filterProductDescription = false;
+        boolean filterAmount = false;
+        boolean filterInterestRate = false;
+        boolean filterNumberOfPayments = false;
+
+        if (filtersOn) {
+            if (searchProduct.getProductId() != 0) {
+                query = query + " AND " + COLUMN_PRODUCT_ID + " = ?";
+                filterProductId = true;
+            }
+            if (searchProduct.getProductDescription() != null && !(searchProduct.getProductDescription().trim().isEmpty())) {
+                query = query + " AND " + COLUMN_PRODUCT_DESCRIPTION + " LIKE ?";
+                filterProductDescription = true;
+            }
+            if (searchProduct.getProductAmount() != null && searchProduct.getProductAmount() != 0) {
+                query = query + " AND " + COLUMN_PRODUCT_AMOUNT + " >= ?";
+                filterAmount = true;
+            }
+            if (searchProduct.getProductInterestRate() != null && searchProduct.getProductInterestRate() != 0) {
+                query = query + " AND " + COLUMN_PRODUCT_INTEREST_RATE + " <= ?";
+                filterInterestRate = true;
+            }
+            if (searchProduct.getProductNumberOfPayments() != 0) {
+                query = query + " AND " + COLUMN_PRODUCT_NUMBER_OF_PAYMENTS + " <= ?";
+                filterNumberOfPayments = true;
+            }
+         }
 
         preparedStatement = databaseConnection.prepareStatement(query);
 
-        preparedStatement.setBoolean(1, activeStatus);
+        preparedStatement.setBoolean(1, searchProduct.getProductActiveStatus());
+        filterCount++;
+
+        if (filtersOn) {
+            if (filterProductId) {
+                preparedStatement.setInt(filterCount, searchProduct.getProductId());
+                filterCount++;
+            }
+            if (filterProductDescription) {
+                preparedStatement.setString(filterCount, "%" + searchProduct.getProductDescription() + "%");
+                filterCount++;
+            }
+            if (filterAmount) {
+                preparedStatement.setDouble(filterCount, searchProduct.getProductAmount());
+                filterCount++;
+            }
+            if (filterInterestRate) {
+                preparedStatement.setDouble(filterCount, searchProduct.getProductInterestRate());
+                filterCount++;
+            }
+            if (filterNumberOfPayments) {
+                preparedStatement.setInt(filterCount, searchProduct.getProductNumberOfPayments());
+                filterCount++;
+            }
+        }
 
         ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -215,8 +268,8 @@ public class ProductDatabase {
                 " ON " + TABLE_PRODUCT_TYPE + "." + COLUMN_PRODUCT_TYPE_ID + " = " +
                 TABLE_PRODUCT + "." + COLUMN_PRODUCT_TYPE_ID +
                 " INNER JOIN " + TABLE_REPRESENTATIVE +
-                " ON " + TABLE_REPRESENTATIVE + "." + COLUMN_PRODUCT_REPRESENTATIVE_ID + " = " +
-                TABLE_PRODUCT + "." + COLUMN_PRODUCT_REPRESENTATIVE_ID +
+                " ON " + TABLE_REPRESENTATIVE + "." + COLUMN_REPRESENTATIVE_ID + " = " +
+                TABLE_PRODUCT + "." + COLUMN_REPRESENTATIVE_ID +
                 " INNER JOIN " + TABLE_INSTITUTION +
                 " ON " + TABLE_INSTITUTION + "." + COLUMN_INSTITUTION_ID + " = " +
                 TABLE_REPRESENTATIVE + "." + COLUMN_INSTITUTION_ID +
