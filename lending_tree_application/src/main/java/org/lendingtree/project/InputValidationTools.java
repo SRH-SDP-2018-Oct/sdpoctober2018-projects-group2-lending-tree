@@ -3,7 +3,7 @@ package org.lendingtree.project;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
-public class InputValidationTools {
+public abstract class InputValidationTools {
     private static final Pattern REGEX_NAME_VALIDATION = Pattern.compile("(?i)(^[a-z])((?![ .,'-]$)[a-z .,'-]){0,24}$");
     private static final Pattern REGEX_NUMBER_VALIDATION = Pattern.compile("^\\d");
     private static final Pattern REGEX_POSTAL_VALIDATION = Pattern.compile("^[0-9]{5}(?:-[0-9]{4})?$");
@@ -31,6 +31,10 @@ public class InputValidationTools {
 
     protected static String inputEmail(){
         return getUserInput("Email", REGEX_EMAIL_VALIDATION);
+    }
+
+    protected static int inputNumber(){
+        return Integer.parseInt(getUserInput("selection", REGEX_NUMBER_VALIDATION));
     }
 
     protected static String inputAddress(){
@@ -61,7 +65,7 @@ public class InputValidationTools {
         return rating;
     }
 
-    protected static Boolean confirmUserInputString(String input){
+    private static Boolean confirmUserInputString(String input){
         char userConfirmation;
         Scanner userInput = new Scanner(System.in);
         do{

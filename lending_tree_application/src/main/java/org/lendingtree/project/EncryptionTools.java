@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EncryptionTools {
+public abstract class EncryptionTools {
     private static final String ENCRYPTION_FILEPATH = ".\\encryption_data.txt";
     private static final int HASH = 0;
     private static final int SALT = 1;
