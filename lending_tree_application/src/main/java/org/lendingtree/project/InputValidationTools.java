@@ -1,7 +1,6 @@
 package org.lendingtree.project;
 
 import java.util.Scanner;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class InputValidationTools {
@@ -14,21 +13,21 @@ public class InputValidationTools {
     private static final Pattern REGEX_FINANCIAL_STATUS = Pattern.compile("(?i)(^[a-z])((?![ .,'-]$)[a-z .,'-]){0,24}$");
     private static final String STRING_SEPARATOR = ", ";
 
-   protected static String inputFinancialStatus(){
+    protected static String inputFinancialStatus(){
        return getUserInput("Institution Financial Status", REGEX_FINANCIAL_STATUS);
-   }
+    }
 
-   protected static String inputIdentificationNumber(){
+    protected static String inputIdentificationNumber(){
        return getUserInput("Identification Number", REGEX_IDENTIFICATION_NUMBER);
-   }
+    }
 
-   protected  static String inputName(String field){
+    protected  static String inputName(String field){
        return getUserInput(field, REGEX_NAME_VALIDATION);
-   }
+    }
 
-   protected  static String inputPhone(){
+    protected  static String inputPhone(){
        return getUserInput("Phone", REGEX_PHONE_VALIDATION);
-   }
+    }
 
     protected static String inputEmail(){
         return getUserInput("Email", REGEX_EMAIL_VALIDATION);
@@ -77,16 +76,14 @@ public class InputValidationTools {
         Scanner scanner = new Scanner(System.in);
         String userInput;
         int numberOfTries = 0;
-        Matcher matcher;
         do{
             if(numberOfTries > 0){
                 System.out.println("Invalid input. " + field + " only accepts regular expressions: " + regex.pattern());
             }
             System.out.println("Please enter your " + field + ":");
             userInput = scanner.nextLine();
-            matcher = regex.matcher(userInput);
             numberOfTries++;
-        }while (!confirmUserInputString(userInput) || !matcher.find());
+        }while (!regex.matcher(userInput).matches() || !confirmUserInputString(userInput));
         return userInput;
     }
 }
