@@ -2,7 +2,6 @@ package org.lendingtree.project;
 
 import java.sql.SQLException;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 public class Customer extends User {
     private String customerType;

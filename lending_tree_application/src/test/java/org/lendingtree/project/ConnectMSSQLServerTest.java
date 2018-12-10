@@ -20,7 +20,7 @@ public class ConnectMSSQLServerTest {
         try {
             dbInputCustomer.setFirstName("Cassie");
             dbInputCustomer.setLastName("Alentorn Vejar");
-            dbInputCustomer.setPassword("test_cassie_password");
+            dbInputCustomer.setPassword(EncryptionTools.encryptPassword("test_cassie_password"));
             dbInputCustomer.setRating(15.12);
             dbInputCustomer.setIdentificationNumber("AA134567");
             dbInputCustomer.setTaxDetails(1);
@@ -38,7 +38,7 @@ public class ConnectMSSQLServerTest {
             Assert.assertEquals(dbInputCustomer.getFirstName(), dbOutputCustomer.getFirstName());
             Assert.assertEquals(dbInputCustomer.getLastName(), dbOutputCustomer.getLastName());
             Assert.assertEquals(dbInputCustomer.getPassword(), dbOutputCustomer.getPassword());
-            // Assert.assertEquals(dbInputCustomer.getRating(), dbOutputCustomer.getRating());
+            Assert.assertEquals(dbInputCustomer.getRating(), dbOutputCustomer.getRating());
             Assert.assertEquals(dbInputCustomer.getIdentificationNumber(), dbOutputCustomer.getIdentificationNumber());
             Assert.assertEquals(dbInputCustomer.getTaxDetails(), dbOutputCustomer.getTaxDetails());
             Assert.assertEquals(dbInputCustomer.getPaySlip(), dbOutputCustomer.getPaySlip());
@@ -56,15 +56,15 @@ public class ConnectMSSQLServerTest {
     }
 
     @Test
-    public void testDataBaseOutput() {
+    public void testDatabaseOutput() {
         Customer dbInputCustomer = new Customer();
         Customer dbOutputCustomer;
 
         try {
             dbInputCustomer.setFirstName("Cassie");
             dbInputCustomer.setLastName("Alentorn Vejar");
-            dbInputCustomer.setPassword("test_cassie_password");
-            dbInputCustomer.setRating(15.16);
+            dbInputCustomer.setPassword(EncryptionTools.encryptPassword("test_cassie_password"));
+            dbInputCustomer.setRating(15.12);
             dbInputCustomer.setIdentificationNumber("AA134567");
             dbInputCustomer.setTaxDetails(1);
             dbInputCustomer.setPaySlip(0);
@@ -74,14 +74,14 @@ public class ConnectMSSQLServerTest {
             dbInputCustomer.setCustomerTypeId(3);
             dbInputCustomer.setCustomerType(CustomerDatabase.getCustomerType(dbInputCustomer.getCustomerTypeId()));
             dbInputCustomer.setEmail("cassie@mail.com");
-            dbInputCustomer.setId(4);
+            dbInputCustomer.setId(1);
 
             dbOutputCustomer = CustomerDatabase.getCustomer(dbInputCustomer.getEmail());
 
             Assert.assertEquals(dbInputCustomer.getFirstName(), dbOutputCustomer.getFirstName());
             Assert.assertEquals(dbInputCustomer.getLastName(), dbOutputCustomer.getLastName());
             Assert.assertEquals(dbInputCustomer.getPassword(), dbOutputCustomer.getPassword());
-            // Assert.assertEquals(dbInputCustomer.getRating(), dbOutputCustomer.getRating());
+            Assert.assertEquals(dbInputCustomer.getRating(), dbOutputCustomer.getRating());
             Assert.assertEquals(dbInputCustomer.getIdentificationNumber(), dbOutputCustomer.getIdentificationNumber());
             Assert.assertEquals(dbInputCustomer.getTaxDetails(), dbOutputCustomer.getTaxDetails());
             Assert.assertEquals(dbInputCustomer.getPaySlip(), dbOutputCustomer.getPaySlip());
