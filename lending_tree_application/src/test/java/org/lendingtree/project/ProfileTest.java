@@ -9,8 +9,7 @@ public class ProfileTest {
     public void getCustomerProfileTest() {
         int profileID = 12;
         try {
-            ProfileDatabase.getCustomerProfile(profileID);
-        } catch (Exception e) {
+            ProfileDatabase.getCustomerProfile(profileID);      } catch (Exception e) {
             e.printStackTrace();
         }
     }
