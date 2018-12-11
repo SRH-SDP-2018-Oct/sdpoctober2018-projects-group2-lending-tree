@@ -29,7 +29,7 @@ public class PaymentHistoryTest {
 
     @Test
     public void getPaymentHistoryNo(){
-        int inputCustomerId =1;
+        int inputCustomerId =5;
         String inputYN = "N";
 
 
@@ -49,6 +49,19 @@ public class PaymentHistoryTest {
 
     @Test
     public void testCustomerPaymentHistory(){
+
+        PaymentHistory paymentHistory = new PaymentHistory();
+        int userId = 1;
+
+        try {
+            PaymentHistoryDatabase.displayPaymentHistoryCustomerDatabase(userId);
+        } catch (Exception exception){
+            exception.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testInput(){
 
         PaymentHistory paymentHistory = new PaymentHistory();
         int userId = 1;

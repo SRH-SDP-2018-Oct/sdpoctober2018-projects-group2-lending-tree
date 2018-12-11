@@ -30,7 +30,6 @@ public class PaymentHistoryDatabase {
                 Boolean availableData = false;
                 int loopCount =0;
                 ResultSet dbResultSet = dbPreparedStatement.executeQuery();
-                System.out.println("Loan ID \t Payment Amount \t Payment Date \t Payment Type \t Payment History ID");
                 while (dbResultSet.next()) {
                     newPaymentHistory.setInputCustomerId(dbResultSet.getInt(CUSTOMER_ID));
                     newPaymentHistory.setCustomerLastName(dbResultSet.getString (CUSTOMER_LAST_NAME));
@@ -121,7 +120,6 @@ public class PaymentHistoryDatabase {
                                                     " = " +userId+ " ";
                 PreparedStatement dbPreparedStatement = databaseConnection.prepareStatement(getPaymentHistoryCustomer);
                 ResultSet dbResultSet = dbPreparedStatement.executeQuery();
-                System.out.println("Customer Last Name \t Customer First Name \t Payment Amount \t Payment Date \t Payment Type");
                 while(dbResultSet.next()){
                     loopCount++;
                     System.out.println("----------" + loopCount + "----------");
@@ -145,8 +143,7 @@ public class PaymentHistoryDatabase {
             }
     }
 
-    public static void insertIntoPaymentHistory(){
-            PaymentHistory newPaymentHistory = new PaymentHistory();
+    public static void insertIntoPaymentHistory(PaymentHistory newPaymentHistory){
             try {
                 String insertQuery = " INSERT INTO " + PAYMENT_HISTORY +
                         " ( " + LOAN_ID + " , " + PAYMENT_AMOUNT +
@@ -172,11 +169,22 @@ public class PaymentHistoryDatabase {
             //PaymentDisplayDatabase pd = new PaymentDisplayDatabase();
             //pd.displayPaymentHistoryCustomerDatabase();
 
+
+
+public static boolean checkInputID(int userId){
+            try {
+                String checkIfIdExists = " SELECT * FROM " + PAYMENT_HISTORY + " WHERE " + userId + " = ? ";
+                PreparedStatement dbPreparedStatement = databaseConnection.prepareStatement(checkIfIdExists);
+                dbPreparedStatement.setInt(1, userId);
+                ResultSet dbResultSet = dbPreparedStatement.executeQuery();
+                return dbResultSet.next();
+            }catch(Exception exception){
+                exception.printStackTrace();
+                return false;
+            }
+
+
+
 }
 
-   // public static void checkInputID( ) throws SQLException {
-   //    String checkIfIdExists = "SELECT * FROM PAYMENT_HISTORY WHERE" +inputLoanId+"=?";
-   //    PreparedStatement checkInputId = databaseConnection.prepareStatement(checkIfIdExists);
-//
-//  }
-
+}
