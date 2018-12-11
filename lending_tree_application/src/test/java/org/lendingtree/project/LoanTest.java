@@ -2,6 +2,8 @@ package org.lendingtree.project;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 public class LoanTest {
 
     @Test
@@ -65,6 +67,25 @@ public class LoanTest {
             e.printStackTrace();
         }
 
+    }
+
+    @Test
+    public void generateReportTest() {
+
+        int userId = 1;
+        boolean isCustomer = true;
+        ArrayList<Integer> periods = new ArrayList<>();
+
+        periods.add(1);
+        periods.add(2018);
+        periods.add(4);
+        periods.add(2018);
+
+        try {
+            LoanDatabase.generateReport(userId, isCustomer, periods);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

@@ -1,9 +1,16 @@
 package org.lendingtree.project;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import ar.com.fdvs.dj.core.DynamicJasperHelper;
+import ar.com.fdvs.dj.core.layout.ClassicLayoutManager;
+import ar.com.fdvs.dj.domain.DynamicReport;
+import ar.com.fdvs.dj.domain.builders.FastReportBuilder;
+import net.sf.jasperreports.engine.JRResultSetDataSource;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.Date;
 
 public class LoanDatabase {
 
@@ -41,7 +48,7 @@ public class LoanDatabase {
         PreparedStatement preparedStatementCustomer;
 
         String queryCustomer = "SELECT customer_first_name, customer_last_name FROM " + TABLE_CUSTOMER
-                + " WHERE "+COLUMN_CUSTOMER_ID + " = " + "?";
+                + " WHERE " + COLUMN_CUSTOMER_ID + " = " + "?";
 
        preparedStatementCustomer = databaseConnection.prepareStatement(queryCustomer);
 
@@ -190,4 +197,150 @@ public class LoanDatabase {
         }
 
     }
+
+    public static void generateReport(int userId, boolean isCustomer, ArrayList<Integer> periods) throws Exception {
+        try {
+            int dayTo = 1;
+            int institutionId = 1;
+            String query = "";
+
+            if (isCustomer) {
+                query = "SELECT * " +
+                        "FROM loan " +
+                        "JOIN product " +
+                        "ON product.product_id=loan.product_id " +
+                        "JOIN loan_status " +
+                        "ON loan_status.loan_status_id=loan.loan_status_id " +
+                        "WHERE customer_id = ? ";
+            } else {
+                institutionId = getInstitutionId(userId);
+                query = "SELECT * " +
+                        "FROM institution " +
+                        "JOIN representative " +
+                        "ON institution.institution_id=representative.institution_id " +
+                        "JOIN product " +
+                        "ON product.representative_id=representative.representative_id " +
+                        "JOIN loan " +
+                        "ON loan.product_id=product.product_id " +
+                        "JOIN loan_status " +
+                        "ON loan_status.loan_status_id=loan.loan_status_id " +
+                        "JOIN customer " +
+                        "ON customer.customer_id=loan.customer_id " +
+                        "WHERE representative.representative_id = ? ";
+            }
+
+            if (periods.size() > 0) {
+                dayTo = getDayTo(periods.get(2), periods.get(3));
+                query = query +
+                        "AND loan_date_applied >= ? " +
+                        "AND loan_date_applied <= ?";
+            }
+
+            PreparedStatement preparedStatement;
+
+            preparedStatement = databaseConnection.prepareStatement(query);
+
+            if (isCustomer) {
+                preparedStatement.setInt(1, userId);
+            } else {
+                preparedStatement.setInt(1, institutionId);
+            }
+
+            if (periods.size() > 0) {
+                preparedStatement.setString(2, periods.get(1) + "-" + periods.get(0) + "-01");
+                preparedStatement.setString(3, periods.get(3) + "-" + periods.get(2)+ "-" + dayTo);
+            }
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            FastReportBuilder fastReportBuilder = new FastReportBuilder();
+
+            DynamicReport dynamicReport;
+
+            if (isCustomer) {
+                dynamicReport = fastReportBuilder
+                        .addColumn("Loan Id", "loan_id", String.class.getName(), 15)
+                        .addColumn("Product name", "product_description", String.class.getName(), 30)
+                        .addColumn("Loan status", "loan_status_description", String.class.getName(), 15)
+                        .addColumn("Loan amount", "product_amount", String.class.getName(), 50)
+                        .addColumn("Date applied", "loan_date_applied", String.class.getName(), 20)
+                        .setTitle("Customer's report")
+                        .setSubtitle("This report was generated at " + new Date() + ".")
+                        .setPrintBackgroundOnOddRows(true)
+                        .setUseFullPageWidth(true)
+                        .build();
+            } else {
+                dynamicReport = fastReportBuilder
+                        .addColumn("Loan Id", "loan_id", String.class.getName(), 10)
+                        .addColumn("Rep. Id", "representative_id", String.class.getName(), 10)
+                        .addColumn("Product name", "product_description", String.class.getName(), 20)
+                        .addColumn("Customer's first name", "customer_first_name", String.class.getName(), 20)
+                        .addColumn("Customer's last name", "customer_last_name", String.class.getName(), 20)
+                        .addColumn("Loan status", "loan_status_description", String.class.getName(), 15)
+                        .addColumn("Loan amount", "product_amount", String.class.getName(), 50)
+                        .addColumn("Date applied", "loan_date_applied", String.class.getName(), 20)
+                        .setTitle("Institution's report")
+                        .setSubtitle("This report was generated at " + new Date() + ".")
+                        .setPrintBackgroundOnOddRows(true)
+                        .setUseFullPageWidth(true)
+                        .build();
+            }
+
+            JRResultSetDataSource jrResultSetDataSource = new JRResultSetDataSource(resultSet);
+
+            JasperPrint jasperPrint = DynamicJasperHelper.generateJasperPrint(dynamicReport, new ClassicLayoutManager(), jrResultSetDataSource);
+
+            JasperViewer.viewReport(jasperPrint, false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static int getDayTo(int month, int year) {
+        int dayTo = 1;
+
+        switch (month) {
+            case 1: case 3: case 5: case 7: case 8: case 10: case 12:
+                dayTo = 31;
+                break;
+
+            case 2:
+                if ((year % 4 == 0) && ((year % 100 != 0) || (year % 400 == 0))) {
+                    dayTo = 29;
+                } else {
+                    dayTo = 28;
+                }
+                break;
+
+            case 4: case 6: case 9: case 11:
+                dayTo = 30;
+        }
+
+        return dayTo;
+    }
+
+    public static int getInstitutionId(int representativeId) throws SQLException {
+        int institutionId = 1;
+
+        PreparedStatement preparedStatementRepresentative;
+
+        String queryRepresentative = "SELECT * " +
+                "FROM representative " +
+                "JOIN institution " +
+                "ON institution.institution_id=representative.institution_id " +
+                "WHERE representative_id = ?";
+
+        preparedStatementRepresentative = databaseConnection.prepareStatement(queryRepresentative);
+
+        preparedStatementRepresentative.setInt(1, representativeId);
+
+        ResultSet resultSetRepresentative = preparedStatementRepresentative.executeQuery();
+
+        resultSetRepresentative.next();
+
+        institutionId = resultSetRepresentative.getInt("institution_id");
+
+        return institutionId;
+    }
+
 }
