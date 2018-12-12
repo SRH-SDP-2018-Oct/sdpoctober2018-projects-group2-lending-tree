@@ -76,6 +76,22 @@ public abstract class InputValidationTools {
         return true;
     }
 
+    protected static int inputNumber(int minValue, int maxValue){
+        Scanner scanner = new Scanner(System.in);
+        int userInput;
+        int numberOfTries = 0;
+        do{
+            if(numberOfTries > 0){
+                System.out.println("Invalid input. Please select a number between " + minValue + " and " + maxValue);
+            }
+            System.out.println("Please enter your selection:");
+            userInput = scanner.nextInt();
+            numberOfTries++;
+        }while (!scanner.hasNextInt() || userInput < minValue || userInput > maxValue);
+
+        return userInput;
+    }
+
     private static String getUserInput(String field, Pattern regex){
         Scanner scanner = new Scanner(System.in);
         String userInput;
