@@ -87,13 +87,12 @@ public class InputValidationToolsTest {
 
     private static Boolean confirmUserInputStringTest(String input, char simulatedInput){
         char userConfirmation;
-        do{
-            System.out.println("You entered: " + input);
-            System.out.println("Is this correct? Y/N");
-            userConfirmation = simulatedInput;
-            System.out.println(simulatedInput);
-        } while (userConfirmation != 'Y');
-        return true;
+        System.out.println("You entered: " + input);
+        System.out.println("Is this correct? Y/N");
+        userConfirmation = simulatedInput;
+        System.out.println(simulatedInput);
+        if (userConfirmation == 'Y') return true;
+        return false;
     }
 
     private static String getUserInputTest(String field, Pattern regex, String simulatedInput, char simulatedConfirmation){

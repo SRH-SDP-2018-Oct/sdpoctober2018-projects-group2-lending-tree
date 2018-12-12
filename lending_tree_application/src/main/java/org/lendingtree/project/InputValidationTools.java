@@ -68,12 +68,11 @@ public abstract class InputValidationTools {
     private static Boolean confirmUserInputString(String input){
         char userConfirmation;
         Scanner userInput = new Scanner(System.in);
-        do{
-            System.out.println("You entered: " + input);
-            System.out.println("Is this correct? Y/N");
-            userConfirmation = userInput.next().charAt(0);
-        } while (userConfirmation != 'Y');
-        return true;
+        System.out.println("You entered: " + input);
+        System.out.println("Is this correct? Y/N");
+        userConfirmation = userInput.next().charAt(0);
+        if(userConfirmation == 'Y') return true;
+        return false;
     }
 
     protected static int inputNumber(int minValue, int maxValue){
