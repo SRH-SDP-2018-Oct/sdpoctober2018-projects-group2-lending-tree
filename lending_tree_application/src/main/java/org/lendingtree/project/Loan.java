@@ -51,9 +51,10 @@ public class Loan {
         this.loanDateApplied = loanDateApplied;
     }
 
-    public static void goMenuLoan(int userId, boolean isCustomer) {
+    public static void goMenuLoan(int userId, String userType) {
         try {
-
+            boolean isCustomer=false;
+            if (userType == App.USER_TYPE_CUSTOMER){isCustomer=true;}
             int choice;
             ArrayList<Integer> periods = new ArrayList<>();
 
@@ -77,6 +78,7 @@ public class Loan {
 
                     case 1:
                         System.out.println("Work in progress.\n");
+                        LoanDatabase.printCustomerLoans(userId);
                         flag = false;
                         break;
 
@@ -135,11 +137,4 @@ public class Loan {
         }
     }
 
-    public static void main(String[] args) {
-        try {
-            goMenuLoan(1, true);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }

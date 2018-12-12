@@ -7,14 +7,14 @@ import java.util.Scanner;
 
 public class PaymentHistory {
 
-    private int inputCustomerId;
+    private static int inputCustomerId;
     private Double paymentAmount;
     private Date paymentDate;
     private String paymentType;
     private int paymentHistoryId;
     private String customerLastName;
     private String customerFirstName;
-    private String inputYN;
+    private static String inputYN;
     private int loanID;
 
 
@@ -83,7 +83,7 @@ public class PaymentHistory {
     }
 
 
-    public void lenderPaymentHistory() {
+    public static void lenderPaymentHistory() {
         try {
             Scanner enterInput = new Scanner(System.in);
             System.out.println("Would you like to see all the data of every customer? Y/N?");
@@ -106,26 +106,13 @@ public class PaymentHistory {
             e.printStackTrace();
         }
 
-
     }
 
-    public void customerPaymentHistory() {
-        int userId;
-
+    public static void customerPaymentHistory(int userId) {
         try {
-            userId = 1;
             PaymentHistoryDatabase.displayPaymentHistoryCustomerDatabase(userId);
-
         } catch (Exception exception) {
             exception.printStackTrace();
         }
-
-
-  /*public static void main (String[] args){
-        PaymentHistory ph = new PaymentHistory();
-        ph.lenderPaymentHistory();
-    }*/
-
-
     }
 }
