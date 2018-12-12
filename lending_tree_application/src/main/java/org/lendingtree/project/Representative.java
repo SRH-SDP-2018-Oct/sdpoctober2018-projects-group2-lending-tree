@@ -32,6 +32,7 @@ public class Representative extends User{
             }
             institutionId = userInput.nextInt();
             if(institutionId == maxInstitutionValue){
+                this.institution = new Institution();
                 this.institution.register();
             }
         } while(institutionId < 1 || institutionId > maxInstitutionValue);

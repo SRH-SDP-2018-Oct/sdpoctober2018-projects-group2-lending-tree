@@ -31,7 +31,7 @@ public class RepresentativeDatabase {
         int maxValueInstitutions = 0;
         ResultSet dbResultSet = dbStatement.executeQuery("SELECT * FROM institution");
         while (dbResultSet.next()) {
-            System.out.println(dbResultSet.getString(1) + ". " + dbResultSet.getString(2));
+            System.out.println(dbResultSet.getString(1) + ". " + dbResultSet.getString(3) +  " (Institution Type: " + InstitutionDatabase.getInstitutionType(Integer.parseInt(dbResultSet.getString(2))) + ")");
             maxValueInstitutions++;
         }
         return  maxValueInstitutions;

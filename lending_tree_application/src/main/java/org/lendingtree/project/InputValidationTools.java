@@ -40,11 +40,11 @@ public abstract class InputValidationTools {
     protected static String inputAddress(){
         String fullAddress;
 
-        fullAddress = getUserInput("Street Name: ", REGEX_NAME_VALIDATION);
-        fullAddress = fullAddress + " " + getUserInput("Street Number: ", REGEX_NUMBER_VALIDATION);
-        fullAddress = fullAddress + STRING_SEPARATOR + getUserInput("Postal Code: ", REGEX_POSTAL_VALIDATION);
-        fullAddress = fullAddress + STRING_SEPARATOR + getUserInput("City: ", REGEX_NAME_VALIDATION);
-        fullAddress = fullAddress + STRING_SEPARATOR + getUserInput("Country: ", REGEX_NAME_VALIDATION);
+        fullAddress = getUserInput("Street Name", REGEX_NAME_VALIDATION);
+        fullAddress = fullAddress + " " + getUserInput("Street Number", REGEX_NUMBER_VALIDATION);
+        fullAddress = fullAddress + STRING_SEPARATOR + getUserInput("Postal Code", REGEX_POSTAL_VALIDATION);
+        fullAddress = fullAddress + STRING_SEPARATOR + getUserInput("City", REGEX_NAME_VALIDATION);
+        fullAddress = fullAddress + STRING_SEPARATOR + getUserInput("Country", REGEX_NAME_VALIDATION);
 
         return fullAddress;
     }
@@ -54,7 +54,7 @@ public abstract class InputValidationTools {
         Double rating;
 
         do{
-            System.out.println("Please select a valid number for the customer rating: ");
+            System.out.println("Please select a valid number for the rating: ");
             while(!userInput.hasNextFloat()) {
                 System.out.println("That is not a valid selection");
                 userInput.next();
@@ -103,6 +103,6 @@ public abstract class InputValidationTools {
             userInput = scanner.nextLine();
             numberOfTries++;
         }while (!regex.matcher(userInput).matches() || !confirmUserInputString(userInput));
-        return userInput;
+        return userInput.toUpperCase();
     }
 }

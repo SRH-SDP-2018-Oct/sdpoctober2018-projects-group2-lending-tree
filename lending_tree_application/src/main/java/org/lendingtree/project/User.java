@@ -55,6 +55,7 @@ public abstract class User {
         lastName = InputValidationTools.inputName("Last Name");
         firstName = InputValidationTools.inputName("First Name");
         phone = InputValidationTools.inputPhone();
+        email = InputValidationTools.inputEmail();
 
         do{
             try{
