@@ -5,11 +5,11 @@ import java.util.regex.Pattern;
 
 public abstract class InputValidationTools {
     private static final Pattern REGEX_NAME_VALIDATION = Pattern.compile("(?i)(^[a-z])((?![ .,'-]$)[a-z .,'-]){0,24}$");
-    private static final Pattern REGEX_NUMBER_VALIDATION = Pattern.compile("^\\d");
+    private static final Pattern REGEX_NUMBER_VALIDATION = Pattern.compile("^[0-9]{1,10}$");
     private static final Pattern REGEX_POSTAL_VALIDATION = Pattern.compile("^[0-9]{5}(?:-[0-9]{4})?$");
     private static final Pattern REGEX_EMAIL_VALIDATION = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
-    private static final Pattern REGEX_PHONE_VALIDATION = Pattern.compile("^(?=(?:[8-9]){1})(?=[0-9]{8}).*");
-    private static final Pattern REGEX_IDENTIFICATION_NUMBER = Pattern.compile("(?i)(^[a-z])((?![ .,'-]$)[a-z .,'-]){0,24}$");
+    private static final Pattern REGEX_PHONE_VALIDATION = Pattern.compile("^[0-9]{7,10}$");
+    private static final Pattern REGEX_IDENTIFICATION_NUMBER = Pattern.compile("(?i)(^[a-z])((?![ .,'-]$)[a-z .,'-]){0,24}[0-9]{0,8}$");
     private static final Pattern REGEX_FINANCIAL_STATUS = Pattern.compile("(?i)(^[a-z])((?![ .,'-]$)[a-z .,'-]){0,24}$");
     private static final String STRING_SEPARATOR = ", ";
 
@@ -71,7 +71,7 @@ public abstract class InputValidationTools {
         System.out.println("You entered: " + input);
         System.out.println("Is this correct? Y/N");
         userConfirmation = userInput.next().charAt(0);
-        if(userConfirmation == 'Y') return true;
+        if(userConfirmation == 'Y' || userConfirmation == 'y') return true;
         return false;
     }
 
