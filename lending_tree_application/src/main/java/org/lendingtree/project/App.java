@@ -142,7 +142,7 @@ public class App {
                         break;
 
                     case 3:
-                        PaymentHistory.customerPaymentHistory(getCurrentSessionId());
+                        PaymentHistory.userPaymentHistory(getCurrentSessionId(), getUserType());
                         break;
 
                     case 4:
@@ -155,7 +155,7 @@ public class App {
 
                     case 5:
                         try {
-                            ProfileSettingDatabase.getCustomerSettings(getCurrentSessionId());
+                            ProfileSettingsDatabase.getCustomerSettings(getCurrentSessionId());
                         } catch (SQLException e) {
                             e.printStackTrace();
                         }
@@ -183,7 +183,7 @@ public class App {
                         break;
 
                     case 3:
-                        PaymentHistory.lenderPaymentHistory();
+                        PaymentHistory.userPaymentHistory(getCurrentSessionId(), getUserType());
                         break;
 
                     case 4:
@@ -196,7 +196,7 @@ public class App {
 
                     case 5:
                         try {
-                            ProfileSettingDatabase.getInstitutionSettings(getCurrentSessionId());
+                            ProfileSettingsDatabase.getInstitutionSettings(getCurrentSessionId());
                         } catch (SQLException e) {
                             e.printStackTrace();
                         }
