@@ -59,5 +59,7 @@ public class Institution {
         this.email = InputValidationTools.inputEmail();
         this.financialStatus = InputValidationTools.inputFinancialStatus();
         this.rating = InputValidationTools.inputRating();
+
+        InstitutionDatabase.insert(this);
     }
 }

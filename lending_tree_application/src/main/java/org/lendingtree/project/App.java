@@ -59,7 +59,7 @@ public class App {
                                 e.printStackTrace();
                             }
                             break;
-                    }
+                    } break;
 
                 case 2:
                     System.out.println("Dear lender, please select one of the following options:\n" +
@@ -109,10 +109,10 @@ public class App {
                             System.out.println("Wrong Entry");
                             flag=true;
                             break;
-                    }
+                    } break;
             }
 
-        } while (flag = true);
+        } while (flag == true);
 
     }
 
@@ -139,9 +139,11 @@ public class App {
 
                     case 2:
                         Loan.goMenuLoan(getCurrentSessionId(), getUserType());
+                        break;
 
                     case 3:
                         PaymentHistory.customerPaymentHistory(getCurrentSessionId());
+                        break;
 
                     case 4:
                         try {
@@ -149,6 +151,7 @@ public class App {
                         } catch (SQLException e) {
                             e.printStackTrace();
                         }
+                        break;
 
                     case 5:
                         try {
@@ -156,6 +159,7 @@ public class App {
                         } catch (SQLException e) {
                             e.printStackTrace();
                         }
+                        break;
                 }
 
             case USER_TYPE_REPRESENTATIVE:
@@ -176,9 +180,11 @@ public class App {
 
                     case 2:
                         Loan.goMenuLoan(getCurrentSessionId(), getUserType());
+                        break;
 
                     case 3:
                         PaymentHistory.lenderPaymentHistory();
+                        break;
 
                     case 4:
                         try {
@@ -186,6 +192,7 @@ public class App {
                         } catch (SQLException e) {
                             e.printStackTrace();
                         }
+                        break;
 
                     case 5:
                         try {
@@ -193,6 +200,7 @@ public class App {
                         } catch (SQLException e) {
                             e.printStackTrace();
                         }
+                        break;
 
                 }
         }

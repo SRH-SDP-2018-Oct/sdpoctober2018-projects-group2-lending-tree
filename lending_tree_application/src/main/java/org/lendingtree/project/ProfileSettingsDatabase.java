@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-public class ProfileSettingDatabase {
+public class ProfileSettingsDatabase {
 
     public static String Userchoice;
     public static String NewPassword;
@@ -15,6 +15,7 @@ public class ProfileSettingDatabase {
     public static String New_Address;
 
     private static Connection databaseConnection = ConnectMSSQLServer.getConnection();
+
 
     public static void getCustomerSettings(int customerID) throws SQLException {
 
@@ -127,4 +128,45 @@ public class ProfileSettingDatabase {
         } while (flag > 0);
 
     }
-}
+    public static void updatePassword(int userId, String newPassword) throws SQLException {
+        String query1 = "Update dbo.customer set customer_password=?" + " Where customer_id=" + userId;
+
+        PreparedStatement statement1 = databaseConnection.prepareStatement(query1);
+        statement1.setString(1, newPassword);
+        statement1.execute();
+        System.out.println("Password Changed Successfully");
+    }
+
+    public static void updateEmail(int userID, String newEmail) throws SQLException {
+        String query2 = "Update dbo.customer set customer_email=?" + " Where customer_id=" + userID;
+        PreparedStatement statement2 = databaseConnection.prepareStatement(query2);
+        statement2.setString(1, newEmail);
+        statement2.execute();
+        System.out.println("Email Changed Successfully");
+    }
+
+    public static void updateRepresentativePassword (int userId, String newPassword) throws SQLException {
+            String query1 = "Update dbo.customer set customer_password=?" + " Where _id=" + userId;
+
+            PreparedStatement statement1 = databaseConnection.prepareStatement(query1);
+            statement1.setString(1, NewPassword);
+            statement1.execute();
+            System.out.println("Password Changed Successfully");
+        }
+    public static void updateRepresentativeAddress(int userId , String newAddress)  throws SQLException {
+
+            String query1 = "Update dbo.representative set representative_address=?" + " Where representative_id=" + userId;
+            PreparedStatement statement1 = databaseConnection.prepareStatement(query1);
+            statement1.setString(1, newAddress);
+            statement1.execute();
+            System.out.println("Address Changed Successfully");
+        }
+    public static void updateRepresentativeEmail(int userId , String newEmail) throws SQLException {
+                String query2 = "Update dbo.representative set representative_email=?" + " Where representative_id=" + userId;
+                PreparedStatement statement2 = databaseConnection.prepareStatement(query2);
+                statement2.setString(1, newEmail);
+                statement2.execute();
+                System.out.println("Email Changed Successfully");
+            }
+    }
+

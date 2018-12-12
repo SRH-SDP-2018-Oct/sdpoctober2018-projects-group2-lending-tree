@@ -89,12 +89,11 @@ public class Customer extends User {
         this.customerTypeId = inputCustomerTypeId();
         this.customerType = CustomerDatabase.getCustomerType(customerTypeId);
         System.out.println("You selected: " + customerType);
-        this.setEmail(InputValidationTools.inputEmail());
         this.address = InputValidationTools.inputAddress();
         this.identificationNumber = InputValidationTools.inputIdentificationNumber();
         this.rating = InputValidationTools.inputRating();
 
-        CustomerDatabase.insert(this);
+        this.setId(CustomerDatabase.insert(this));
     }
 
     @Override
@@ -129,5 +128,4 @@ public class Customer extends User {
         System.out.println(message);
         return  loginCustomer;
     }
-
 }

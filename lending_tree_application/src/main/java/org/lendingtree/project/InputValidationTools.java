@@ -5,11 +5,11 @@ import java.util.regex.Pattern;
 
 public abstract class InputValidationTools {
     private static final Pattern REGEX_NAME_VALIDATION = Pattern.compile("(?i)(^[a-z])((?![ .,'-]$)[a-z .,'-]){0,24}$");
-    private static final Pattern REGEX_NUMBER_VALIDATION = Pattern.compile("^\\d");
+    private static final Pattern REGEX_NUMBER_VALIDATION = Pattern.compile("^[0-9]{1,10}$");
     private static final Pattern REGEX_POSTAL_VALIDATION = Pattern.compile("^[0-9]{5}(?:-[0-9]{4})?$");
     private static final Pattern REGEX_EMAIL_VALIDATION = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
-    private static final Pattern REGEX_PHONE_VALIDATION = Pattern.compile("^(?=(?:[8-9]){1})(?=[0-9]{8}).*");
-    private static final Pattern REGEX_IDENTIFICATION_NUMBER = Pattern.compile("(?i)(^[a-z])((?![ .,'-]$)[a-z .,'-]){0,24}$");
+    private static final Pattern REGEX_PHONE_VALIDATION = Pattern.compile("^[0-9]{7,10}$");
+    private static final Pattern REGEX_IDENTIFICATION_NUMBER = Pattern.compile("(?i)(^[a-z])((?![ .,'-]$)[a-z .,'-]){0,24}[0-9]{0,8}$");
     private static final Pattern REGEX_FINANCIAL_STATUS = Pattern.compile("(?i)(^[a-z])((?![ .,'-]$)[a-z .,'-]){0,24}$");
     private static final String STRING_SEPARATOR = ", ";
 
@@ -40,11 +40,11 @@ public abstract class InputValidationTools {
     protected static String inputAddress(){
         String fullAddress;
 
-        fullAddress = getUserInput("Street Name: ", REGEX_NAME_VALIDATION);
-        fullAddress = fullAddress + " " + getUserInput("Street Number: ", REGEX_NUMBER_VALIDATION);
-        fullAddress = fullAddress + STRING_SEPARATOR + getUserInput("Postal Code: ", REGEX_POSTAL_VALIDATION);
-        fullAddress = fullAddress + STRING_SEPARATOR + getUserInput("City: ", REGEX_NAME_VALIDATION);
-        fullAddress = fullAddress + STRING_SEPARATOR + getUserInput("Country: ", REGEX_NAME_VALIDATION);
+        fullAddress = getUserInput("Street Name", REGEX_NAME_VALIDATION);
+        fullAddress = fullAddress + " " + getUserInput("Street Number", REGEX_NUMBER_VALIDATION);
+        fullAddress = fullAddress + STRING_SEPARATOR + getUserInput("Postal Code", REGEX_POSTAL_VALIDATION);
+        fullAddress = fullAddress + STRING_SEPARATOR + getUserInput("City", REGEX_NAME_VALIDATION);
+        fullAddress = fullAddress + STRING_SEPARATOR + getUserInput("Country", REGEX_NAME_VALIDATION);
 
         return fullAddress;
     }
@@ -54,7 +54,7 @@ public abstract class InputValidationTools {
         Double rating;
 
         do{
-            System.out.println("Please select a valid number for the customer rating: ");
+            System.out.println("Please select a valid number for the rating: ");
             while(!userInput.hasNextFloat()) {
                 System.out.println("That is not a valid selection");
                 userInput.next();
@@ -68,12 +68,27 @@ public abstract class InputValidationTools {
     private static Boolean confirmUserInputString(String input){
         char userConfirmation;
         Scanner userInput = new Scanner(System.in);
+        System.out.println("You entered: " + input);
+        System.out.println("Is this correct? Y/N");
+        userConfirmation = userInput.next().charAt(0);
+        if(userConfirmation == 'Y' || userConfirmation == 'y') return true;
+        return false;
+    }
+
+    protected static int inputNumber(int minValue, int maxValue){
+        Scanner scanner = new Scanner(System.in);
+        int userInput;
+        int numberOfTries = 0;
         do{
-            System.out.println("You entered: " + input);
-            System.out.println("Is this correct? Y/N");
-            userConfirmation = userInput.next().charAt(0);
-        } while (userConfirmation != 'Y');
-        return true;
+            if(numberOfTries > 0){
+                System.out.println("Invalid input. Please select a number between " + minValue + " and " + maxValue);
+            }
+            System.out.println("Please enter your selection:");
+            userInput = scanner.nextInt();
+            numberOfTries++;
+        }while (!scanner.hasNextInt() || userInput < minValue || userInput > maxValue);
+
+        return userInput;
     }
 
     private static String getUserInput(String field, Pattern regex){
@@ -88,6 +103,6 @@ public abstract class InputValidationTools {
             userInput = scanner.nextLine();
             numberOfTries++;
         }while (!regex.matcher(userInput).matches() || !confirmUserInputString(userInput));
-        return userInput;
+        return userInput.toUpperCase();
     }
 }
