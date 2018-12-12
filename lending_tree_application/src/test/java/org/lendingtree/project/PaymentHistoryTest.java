@@ -6,24 +6,39 @@ import org.junit.Test;
 public class PaymentHistoryTest {
 
 
+
+
     @Test
-    public void getPaymentHistoryRepresentative() {
+    public void getPaymentHistoryYes() {
 
-        int userId = 2;
+        String inputYN = "Y";
 
-            PaymentHistoryDatabase.displayPaymentHistoryRepresentative(userId);
 
+
+
+       try {
+             if (inputYN.equalsIgnoreCase("Y")) {
+                PaymentHistoryDatabase.displayPaymentHistoryAll();
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+       }
     }
 
     @Test
-    public void getPaymentHistoryTwo() {
-        int userId = 2;
-        int inputCustomerId = 2;
+    public void getPaymentHistoryNo(){
+        int inputCustomerId =5;
+        String inputYN = "N";
+
+
 
 
         try {
-
-             PaymentHistoryDatabase.displayPaymentHistoryRepresentativeSort(userId, inputCustomerId);
+            if(inputYN.equalsIgnoreCase("N")) {
+                PaymentHistoryDatabase.displayPaymentHistory(inputCustomerId);
+            }
 
 
         } catch (Exception e) {
@@ -33,15 +48,28 @@ public class PaymentHistoryTest {
 
 
     @Test
-    public void testCustomerPaymentHistory() {
+    public void testCustomerPaymentHistory(){
 
+        PaymentHistory paymentHistory = new PaymentHistory();
         int userId = 1;
 
         try {
-            PaymentHistoryDatabase.displayPaymentHistoryCustomer(userId);
-        } catch (Exception exception) {
+            PaymentHistoryDatabase.displayPaymentHistoryCustomerDatabase(userId);
+        } catch (Exception exception){
+            exception.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testInput(){
+
+        PaymentHistory paymentHistory = new PaymentHistory();
+        int userId = 1;
+
+        try {
+            PaymentHistoryDatabase.displayPaymentHistoryCustomerDatabase(userId);
+        } catch (Exception exception){
             exception.printStackTrace();
         }
     }
 }
-

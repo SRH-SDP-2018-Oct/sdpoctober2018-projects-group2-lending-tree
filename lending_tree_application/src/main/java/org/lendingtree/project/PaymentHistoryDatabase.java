@@ -15,34 +15,21 @@ public class PaymentHistoryDatabase {
     private static final String LOAN_ID = "loan_id";
     private static final String LOAN = "loan";
     private static final String CUSTOMER = "customer";
-    private static final String PRODUCT_ID = "product_id";
-    private static final String PRODUCT = "product";
-    private static final String REPRESENTATIVE = "representative";
-    private static final String REPRESENTATIVE_ID = "representative_id";
 
     protected static Connection databaseConnection = ConnectMSSQLServer.getConnection();
 
-        public static void displayPaymentHistoryRepresentative(int inputRepresentativeID){
-
+        public static void displayPaymentHistoryAll(){
             PaymentHistory newPaymentHistory = new PaymentHistory();
             try {
-
                 String getPaymentHistoryForAll = " SELECT * FROM " +PAYMENT_HISTORY+
                                                  " INNER JOIN " +LOAN+ " ON " +PAYMENT_HISTORY+
                                                  " . " +LOAN_ID+ " = " +LOAN+ " . " +LOAN_ID+
-                                                 " INNER JOIN " +PRODUCT+ " ON " +LOAN+ " . "
-                                                 +PRODUCT_ID+ " = " +PRODUCT+ " . " +PRODUCT_ID+ " INNER JOIN "
-                                                 +REPRESENTATIVE+ " ON " +PRODUCT+ " . " +REPRESENTATIVE_ID+ " = "
-                                                 +REPRESENTATIVE+ " . " +REPRESENTATIVE_ID+ " INNER JOIN " +CUSTOMER+ " ON "
-                                                 +LOAN+ " . " +CUSTOMER_ID+ " = " +CUSTOMER+ " . " +CUSTOMER_ID+
-                                                 " WHERE " +PRODUCT+
-                                                 " . " +REPRESENTATIVE_ID+ " = ? " ;
+                                                 " INNER JOIN " +CUSTOMER+ " ON " +LOAN+ " . "
+                                                 +CUSTOMER_ID+ " = " +CUSTOMER+ " . " +CUSTOMER_ID+ "";
                 PreparedStatement dbPreparedStatement = databaseConnection.prepareStatement(getPaymentHistoryForAll);
-                dbPreparedStatement.setInt(1, inputRepresentativeID);
                 Boolean availableData = false;
                 int loopCount =0;
                 ResultSet dbResultSet = dbPreparedStatement.executeQuery();
-                System.out.println("You have the following customers :");
                 while (dbResultSet.next()) {
                     newPaymentHistory.setInputCustomerId(dbResultSet.getInt(CUSTOMER_ID));
                     newPaymentHistory.setCustomerLastName(dbResultSet.getString (CUSTOMER_LAST_NAME));
@@ -53,7 +40,6 @@ public class PaymentHistoryDatabase {
                     newPaymentHistory.setPaymentHistoryId(dbResultSet.getShort(PAYMENT_HISTORY_ID));
 
                     loopCount++;
-
                     System.out.println("----------" + loopCount + "----------");
                     System.out.println("CUSTOMER ID: " + "" + dbResultSet.getInt(CUSTOMER_ID));
                     System.out.println("CUSTOMER LAST NAME: " + "" + dbResultSet.getString (CUSTOMER_LAST_NAME));
@@ -72,26 +58,23 @@ public class PaymentHistoryDatabase {
                 }
 
             }catch (Exception e){
-                e.printStackTrace();
+
             }
 
         }
 
-        public static void displayPaymentHistoryRepresentativeSort(int userId,int inputCustomerId) {
+        public static void displayPaymentHistory(int inputCustomerId) {
             PaymentHistory newPaymentHistory = new PaymentHistory();
             try {
                 String getPaymentHistory = " SELECT * FROM " +PAYMENT_HISTORY+
                         " INNER JOIN " +LOAN+ " ON " +PAYMENT_HISTORY+ " . " +LOAN_ID+
                         " = " +LOAN+ " . " + LOAN_ID + " INNER JOIN " +CUSTOMER+ " ON " +LOAN+
                         " . " +CUSTOMER_ID+ " = " +CUSTOMER+ " . " +CUSTOMER_ID+
-                        " INNER JOIN " + PRODUCT + " ON " + LOAN + " . " + PRODUCT_ID + " = "
-                        + PRODUCT + " . " + PRODUCT_ID +
-                        " WHERE " +LOAN+ " . " +CUSTOMER_ID+ " = ? AND " +REPRESENTATIVE_ID + " = ?" ;
+                        " WHERE " +LOAN+ " . " +CUSTOMER_ID+ " = ? ";
                 PreparedStatement dbPreparedStatement = databaseConnection.prepareStatement(getPaymentHistory);
                 int loopCount = 0;
                 Boolean availableData = false;
                 dbPreparedStatement.setInt(1, inputCustomerId);
-                dbPreparedStatement.setInt(2,userId);
                 ResultSet dbResultSet = dbPreparedStatement.executeQuery();
                 while (dbResultSet.next()) {
                     newPaymentHistory.setInputCustomerId(dbResultSet.getInt(CUSTOMER_ID));
@@ -125,7 +108,7 @@ public class PaymentHistoryDatabase {
             }
         }
 
-        public static void displayPaymentHistoryCustomer(int userId){
+        public static void displayPaymentHistoryCustomerDatabase(int userId){
             int loopCount = 0;
             Boolean availableData = false;
             try{
@@ -160,7 +143,7 @@ public class PaymentHistoryDatabase {
             }
     }
 
-        public static void insertIntoPaymentHistory(PaymentHistory newPaymentHistory){
+    public static void insertIntoPaymentHistory(PaymentHistory newPaymentHistory){
             try {
                 String insertQuery = " INSERT INTO " + PAYMENT_HISTORY +
                         " ( " + LOAN_ID + " , " + PAYMENT_AMOUNT +
@@ -181,5 +164,27 @@ public class PaymentHistoryDatabase {
 
     }
 
+//public static void main(String[] args){
+
+            //PaymentDisplayDatabase pd = new PaymentDisplayDatabase();
+            //pd.displayPaymentHistoryCustomerDatabase();
+
+
+
+public static boolean checkInputID(int userId){
+            try {
+                String checkIfIdExists = " SELECT * FROM " + PAYMENT_HISTORY + " WHERE " + userId + " = ? ";
+                PreparedStatement dbPreparedStatement = databaseConnection.prepareStatement(checkIfIdExists);
+                dbPreparedStatement.setInt(1, userId);
+                ResultSet dbResultSet = dbPreparedStatement.executeQuery();
+                return dbResultSet.next();
+            }catch(Exception exception){
+                exception.printStackTrace();
+                return false;
+            }
+
+
+
 }
 
+}

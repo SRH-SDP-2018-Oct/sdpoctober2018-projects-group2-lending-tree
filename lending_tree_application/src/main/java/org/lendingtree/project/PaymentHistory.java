@@ -14,19 +14,8 @@ public class PaymentHistory {
     private int paymentHistoryId;
     private String customerLastName;
     private String customerFirstName;
-    private static int inputYN;
+    private static String inputYN;
     private int loanID;
-    private static int inputRepresentativeID;
-    private static int choice;
-    private static Scanner input = new Scanner(System.in);
-
-    public int getInputRepresentativeID() {
-        return inputRepresentativeID;
-    }
-
-    public void setInputRepresentativeID(int inputRepresentativeID) {
-        this.inputRepresentativeID = inputRepresentativeID;
-    }
 
 
     public int getLoanID() {
@@ -94,54 +83,36 @@ public class PaymentHistory {
     }
 
 
-    public static void userPaymentHistory(int userId, String userType) {
-
+    public static void lenderPaymentHistory() {
         try {
-            boolean flag;
-            if (userType == App.USER_TYPE_REPRESENTATIVE) {
-                do {
+            Scanner enterInput = new Scanner(System.in);
+            System.out.println("Would you like to see all the data of every customer? Y/N?");
+            inputYN = enterInput.nextLine();
 
-                    System.out.println("Please select one of the following options:\n" +
-                            "1) Display a specific customer's history\n" +
-                            "2) Display the entire payment history");
-                    choice = input.nextInt();
-                    switch (choice) {
-                        case 1:
-                            System.out.println("You chose to display a specific customer's history");
-                            System.out.println(" Enter the customer ID =  ");
-                            inputCustomerId = input.nextInt();
-                            PaymentHistoryDatabase.displayPaymentHistoryRepresentativeSort(userId, inputCustomerId);
-                            flag = false;
-                            break;
-
-                        case 2:
-                            System.out.println(" You chose to display the entire payment history ");
-                            PaymentHistoryDatabase.displayPaymentHistoryRepresentative(userId);
-                            flag = false;
-                            break;
-
-                    }
-
-
-                } while (flag = false);
-            } else if (userType == App.USER_TYPE_CUSTOMER) {
-                try {
-                    System.out.println("Your records are as follows:");
-                    PaymentHistoryDatabase.displayPaymentHistoryCustomer(userId);
-                } catch (Exception exception) {
-                    exception.printStackTrace();
+            if (inputYN != null) {
+                if (inputYN.equalsIgnoreCase("N")) {
+                    System.out.println("You chose No");
+                    System.out.println(" Enter the customer ID =  ");
+                    inputCustomerId = Integer.parseInt(enterInput.nextLine());
+                    PaymentHistoryDatabase.displayPaymentHistory(inputCustomerId);
+                } else if (inputYN.equalsIgnoreCase("Y")) {
+                    System.out.println(" You chose Yes");
+                    PaymentHistoryDatabase.displayPaymentHistoryAll();
+                } else {
+                    System.out.println("Incorrect input! Please choose either Y or N");
                 }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
+    }
 
+    public static void customerPaymentHistory(int userId) {
+        try {
+            PaymentHistoryDatabase.displayPaymentHistoryCustomerDatabase(userId);
         } catch (Exception exception) {
             exception.printStackTrace();
         }
     }
-
 }
-
-
-
-
-
