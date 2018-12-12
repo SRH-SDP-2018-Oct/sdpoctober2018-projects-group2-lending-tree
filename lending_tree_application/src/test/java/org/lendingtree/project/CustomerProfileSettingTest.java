@@ -15,7 +15,7 @@ public class CustomerProfileSettingTest {
 
             System.out.println("Please provide Customer Id :" );
             customerID = input.nextInt();
-            ProfileSettingDatabase.getCustomerSettings(customerID);
+            ProfileSettingsDatabase.getCustomerSettings(customerID);
         } catch (Exception e) {
             e.printStackTrace();
         }

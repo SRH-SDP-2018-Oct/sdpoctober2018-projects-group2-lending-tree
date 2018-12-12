@@ -2,7 +2,7 @@ package org.lendingtree.project;
 
 import java.sql.*;
 
-public class RepresentativeDatabase {
+public abstract class RepresentativeDatabase {
     private static final String COLUMN_REPRESENTATIVE_ID = "representative_id";
     private static final String COLUMN_INSTITUTION_ID = "institution_id";
     private static final String COLUMN_REPRESENTATIVE_LAST_NAME = "representative_last_name";

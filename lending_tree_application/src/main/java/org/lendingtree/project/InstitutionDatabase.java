@@ -2,7 +2,7 @@ package org.lendingtree.project;
 
 import java.sql.*;
 
-public class InstitutionDatabase {
+public abstract class InstitutionDatabase {
     private static final String COLUMN_INSTITUTION_ID = "institution_id";
     private static final String COLUMN_INSTITUTION_TYPE_ID = "institution_type_id";
     private static final String COLUMN_INSTITUTION_NAME = "institution_name";

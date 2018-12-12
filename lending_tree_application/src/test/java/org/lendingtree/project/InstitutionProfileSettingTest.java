@@ -15,7 +15,7 @@ public class InstitutionProfileSettingTest {
 
             System.out.println("Please provide Institution Id :" );
             institutionID = input.nextInt();
-            ProfileSettingDatabase.getInstitutionSettings(institutionID);
+            ProfileSettingsDatabase.getInstitutionSettings(institutionID);
         } catch (Exception e) {
             e.printStackTrace();
         }

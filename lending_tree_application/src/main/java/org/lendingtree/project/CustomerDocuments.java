@@ -1,7 +1,5 @@
 package org.lendingtree.project;
 
-import java.util.Scanner;
-
 public abstract class CustomerDocuments {
     final static String DOCUMENT_STATUS_1 = "Document Sent";
     final static String DOCUMENT_STATUS_0 = "Document Not Sent";
