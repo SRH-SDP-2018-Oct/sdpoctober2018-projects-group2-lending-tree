@@ -68,7 +68,7 @@ public class Representative extends User{
         this.institutionDepartment = RepresentativeDatabase.getInstitutionDepartment(this.institutionDepartmentId);
         System.out.println("You selected: " + this.institutionDepartment);
 
-        RepresentativeDatabase.insert(this);
+        this.setId(RepresentativeDatabase.insert(this));
     }
 
     @Override

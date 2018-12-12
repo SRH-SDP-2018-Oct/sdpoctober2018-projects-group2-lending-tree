@@ -94,7 +94,7 @@ public class Customer extends User {
         this.identificationNumber = InputValidationTools.inputIdentificationNumber();
         this.rating = InputValidationTools.inputRating();
 
-        CustomerDatabase.insert(this);
+        this.setId(CustomerDatabase.insert(this));
     }
 
     @Override
