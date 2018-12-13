@@ -50,18 +50,22 @@ public abstract class InputValidationTools {
     }
 
     protected static Double inputRating(){
+        return inputDouble("Please select a valid number for the rating: ", "Your customer rating is: ");
+    }
+
+    protected static Double inputDouble(String inputMessage, String outputMessage){
         Scanner userInput = new Scanner(System.in);
         Double rating;
 
         do{
-            System.out.println("Please select a valid number for the rating: ");
+            System.out.println(inputMessage);
             while(!userInput.hasNextFloat()) {
                 System.out.println("That is not a valid selection");
                 userInput.next();
             }
             rating = userInput.nextDouble();
         } while(rating < 0);
-        System.out.println("Your customer rating is: " + rating);
+        System.out.println(outputMessage + rating);
         return rating;
     }
 
