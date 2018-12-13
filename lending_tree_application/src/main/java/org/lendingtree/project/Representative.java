@@ -98,8 +98,10 @@ public class Representative extends User{
             return null;
         }
 
-        if(userInputPassword.compareTo(loginRepresentative.getPassword())!=0)
+        if(userInputPassword.compareTo(loginRepresentative.getPassword())!=0) {
             message = "Invalid password. No attempts remaining.";
+            loginRepresentative = null;
+        }
 
         System.out.println(message);
         return  loginRepresentative;

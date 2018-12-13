@@ -122,8 +122,10 @@ public class Customer extends User {
             return null;
         }
 
-        if(userInputPassword.compareTo(loginCustomer.getPassword())!=0)
+        if(userInputPassword.compareTo(loginCustomer.getPassword())!=0) {
             message = "Invalid password. No attempts remaining.";
+            loginCustomer = null;
+        }
 
         System.out.println(message);
         return  loginCustomer;
