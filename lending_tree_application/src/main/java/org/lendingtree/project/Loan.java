@@ -5,11 +5,11 @@ import java.util.Scanner;
 
 public class Loan {
 
-    public int loanId;
-    public int customerId;
-    public int productId;
-    public int loanStatusId;
-    public String loanDateApplied;
+    private int loanId;
+    private int customerId;
+    private int productId;
+    private int loanStatusId;
+    private String loanDateApplied;
 
     public int getLoanId() {
         return loanId;
