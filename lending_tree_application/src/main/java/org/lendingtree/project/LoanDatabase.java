@@ -15,7 +15,7 @@ import java.util.Date;
 public class LoanDatabase {
 
     private static final String TABLE_LOAN = "loan";
-    private static final String TABLE_CUSTOMER = "customer"; //extract
+    private static final String TABLE_CUSTOMER = "customer";
     private static final String COLUMN_LOAN_ID = "loan_id";
     private static final String COLUMN_CUSTOMER_ID = "customer_id";
     private static final String COLUMN_PRODUCT_ID = "product_id";
@@ -341,6 +341,37 @@ public class LoanDatabase {
         institutionId = resultSetRepresentative.getInt("institution_id");
 
         return institutionId;
+    }
+
+    public static void printLoansStatus() throws SQLException {
+
+        PreparedStatement preparedStatementLoanStatus;
+
+        String queryLoanStatus = "SELECT * FROM loan_status";
+
+        preparedStatementLoanStatus = databaseConnection.prepareStatement(queryLoanStatus);
+
+        ResultSet resultSetLoanStatus = preparedStatementLoanStatus.executeQuery();
+
+
+        while (resultSetLoanStatus.next()) {
+            System.out.println("Loan Status ID: " + "\t\t\t" + resultSetLoanStatus.getString(1));
+            System.out.println("Loan Statutus Description: " + "\t\t" + resultSetLoanStatus.getString(2));
+        }
+    }
+
+    public static void updateLoan(int loanId, int loanStatusId) throws SQLException {
+        PreparedStatement preparedStatement;
+        String query = "UPDATE " + TABLE_LOAN +
+                " SET " + COLUMN_LOAN_STATUS_ID + " = ?" +
+                " WHERE " + COLUMN_LOAN_ID + " = ?;";
+
+        preparedStatement = databaseConnection.prepareStatement(query);
+
+        preparedStatement.setInt(2, loanId);
+        preparedStatement.setInt(1, loanStatusId);
+
+        preparedStatement.executeUpdate();
     }
 
 }

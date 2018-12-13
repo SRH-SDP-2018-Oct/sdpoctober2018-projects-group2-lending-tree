@@ -181,7 +181,6 @@ public class App {
                     case "1":
                         Product.goMenuProduct(getCurrentSessionId(),getUserType());
                         break;
-
                     case "2":
                         Loan.goMenuLoan(getCurrentSessionId(), getUserType());
                         break;
@@ -265,5 +264,4 @@ public class App {
 
         App.userType = userType;
     }
-
 }

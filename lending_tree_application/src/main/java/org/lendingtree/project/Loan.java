@@ -68,7 +68,8 @@ public class Loan {
 
                 System.out.println("\nPlease select one of the following options:\n" +
                         "1) Display loans\n" +
-                        "2) Generate report\n");
+                        "2) Edit loans\n" +
+                        "3) Generate report\n");
                 choice = input.next();
 
                 switch (choice) {
@@ -78,10 +79,22 @@ public class Loan {
                         break;
 
                     case "1":
-                        LoanDatabase.printCustomerLoans(userId);
+                        if (isCustomer==true){
+                            LoanDatabase.printCustomerLoans(userId);
+                        } else {
+                            LoanDatabase.printRepresentativeLoans(userId);
+                        }
                         break;
 
+
                     case "2":
+                        System.out.println("Enter the ID of the loan you want to edit\n");
+                        String loanId=input.next();
+                        System.out.println("Enter the ID of the loan status\n");
+                        String loanIdStatus=input.next();
+                        LoanDatabase.updateLoan(Integer.parseInt(loanId),Integer.parseInt(loanIdStatus));
+
+                    case "3":
                         System.out.println("\nPlease select one of the following options:\n" +
                                 "1) Generate complete report\n" +
                                 "2) Generate report from a period of time\n");
