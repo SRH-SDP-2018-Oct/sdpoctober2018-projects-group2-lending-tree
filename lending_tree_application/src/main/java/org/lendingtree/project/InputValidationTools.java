@@ -18,7 +18,7 @@ public abstract class InputValidationTools {
     }
 
     protected static String inputIdentificationNumber(){
-       return getUserInput("Identification Number", REGEX_IDENTIFICATION_NUMBER);
+       return getUserInput("Passport Number", REGEX_IDENTIFICATION_NUMBER);
     }
 
     protected  static String inputName(String field){
