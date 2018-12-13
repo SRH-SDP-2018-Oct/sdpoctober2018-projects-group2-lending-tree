@@ -9,6 +9,7 @@ public class ProductTest {
     @Test
     public void createProductTest() {
         Product newProduct = new Product();
+        int productId = 1;
         int productTypeId = 1;
         String productDescription = "Test";
         int representativeId = 2;
@@ -80,10 +81,9 @@ public class ProductTest {
     @Test
     public void getProductFromRepresentativeTest() {
         int representativeId = 2;
-        boolean allProducts = true;
 
         try {
-            ProductDatabase.getProductFromRepresentative(representativeId, allProducts);
+            ProductDatabase.getProductFromRepresentative(representativeId);
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -109,6 +109,7 @@ public class ProductTest {
         Product searchProduct = new Product();
         boolean activeStatus = true;
         boolean filtersOn = true;
+        //int productId = 2;
         String productDescription = "Test";
         Double productAmount = 1.23;
         Double productInterestRate = 0.1;
@@ -116,6 +117,7 @@ public class ProductTest {
 
         try {
             searchProduct.setProductActiveStatus(activeStatus);
+            //searchProduct.setProductId(productId);
             searchProduct.setProductDescription(productDescription);
             searchProduct.setProductAmount(productAmount);
             searchProduct.setProductInterestRate(productInterestRate);
@@ -150,4 +152,28 @@ public class ProductTest {
         }
     }
 
+    @Test
+    public void updateProductTypeDescriptionTest() {
+        int productTypeId = 1;
+        String productTypeDescription = "Product type description";
+
+        try {
+            ProductDatabase.updateProductTypeDescription(productTypeId, productTypeDescription);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    /*
+    @Test
+    public void createProductTypeTest() {
+        String productTypeDescription = "New product type added from test";
+
+        try {
+            ProductDatabase.createProductType(productTypeDescription);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    */
 }
