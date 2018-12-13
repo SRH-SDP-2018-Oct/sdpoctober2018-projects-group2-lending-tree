@@ -69,12 +69,14 @@ public class ProductDatabase {
         PreparedStatement preparedStatement;
         String query = "UPDATE " + TABLE_PRODUCT +
                 " SET " + COLUMN_PRODUCT_DESCRIPTION + " = ?" +
-                " WHERE " + COLUMN_PRODUCT_ID + " = ?";
+                " WHERE " + COLUMN_PRODUCT_ID + " = ?" +
+                " AND " + COLUMN_REPRESENTATIVE_ID + " = ?";
 
         preparedStatement = databaseConnection.prepareStatement(query);
 
         preparedStatement.setString(1, product.getProductDescription());
         preparedStatement.setInt(2, product.getProductId());
+        preparedStatement.setInt(3, product.getRepresentativeId());
 
         preparedStatement.executeUpdate();
     }
@@ -83,40 +85,41 @@ public class ProductDatabase {
         PreparedStatement preparedStatement;
         String query = "UPDATE " + TABLE_PRODUCT +
                 " SET " + COLUMN_PRODUCT_ACTIVE_STATUS + " = ?" +
-                " WHERE " + COLUMN_PRODUCT_ID + " = ?";
+                " WHERE " + COLUMN_PRODUCT_ID + " = ?" +
+                " AND " + COLUMN_REPRESENTATIVE_ID + " = ?";
 
         preparedStatement = databaseConnection.prepareStatement(query);
 
         preparedStatement.setBoolean(1, product.getProductActiveStatus());
         preparedStatement.setInt(2, product.getProductId());
+        preparedStatement.setInt(3, product.getRepresentativeId());
 
         preparedStatement.executeUpdate();
     }
 
-    public static void getProductFromRepresentative(int representativeId) throws SQLException {
-        //This method includes some hard-coded variables. It needs to be checked.
+    public static void getProductFromRepresentative(int representativeId, boolean allProducts) throws SQLException {
         PreparedStatement preparedStatement;
-        String query = "SELECT * FROM " + TABLE_PRODUCT +
-                " INNER JOIN " + TABLE_PRODUCT_TYPE +
-                " ON " + TABLE_PRODUCT_TYPE + "." + COLUMN_PRODUCT_TYPE_ID + " = " +
-                TABLE_PRODUCT + "." + COLUMN_PRODUCT_TYPE_ID +
-                " INNER JOIN " + TABLE_REPRESENTATIVE +
-                " ON " + TABLE_REPRESENTATIVE + "." + COLUMN_REPRESENTATIVE_ID + " = " +
-                TABLE_PRODUCT + "." + COLUMN_REPRESENTATIVE_ID +
-                " INNER JOIN " + TABLE_INSTITUTION_DEPARTMENT +
-                " ON " + TABLE_INSTITUTION_DEPARTMENT + "." + COLUMN_INSTITUTION_DEPARTMENT_ID + " = " +
-                TABLE_REPRESENTATIVE + "." + COLUMN_INSTITUTION_DEPARTMENT_ID +
-                " INNER JOIN " + TABLE_INSTITUTION +
-                " ON " + TABLE_INSTITUTION + "." + COLUMN_INSTITUTION_ID + " = " +
-                TABLE_REPRESENTATIVE + "." + COLUMN_INSTITUTION_ID +
-                " WHERE " + TABLE_PRODUCT + "." + COLUMN_REPRESENTATIVE_ID + " = ?";
+        int institutionId = 1;
+        String query = getQuery();
+        if (allProducts) {
+            query = query +
+                    " WHERE " + TABLE_INSTITUTION + "." + COLUMN_INSTITUTION_ID + " = ?";
+            institutionId = getInstitutionId(representativeId);
+        } else {
+            query = query +
+                    " WHERE " +  TABLE_PRODUCT + "." + COLUMN_REPRESENTATIVE_ID + " = ?";
+        }
         Boolean availableData = false;
         int loopCount = 0;
         String activeStatus = "Not available";
 
         preparedStatement = databaseConnection.prepareStatement(query);
 
-        preparedStatement.setInt(1, representativeId);
+        if (allProducts) {
+            preparedStatement.setInt(1, institutionId);
+        } else {
+            preparedStatement.setInt(1, representativeId);
+        }
 
         ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -158,16 +161,8 @@ public class ProductDatabase {
 
     public static void getAllActiveProducts(Product searchProduct, boolean filtersOn) throws SQLException {
         PreparedStatement preparedStatement;
-        String query = "SELECT * FROM " + TABLE_PRODUCT +
-                " INNER JOIN " + TABLE_PRODUCT_TYPE +
-                " ON " + TABLE_PRODUCT_TYPE + "." + COLUMN_PRODUCT_TYPE_ID + " = " +
-                TABLE_PRODUCT + "." + COLUMN_PRODUCT_TYPE_ID +
-                " INNER JOIN " + TABLE_REPRESENTATIVE +
-                " ON " + TABLE_REPRESENTATIVE + "." + COLUMN_REPRESENTATIVE_ID + " = " +
-                TABLE_PRODUCT + "." + COLUMN_REPRESENTATIVE_ID +
-                " INNER JOIN " + TABLE_INSTITUTION +
-                " ON " + TABLE_INSTITUTION + "." + COLUMN_INSTITUTION_ID + " = " +
-                TABLE_REPRESENTATIVE + "." + COLUMN_INSTITUTION_ID +
+        String query = getQuery();
+        query = query +
                 " WHERE " + COLUMN_PRODUCT_ACTIVE_STATUS + " = ?";
         Boolean availableData = false;
         int loopCount = 0;
@@ -196,10 +191,12 @@ public class ProductDatabase {
                 filterInterestRate = true;
             }
             if (searchProduct.getProductNumberOfPayments() != 0) {
-                query = query + " AND " + COLUMN_PRODUCT_NUMBER_OF_PAYMENTS + " <= ?";
+                query = query + " AND " + COLUMN_PRODUCT_NUMBER_OF_PAYMENTS + " >= ?";
                 filterNumberOfPayments = true;
             }
-         }
+        }
+
+        query = query + " ORDER BY " + COLUMN_PRODUCT_AMOUNT + " ASC";
 
         preparedStatement = databaseConnection.prepareStatement(query);
 
@@ -236,9 +233,7 @@ public class ProductDatabase {
             System.out.println("----------" + loopCount + "----------");
             System.out.println("Product ID: " + "\t\t\t" + resultSet.getInt(COLUMN_PRODUCT_ID));
             System.out.println("Description: " + "\t\t\t" + resultSet.getString(COLUMN_PRODUCT_DESCRIPTION));
-            //System.out.println("Product type ID: " + "\t\t" + resultSet.getInt(COLUMN_PRODUCT_TYPE_ID));
             System.out.println("Product type: " + "\t\t\t" + resultSet.getString(COLUMN_PRODUCT_TYPE_DESCRIPTION));
-            //System.out.println("Representative ID: " + "\t\t" + resultSet.getInt(COLUMN_PRODUCT_REPRESENTATIVE_ID));
             System.out.println("Representative: " + "\t\t" + resultSet.getString(COLUMN_REPRESENTATIVE_FIRST_NAME) +
                     " " + resultSet.getString(COLUMN_REPRESENTATIVE_LAST_NAME));
             System.out.println("Institution: " + "\t\t\t" + resultSet.getString(COLUMN_INSTITUTION_NAME));
@@ -263,16 +258,8 @@ public class ProductDatabase {
         int arraySize = productIds.size();
 
         PreparedStatement preparedStatement;
-        String query = "SELECT * FROM " + TABLE_PRODUCT +
-                " INNER JOIN " + TABLE_PRODUCT_TYPE +
-                " ON " + TABLE_PRODUCT_TYPE + "." + COLUMN_PRODUCT_TYPE_ID + " = " +
-                TABLE_PRODUCT + "." + COLUMN_PRODUCT_TYPE_ID +
-                " INNER JOIN " + TABLE_REPRESENTATIVE +
-                " ON " + TABLE_REPRESENTATIVE + "." + COLUMN_REPRESENTATIVE_ID + " = " +
-                TABLE_PRODUCT + "." + COLUMN_REPRESENTATIVE_ID +
-                " INNER JOIN " + TABLE_INSTITUTION +
-                " ON " + TABLE_INSTITUTION + "." + COLUMN_INSTITUTION_ID + " = " +
-                TABLE_REPRESENTATIVE + "." + COLUMN_INSTITUTION_ID +
+        String query = getQuery();
+        query = query +
                 " WHERE " + COLUMN_PRODUCT_ACTIVE_STATUS + " = ?";
         Boolean availableData = false;
         int loopCount = 0;
@@ -304,9 +291,7 @@ public class ProductDatabase {
             System.out.println("----------" + loopCount + "----------");
             System.out.println("Product ID: " + "\t\t\t" + resultSet.getInt(COLUMN_PRODUCT_ID));
             System.out.println("Description: " + "\t\t\t" + resultSet.getString(COLUMN_PRODUCT_DESCRIPTION));
-            //System.out.println("Product type ID: " + "\t\t" + resultSet.getInt(COLUMN_PRODUCT_TYPE_ID));
             System.out.println("Product type: " + "\t\t\t" + resultSet.getString(COLUMN_PRODUCT_TYPE_DESCRIPTION));
-            //System.out.println("Representative ID: " + "\t\t" + resultSet.getInt(COLUMN_PRODUCT_REPRESENTATIVE_ID));
             System.out.println("Representative: " + "\t\t" + resultSet.getString(COLUMN_REPRESENTATIVE_FIRST_NAME) +
                     " " + resultSet.getString(COLUMN_REPRESENTATIVE_LAST_NAME));
             System.out.println("Email: " + "\t\t\t\t\t" + resultSet.getString(COLUMN_REPRESENTATIVE_EMAIL));
@@ -330,6 +315,47 @@ public class ProductDatabase {
         }
     }
 
+    public static String getQuery() {
+        String query = "SELECT * FROM " + TABLE_PRODUCT +
+                " INNER JOIN " + TABLE_PRODUCT_TYPE +
+                " ON " + TABLE_PRODUCT_TYPE + "." + COLUMN_PRODUCT_TYPE_ID + " = " +
+                TABLE_PRODUCT + "." + COLUMN_PRODUCT_TYPE_ID +
+                " INNER JOIN " + TABLE_REPRESENTATIVE +
+                " ON " + TABLE_REPRESENTATIVE + "." + COLUMN_REPRESENTATIVE_ID + " = " +
+                TABLE_PRODUCT + "." + COLUMN_REPRESENTATIVE_ID +
+                " INNER JOIN " + TABLE_INSTITUTION_DEPARTMENT +
+                " ON " + TABLE_INSTITUTION_DEPARTMENT + "." + COLUMN_INSTITUTION_DEPARTMENT_ID + " = " +
+                TABLE_REPRESENTATIVE + "." + COLUMN_INSTITUTION_DEPARTMENT_ID +
+                " INNER JOIN " + TABLE_INSTITUTION +
+                " ON " + TABLE_INSTITUTION + "." + COLUMN_INSTITUTION_ID + " = " +
+                TABLE_REPRESENTATIVE + "." + COLUMN_INSTITUTION_ID;
+        return query;
+    }
+
+    public static int getInstitutionId(int representativeId) throws SQLException {
+        int institutionId = 1;
+
+        PreparedStatement preparedStatementRepresentative;
+
+        String queryRepresentative = "SELECT * " +
+                "FROM representative " +
+                "JOIN institution " +
+                "ON institution.institution_id=representative.institution_id " +
+                "WHERE representative_id = ?";
+
+        preparedStatementRepresentative = databaseConnection.prepareStatement(queryRepresentative);
+
+        preparedStatementRepresentative.setInt(1, representativeId);
+
+        ResultSet resultSetRepresentative = preparedStatementRepresentative.executeQuery();
+
+        resultSetRepresentative.next();
+
+        institutionId = resultSetRepresentative.getInt("institution_id");
+
+        return institutionId;
+    }
+
     public static void getAllProductTypeDescription() throws SQLException {
         PreparedStatement preparedStatement;
         String query = "SELECT * FROM " + TABLE_PRODUCT_TYPE;
@@ -342,43 +368,15 @@ public class ProductDatabase {
 
         while (resultSet.next()) {
             loopCount++;
-            System.out.println(resultSet.getInt(COLUMN_PRODUCT_TYPE_ID) + ". " + resultSet.getString(COLUMN_PRODUCT_TYPE_DESCRIPTION));
+            System.out.println(resultSet.getInt(COLUMN_PRODUCT_TYPE_ID) + ") " + resultSet.getString(COLUMN_PRODUCT_TYPE_DESCRIPTION));
             availableData = true;
         }
 
         if (availableData) {
-            System.out.println("\nNumber of records: " + loopCount + ".");
+            System.out.println("\n(Number of product types available: " + loopCount + ")\n");
         } else {
             System.out.println("No data available.");
         }
     }
-
-    public static void updateProductTypeDescription(int productTypeId, String productTypeDescription) throws SQLException {
-        PreparedStatement preparedStatement;
-        String query = "UPDATE " + TABLE_PRODUCT_TYPE +
-                " SET " + COLUMN_PRODUCT_TYPE_DESCRIPTION + " = ?" +
-                " WHERE " + COLUMN_PRODUCT_TYPE_ID + " = ?";
-
-        preparedStatement = databaseConnection.prepareStatement(query);
-
-        preparedStatement.setString(1, productTypeDescription);
-        preparedStatement.setInt(2, productTypeId);
-
-        preparedStatement.executeUpdate();
-    }
-
-    /*
-    public static void createProductType(String productTypeDescription) throws SQLException {
-        PreparedStatement preparedStatement;
-        String query = "INSERT INTO " + TABLE_PRODUCT_TYPE + " (" +
-                COLUMN_PRODUCT_TYPE_DESCRIPTION + ") " +
-                "VALUES (?)";
-
-        preparedStatement = databaseConnection.prepareStatement(query);
-
-        preparedStatement.setString(1, productTypeDescription);
-
-        preparedStatement.executeUpdate();
-    }
-    */
+    
 }
