@@ -163,45 +163,56 @@ public class App {
     public final static void initializeDashboard() throws SQLException {
 
         System.out.println("\n\n----Lending Tree: Dashboard\n");
+        boolean flagDashboard;
 
         switch (getUserType()) {
 
             case USER_TYPE_CUSTOMER:
-                System.out.println("Please select one of the following options:\n" +
-                        "1) See offers\n" +
-                        "2) My loans\n" +
-                        "3) My payment history\n" +
-                        "4) My profile\n" +
-                        "5) Settings\n");
+                do{
+                    flagDashboard=false;
+                    System.out.println("Please select one of the following options:\n" +
+                            "1) See offers\n" +
+                            "2) My loans\n" +
+                            "3) My payment history\n" +
+                            "4) My profile\n" +
+                            "5) Settings\n");
 
-                choice = input.next();
+                    choice = input.next();
 
-                switch (choice) {
+                    switch (choice) {
 
-                    case "1":
-                        Product.goMenuProduct(getCurrentSessionId(),getUserType());
-                        break;
-                    case "2":
-                        Loan.goMenuLoan(getCurrentSessionId(), getUserType());
-                        break;
+                        default:
+                            System.out.println("\nWrong Entry, please try again.");
+                            flagDashboard = true;
+                            break;
 
-                    case "3":
-                        PaymentHistory.userPaymentHistory(getCurrentSessionId(), getUserType());
-                        break;
+                        case "1":
+                            Product.goMenuProduct(getCurrentSessionId(), getUserType());
+                            break;
+                        case "2":
+                            Loan.goMenuLoan(getCurrentSessionId(), getUserType());
+                            break;
 
-                    case "4":
+                        case "3":
+                            PaymentHistory.userPaymentHistory(getCurrentSessionId(), getUserType());
+                            break;
+
+                        case "4":
                             ProfileDatabase.getCustomerProfile(currentSessionId);
-                        break;
+                            break;
 
-                    case "5":
-                        ProfileSettings.getSettings(getCurrentSessionId(),getUserType());
-                        break;
-                }
+                        case "5":
+                            ProfileSettings.getSettings(getCurrentSessionId(), getUserType());
+                            break;
+                    }
+                }while (flagDashboard == true);
                 break;
 
-            case USER_TYPE_REPRESENTATIVE:
 
-                System.out.println("Please select one of the following options:\n" +
+            case USER_TYPE_REPRESENTATIVE:
+                do {
+                    flagDashboard=false;
+                    System.out.println("Please select one of the following options:\n" +
                         "1) Manage products\n" +
                         "2) My loans\n" +
                         "3) My payment history\n" +
@@ -211,8 +222,13 @@ public class App {
 
                 switch (choice) {
 
+                    default:
+                        System.out.println("\nWrong Entry, please try again.");
+                        flagDashboard = true;
+                        break;
+
                     case "1":
-                        Product.goMenuProduct(getCurrentSessionId(),getUserType());
+                        Product.goMenuProduct(getCurrentSessionId(), getUserType());
                         break;
 
                     case "2":
@@ -228,9 +244,11 @@ public class App {
                         break;
 
                     case "5":
-                        ProfileSettings.getSettings(getCurrentSessionId(),getUserType());
+                        ProfileSettings.getSettings(getCurrentSessionId(), getUserType());
                         break;
-                }break;
+                }
+                }while(flagDashboard == true);
+                break;
         }
 
     }
