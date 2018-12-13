@@ -104,126 +104,37 @@ public class Product {
             String choice;
             ArrayList<Integer> productIds = new ArrayList<>();
 
-            System.out.println("----Lending Tree: Products menu---- \n");
+            System.out.println("----Lending Tree: Products menu\n");
 
             boolean flag;
             boolean flagFilters;
 
             Scanner input = new Scanner(System.in);
 
-            if (userType == App.USER_TYPE_CUSTOMER) {
-                do {
-                    flag = false;
-                    System.out.println("\nPlease select one of the following options:\n" +
-                            "1) Search for products\n" +
-                            "2) See \"My list\"\n" +
-                            "3) Go back\n");
-                    choice = input.next();
+            switch (userType) {
+                default:
+                    flag = true;
+                    System.out.println("Invalid entry.\n");
+                    break;
 
-                    switch (choice) {
-                        default:
-                            System.out.println("Invalid entry.\n");
-                            break;
+                case App.USER_TYPE_CUSTOMER:
+                    do {
+                        flag = false;
+                        System.out.println("\nPlease select one of the following options:\n" +
+                                "1) Search for products\n" +
+                                "2) See \"My list\"\n" +
+                                "3) Go back\n");
+                        choice = input.next();
 
-                        case "1":
-                            System.out.println("\nPlease select one of the following options:\n" +
-                                    "1) Search all products\n" +
-                                    "2) Search with filters\n");
-                            choice = input.next();
+                        switch (choice) {
+                            default:
+                                System.out.println("Invalid entry.\n");
+                                break;
 
-                            switch (choice) {
-                                default:
-                                    System.out.println("Invalid entry.\n");
-                                    break;
-
-                                case "1":
-                                    product.setProductActiveStatus(true);
-                                    ProductDatabase.getAllActiveProducts(product, false);
-
-                                    productIds = (addProductsToMyList(input, productIds));
-
-                                    break;
-
-                                case "2":
-                                    do {
-                                        System.out.println("\nPlease select one of the following options:\n" +
-                                                "1) Enter filter by description\n" +
-                                                "2) Enter filter by amount\n" +
-                                                "3) Enter filter by interest rate\n" +
-                                                "4) Enter filter by number of payments\n" +
-                                                "5) Search with the current filters\n");
-
-                                        choice = input.next();
-                                        flagFilters = false;
-
-                                        switch (choice) {
-                                            default:
-                                                System.out.println("Invalid entry.\n");
-                                                break;
-
-                                            case "1":
-                                                System.out.println("\nPlease enter the desired description:\n" +
-                                                        "(i.e., \"construction\")\n" +
-                                                        "(If you do not want to filter by description, press Enter)\n");
-                                                input.nextLine();
-                                                String inputDescription = input.nextLine();
-                                                if (!inputDescription.trim().isEmpty()) {
-                                                    product.setProductDescription(inputDescription);
-                                                }
-                                                break;
-
-                                            case "2":
-                                                System.out.println("\nPlease enter the minimum amount:\n" +
-                                                        "(i.e., \"1000\")\n" +
-                                                        "(If you do not want to filter by amount, press Enter)\n");
-                                                input.nextLine();
-                                                String inputAmount = input.nextLine();
-                                                if (!inputAmount.trim().isEmpty()) {
-                                                    product.setProductAmount(Double.valueOf(inputAmount));
-                                                }
-                                                break;
-
-                                            case "3":
-                                                System.out.println("\nPlease enter the maximum interest rate:\n" +
-                                                        "(i.e., \"1.5\")\n" +
-                                                        "(If you do not want to filter by interest rate, press Enter)\n");
-                                                input.nextLine();
-                                                String inputInterestRate = input.nextLine();
-                                                if (!inputInterestRate.trim().isEmpty()) {
-                                                    product.setProductInterestRate(Double.valueOf(inputInterestRate));
-                                                }
-                                                break;
-
-                                            case "4":
-                                                System.out.println("\nPlease enter the minimum number of payments:\n" +
-                                                        "(i.e., \"12\")\n" +
-                                                        "(If you do not want to filter by number of payments, press Enter)\n");
-                                                input.nextLine();
-                                                String inputNumberOfPayments = input.nextLine();
-                                                if (!inputNumberOfPayments.trim().isEmpty()) {
-                                                    product.setProductNumberOfPayments(Integer.valueOf(inputNumberOfPayments));
-                                                }
-                                                break;
-
-                                            case "5":
-                                                flagFilters = true;
-                                                product.setProductActiveStatus(true);
-                                                ProductDatabase.getAllActiveProducts(product, true);
-
-                                                productIds = (addProductsToMyList(input, productIds));
-
-                                                break;
-
-                                        }
-                                    } while (!flagFilters);
-                            }
-                            break;
-                        case "2":
-                            if (!productIds.isEmpty()) {
-                                ProductDatabase.getProductDetails(productIds, true);
-                                System.out.println("\nDo you want to send a request for a product?\n" +
-                                        "1) Yes\n" +
-                                        "2) No\n");
+                            case "1":
+                                System.out.println("\nPlease select one of the following options:\n" +
+                                        "1) Search all products\n" +
+                                        "2) Search with filters\n");
                                 choice = input.next();
 
                                 switch (choice) {
@@ -232,117 +143,81 @@ public class Product {
                                         break;
 
                                     case "1":
-                                        System.out.println("\nPlease enter the product ID.");
-                                        choice = input.next();
-                                        Date date = new Date();
-                                        Calendar calendar = Calendar.getInstance();
-                                        calendar.setTime(date);
+                                        product.setProductActiveStatus(true);
+                                        ProductDatabase.getAllActiveProducts(product, false);
 
-                                        String todaysDate = calendar.get(Calendar.DAY_OF_MONTH) + "/" +
-                                                (calendar.get(Calendar.MONTH) + 1) + "/" +
-                                                calendar.get(Calendar.YEAR);
+                                        productIds = (addProductsToMyList(input, productIds));
 
-                                        Loan newLoan = new Loan();
-                                        newLoan.setCustomerId(userId);
-                                        newLoan.setProductId(Integer.parseInt(choice));
-                                        newLoan.setLoanStatusId(1);
-                                        newLoan.setLoanDateApplied(todaysDate);
-                                        LoanDatabase.insertLoan(newLoan);
-
-                                        System.out.println("\nYou applied to the product " + choice + " successfully.");
                                         break;
 
                                     case "2":
-                                        break;
+                                        do {
+                                            System.out.println("\nPlease select one of the following options:\n" +
+                                                    "1) Enter filter by description\n" +
+                                                    "2) Enter filter by amount\n" +
+                                                    "3) Enter filter by interest rate\n" +
+                                                    "4) Enter filter by number of payments\n" +
+                                                    "5) Search with the current filters\n");
+
+                                            choice = input.next();
+                                            flagFilters = false;
+
+                                            switch (choice) {
+                                                default:
+                                                    System.out.println("Invalid entry.\n");
+                                                    break;
+
+                                                case "1":
+                                                    System.out.println("\nPlease enter the desired description:\n" +
+                                                            "(i.e., \"construction\")\n" +
+                                                            "(If you do not want to filter by description, press Enter)\n");
+                                                    input.nextLine();
+                                                    String inputDescription = input.nextLine();
+                                                    if (!inputDescription.trim().isEmpty()) {
+                                                        product.setProductDescription(inputDescription);
+                                                    }
+                                                    break;
+
+                                                case "2":
+                                                    System.out.println("\nPlease enter the minimum amount:\n" +
+                                                            "(i.e., \"1000\")\n" +
+                                                            "(If you do not want to filter by amount, press Enter)\n");
+                                                    product.setProductAmount(inputNumber());
+                                                    break;
+
+                                                case "3":
+                                                    System.out.println("\nPlease enter the maximum interest rate:\n" +
+                                                            "(i.e., \"1.5\")\n" +
+                                                            "(If you do not want to filter by interest rate, press Enter)\n");
+                                                    product.setProductInterestRate(inputNumber());
+                                                    break;
+
+                                                case "4":
+                                                    System.out.println("\nPlease enter the minimum number of payments:\n" +
+                                                            "(i.e., \"12\")\n" +
+                                                            "(If you do not want to filter by number of payments, press Enter)\n");
+                                                    product.setProductNumberOfPayments(inputNumber().intValue());
+                                                    break;
+
+                                                case "5":
+                                                    flagFilters = true;
+                                                    product.setProductActiveStatus(true);
+                                                    ProductDatabase.getAllActiveProducts(product, true);
+
+                                                    productIds = (addProductsToMyList(input, productIds));
+
+                                                    break;
+
+                                            }
+                                        } while (!flagFilters);
                                 }
-
-                            } else {
-                                System.out.println("\n\"My list\" is empty.");
-                            }
-                            break;
-
-                        case "3":
-                            flag = true;
-                            break;
-                    }
-                } while (!flag);
-            } else if (userType == App.USER_TYPE_REPRESENTATIVE) {
-                do {
-
-                    System.out.println("\nPlease select one of the following options:\n" +
-                            "1) Create a product\n" +
-                            "2) List my products\n" +
-                            "3) Go back\n");
-                    choice = input.next();
-
-                    switch (choice) {
-                        default:
-                            flag = false;
-                            System.out.println("Invalid entry.\n");
-                            break;
-
-                        case "1":
-                            flag = false;
-
-                            System.out.println("\nPlease select the product type.\n" +
-                                    "The product types are the following:\n");
-                            ProductDatabase.getAllProductTypeDescription();
-                            product.setProductTypeId(Integer.parseInt(input.next()));
-
-                            System.out.println("\nPlease enter the description:\n" +
-                                    "(e.g., \"Recommended for students\")\n");
-                            input.nextLine();
-                            product.setProductDescription(input.nextLine());
-
-                            product.setRepresentativeId(userId);
-
-                            System.out.println("\nPlease enter the amount:\n" +
-                                    "(e.g., \"3000\")\n");
-                            product.setProductAmount(Double.valueOf(input.nextLine()));
-
-                            System.out.println("\nPlease enter the interest rate:\n" +
-                                    "(e.g., \"3.5\")\n");
-                            product.setProductInterestRate(Double.valueOf(input.nextLine()));
-
-                            System.out.println("\nPlease enter the number of payments:\n" +
-                                    "(e.g., \"12\")\n");
-                            product.setProductNumberOfPayments(Integer.parseInt(input.next()));
-
-                            System.out.println("\nPlease enter the starting date:\n" +
-                                    "(e.g., \"2018-05-30\")\n");
-                            input.nextLine();
-                            product.setProductAvailabilityFrom(input.nextLine());
-
-                            System.out.println("\nPlease enter the ending date:\n" +
-                                    "(e.g., \"2018-08-30\")\n");
-                            product.setProductAvailabilityTo(input.nextLine());
-
-                            product.setProductActiveStatus(true);
-
-                            ProductDatabase.createProduct(product);
-
-                            System.out.println("\nProduct created successfully.\n");
-                            break;
-
-                        case "2":
-                            flag = false;
-
-                            System.out.println("\nPlease select one of the following options:\n" +
-                                    "1) List representative's products\n" +
-                                    "2) List institution's products\n");
-                            choice = input.next();
-
-                            switch (choice) {
-                                default:
-                                    System.out.println("Invalid entry.\n");
-                                    break;
-
-                                case "1":
-                                    ProductDatabase.getProductFromRepresentative(userId, false);
-                                    System.out.println("\nWould you like to modify a product?\n" +
-                                            "1) Update the description\n" +
-                                            "2) Disable the product\n" +
-                                            "3) Cancel\n");
+                                break;
+                            case "2":
+                                if (!productIds.isEmpty()) {
+                                    ProductDatabase.getProductDetails(productIds, true);
+                                    System.out.println("\nDo you want to send a request for a product?\n" +
+                                            "1) Yes\n" +
+                                            "2) No\n");
                                     choice = input.next();
 
                                     switch (choice) {
@@ -351,43 +226,165 @@ public class Product {
                                             break;
 
                                         case "1":
-                                            System.out.println("\nEnter the ID of the product:\n");
-                                            product.setProductId(Integer.parseInt(input.next()));
-                                            System.out.println("\nEnter the new description:\n");
-                                            input.nextLine();
-                                            product.setProductDescription(input.nextLine());
-                                            product.setRepresentativeId(userId);
+                                            System.out.println("\nPlease enter the product ID.");
+                                            choice = inputNumber().toString();
+                                            Date date = new Date();
+                                            Calendar calendar = Calendar.getInstance();
+                                            calendar.setTime(date);
 
-                                            ProductDatabase.updateProduct(product);
-                                            System.out.println("\nDescription updated successfully.");
+                                            String todaysDate = calendar.get(Calendar.YEAR) + "-" +
+                                                    (calendar.get(Calendar.MONTH) + 1) + "-" +
+                                                    calendar.get(Calendar.DAY_OF_MONTH);
+
+                                            Loan newLoan = new Loan();
+                                            newLoan.setCustomerId(userId);
+                                            newLoan.setProductId(Double.valueOf(choice).intValue());
+                                            newLoan.setLoanStatusId(1);
+                                            newLoan.setLoanDateApplied(todaysDate);
+                                            LoanDatabase.insertLoan(newLoan);
+
+                                            System.out.println("\nYou applied to the product " + newLoan.getProductId() + " successfully.");
                                             break;
 
                                         case "2":
-                                            System.out.println("\nEnter the ID of the product:\n");
-                                            product.setProductId(Integer.parseInt(input.next()));
-                                            product.setProductActiveStatus(false);
-                                            product.setRepresentativeId(userId);
-
-                                            ProductDatabase.disableProduct(product);
-                                            System.out.println("\nProduct disabled successfully.");
-                                            break;
-
-                                        case "3":
                                             break;
                                     }
-                                    break;
 
-                                case "2":
-                                    ProductDatabase.getProductFromRepresentative(userId, true);
-                                    break;
-                            }
-                            break;
+                                } else {
+                                    System.out.println("\n\"My list\" is empty.");
+                                }
+                                break;
 
-                        case "3":
-                            flag = true;
-                            break;
-                    }
-                } while (!flag);
+                            case "3":
+                                flag = true;
+                                break;
+                        }
+                    } while (!flag);
+                    break;
+
+                case App.USER_TYPE_REPRESENTATIVE:
+                    do {
+
+                        System.out.println("\nPlease select one of the following options:\n" +
+                                "1) Create a product\n" +
+                                "2) List my products\n" +
+                                "3) Go back\n");
+                        choice = input.next();
+
+                        switch (choice) {
+                            default:
+                                flag = false;
+                                System.out.println("Invalid entry.\n");
+                                break;
+
+                            case "1":
+                                flag = false;
+
+                                System.out.println("\nPlease select the product type.\n" +
+                                        "The product types are the following:\n");
+                                ProductDatabase.getAllProductTypeDescription();
+                                product.setProductTypeId(inputNumber().intValue());
+
+                                System.out.println("\nPlease enter the description:\n" +
+                                        "(e.g., \"Recommended for students\")\n");
+                                input.nextLine();
+                                product.setProductDescription(input.nextLine());
+
+                                product.setRepresentativeId(userId);
+
+                                System.out.println("\nPlease enter the amount:\n" +
+                                        "(e.g., \"3000\")\n");
+                                product.setProductAmount(inputNumber());
+
+                                System.out.println("\nPlease enter the interest rate:\n" +
+                                        "(e.g., \"3.5\")\n");
+                                product.setProductInterestRate(inputNumber());
+
+                                System.out.println("\nPlease enter the number of payments:\n" +
+                                        "(e.g., \"12\")\n");
+                                product.setProductNumberOfPayments(inputNumber().intValue());
+
+                                System.out.println("\nPlease enter the starting date:\n" +
+                                        "(e.g., \"2018-05-30\")\n");
+                                input.nextLine();
+                                product.setProductAvailabilityFrom(input.nextLine());
+
+                                System.out.println("\nPlease enter the ending date:\n" +
+                                        "(e.g., \"2018-08-30\")\n");
+                                product.setProductAvailabilityTo(input.nextLine());
+
+                                product.setProductActiveStatus(true);
+
+                                ProductDatabase.createProduct(product);
+
+                                System.out.println("\nProduct created successfully.\n");
+                                break;
+
+                            case "2":
+                                flag = false;
+
+                                System.out.println("\nPlease select one of the following options:\n" +
+                                        "1) List representative's products\n" +
+                                        "2) List institution's products\n");
+                                choice = input.next();
+
+                                switch (choice) {
+                                    default:
+                                        System.out.println("Invalid entry.\n");
+                                        break;
+
+                                    case "1":
+                                        ProductDatabase.getProductFromRepresentative(userId, false);
+                                        System.out.println("\nWould you like to modify a product?\n" +
+                                                "1) Update the description\n" +
+                                                "2) Disable the product\n" +
+                                                "3) Cancel\n");
+                                        choice = input.next();
+
+                                        switch (choice) {
+                                            default:
+                                                System.out.println("Invalid entry.\n");
+                                                break;
+
+                                            case "1":
+                                                System.out.println("\nEnter the ID of the product:\n");
+                                                product.setProductId(inputNumber().intValue());
+                                                System.out.println("\nEnter the new description:\n");
+                                                input.nextLine();
+                                                product.setProductDescription(input.nextLine());
+                                                product.setRepresentativeId(userId);
+
+                                                ProductDatabase.updateProduct(product);
+                                                System.out.println("\nDescription updated successfully.");
+                                                break;
+
+                                            case "2":
+                                                System.out.println("\nEnter the ID of the product:\n");
+                                                product.setProductId(inputNumber().intValue());
+                                                product.setProductActiveStatus(false);
+                                                product.setRepresentativeId(userId);
+
+                                                ProductDatabase.disableProduct(product);
+                                                System.out.println("\nProduct disabled successfully.");
+                                                break;
+
+                                            case "3":
+                                                break;
+                                        }
+                                        break;
+
+                                    case "2":
+                                        ProductDatabase.getProductFromRepresentative(userId, true);
+                                        break;
+                                }
+                                break;
+
+                            case "3":
+                                flag = true;
+                                break;
+                        }
+                    } while (!flag);
+                    break;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -415,7 +412,7 @@ public class Product {
 
                 case "1":
                     System.out.println("\nEnter the ID of the product:\n");
-                    productIds.add(Integer.parseInt(input.next()));
+                    productIds.add(inputNumber().intValue());
                     System.out.println("\nCurrent IDs in the list:\n");
                     for (int i = 0; i < productIds.size(); i++) {
                         System.out.println((i + 1) + ") " + productIds.get(i));
@@ -429,5 +426,20 @@ public class Product {
             }
         } while (!flagAddProducts);
         return productIds;
+    }
+
+    public static Double inputNumber(){
+        Scanner userInput = new Scanner(System.in);
+        Double inputDouble;
+
+        do{
+            System.out.println("Please select a valid number: ");
+            while(!userInput.hasNextFloat()) {
+                System.out.println("That is not a valid selection");
+                userInput.next();
+            }
+            inputDouble = userInput.nextDouble();
+        } while(inputDouble < 0);
+        return inputDouble;
     }
 }
