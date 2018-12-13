@@ -19,7 +19,9 @@ public class ProfileSettings {
             case (App.USER_TYPE_CUSTOMER):
                 int flag;
                 do {
-                    System.out.println("press 1 to change password, press 2 to change email id");
+                    System.out.println("Please select one of the following options:\n" +
+                            "1) Change Password\n" +
+                            "2) Change Email\n");
                     userChoice = input.nextInt();
                     flag = 0;
                     switch (userChoice) {
@@ -53,7 +55,9 @@ public class ProfileSettings {
             case (App.USER_TYPE_REPRESENTATIVE):
                 int flag1;
                 do {
-                    System.out.println("press 1 to change Password, press 2 to change email id");
+                    System.out.println("Please select one of the following options:\n" +
+                            "1) Change Password\n" +
+                            "2) Change Email\n");
                     userChoice = input.nextInt();
                     flag1 = 0;
                     switch (userChoice) {

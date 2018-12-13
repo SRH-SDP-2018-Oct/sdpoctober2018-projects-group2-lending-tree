@@ -55,46 +55,44 @@ public class Loan {
         try {
             boolean isCustomer=false;
             if (userType == App.USER_TYPE_CUSTOMER){isCustomer=true;}
-            int choice;
+            String choice;
             ArrayList<Integer> periods = new ArrayList<>();
 
             System.out.println("----Lending Tree: Loans menu---- \n");
 
-            boolean flag;
+            boolean flagMenuLoan;
 
             do {
+                flagMenuLoan=false;
                 Scanner input = new Scanner(System.in);
 
                 System.out.println("\nPlease select one of the following options:\n" +
                         "1) Display loans\n" +
                         "2) Generate report\n");
-                choice = input.nextInt();
+                choice = input.next();
 
                 switch (choice) {
                     default:
                         System.out.println("Invalid entry.\n");
-                        flag = false;
+                        flagMenuLoan=true;
                         break;
 
-                    case 1:
-                        System.out.println("Work in progress.\n");
+                    case "1":
                         LoanDatabase.printCustomerLoans(userId);
-                        flag = false;
                         break;
 
-                    case 2:
+                    case "2":
                         System.out.println("\nPlease select one of the following options:\n" +
                                 "1) Generate complete report\n" +
                                 "2) Generate report from a period of time\n");
-                        choice = input.nextInt();
-                        flag = false;
+                        choice = input.next();
 
                         switch (choice) {
-                            case 1:
+                            case "1":
                                 LoanDatabase.generateReport(userId, isCustomer, periods);
                                 break;
 
-                            case 2:
+                            case "2":
                                 System.out.println("\nPlease enter the month of the starting period\n" +
                                         "1) January\n" +
                                         "2) February\n" +
@@ -130,8 +128,9 @@ public class Loan {
                                 LoanDatabase.generateReport(userId, isCustomer, periods);
                                 break;
                         }
+                        break;
                 }
-            } while (flag = false);
+            } while (flagMenuLoan == true);
         } catch (Exception e) {
             e.printStackTrace();
         }

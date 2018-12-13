@@ -1,2 +1,9 @@
 lending_tree_application/.idea/
 *.class
+lending_tree_application/target/classes/org/lendingtree/project/App.class
+lending_tree_application/target/classes/org/lendingtree/project/ConnectMSSQLServer.class
+lending_tree_application/target/classes/org/lendingtree/project/CustomerDatabase.class
+lending_tree_application/target/classes/org/lendingtree/project/EncryptionTools.class
+lending_tree_application/target/classes/org/lendingtree/project/Product.class
+lending_tree_application/target/classes/org/lendingtree/project/ProductDatabase.class
+lending_tree_application/target/test-classes/org/lendingtree/project/ConnectMSSQLServerTest.class

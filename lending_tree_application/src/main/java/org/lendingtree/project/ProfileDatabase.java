@@ -99,7 +99,7 @@ public abstract class ProfileDatabase {
             System.out.println("Phone: \t\t\t\t\t " + resultSet.getString(COLUMN_REPRESENTATIVE_PHONE));
 
         } else {
-            System.out.println("No Data Found!! Institution not Registered");
+            System.out.println("No Data Found!! Representative not Registered");
         }
     }
 }

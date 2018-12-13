@@ -18,7 +18,7 @@ public class App {
     private static Scanner input = new Scanner(System.in);
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
 
         System.out.println("----Lending Tree: loan finding platform----");
 
@@ -160,7 +160,7 @@ public class App {
 
     }
 
-    public final static void initializeDashboard() {
+    public final static void initializeDashboard() throws SQLException {
 
         System.out.println("\n\n----Lending Tree: Dashboard\n");
 
@@ -191,19 +191,11 @@ public class App {
                         break;
 
                     case "4":
-                        try {
                             ProfileDatabase.getCustomerProfile(currentSessionId);
-                        } catch (SQLException e) {
-                            e.printStackTrace();
-                        }
                         break;
 
                     case "5":
-                        //  try {
-                        //ProfileSettingsDatabase.getCustomerSettings(getCurrentSessionId());
-                        // } catch (SQLException e) {
-                        //     e.printStackTrace();
-                        //  }
+                        ProfileSettings.getSettings(getCurrentSessionId(),getUserType());
                         break;
                 }
                 break;
@@ -233,19 +225,11 @@ public class App {
                         break;
 
                     case "4":
-                        //  try {
-                        //   ProfileDatabase.getInstitutionProfile(getCurrentSessionId()); //take a look
-                        // } catch (SQLException e) {
-                        //      e.printStackTrace();
-                        //  }
+                        ProfileDatabase.getRepresentativeProfile(getCurrentSessionId());
                         break;
 
                     case "5":
-                        //  try {
-                        // ProfileSettingsDatabase.getInstitutionSettings(getCurrentSessionId());
-                        //  } catch (SQLException e) {
-                        //   e.printStackTrace();
-                        //   }
+                        ProfileSettings.getSettings(getCurrentSessionId(),getUserType());
                         break;
                 }break;
         }
