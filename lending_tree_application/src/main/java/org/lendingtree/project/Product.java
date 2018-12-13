@@ -98,6 +98,10 @@ public class Product {
         this.productActiveStatus = productActiveStatus;
     }
 
+    public static String MESSAGE_VALID_NUMBER = "Please select a valid number: ";
+    public static String MESSAGE_YOU_ENTERED = "You entered the number: ";
+
+
     public static void goMenuProduct(int userId, String userType) {
         try {
             Product product = new Product();
@@ -123,7 +127,7 @@ public class Product {
                         System.out.println("\nPlease select one of the following options:\n" +
                                 "1) Search for products\n" +
                                 "2) See \"My list\"\n" +
-                                "3) Go back\n");
+                                "3) Exit\n");
                         choice = input.next();
 
                         switch (choice) {
@@ -182,21 +186,21 @@ public class Product {
                                                     System.out.println("\nPlease enter the minimum amount:\n" +
                                                             "(i.e., \"1000\")\n" +
                                                             "(If you do not want to filter by amount, press Enter)\n");
-                                                    product.setProductAmount(inputNumber());
+                                                    product.setProductAmount(InputValidationTools.inputDouble(MESSAGE_VALID_NUMBER, MESSAGE_YOU_ENTERED));
                                                     break;
 
                                                 case "3":
                                                     System.out.println("\nPlease enter the maximum interest rate:\n" +
                                                             "(i.e., \"1.5\")\n" +
                                                             "(If you do not want to filter by interest rate, press Enter)\n");
-                                                    product.setProductInterestRate(inputNumber());
+                                                    product.setProductInterestRate(InputValidationTools.inputDouble(MESSAGE_VALID_NUMBER, MESSAGE_YOU_ENTERED));
                                                     break;
 
                                                 case "4":
                                                     System.out.println("\nPlease enter the minimum number of payments:\n" +
                                                             "(i.e., \"12\")\n" +
                                                             "(If you do not want to filter by number of payments, press Enter)\n");
-                                                    product.setProductNumberOfPayments(inputNumber().intValue());
+                                                    product.setProductNumberOfPayments(InputValidationTools.inputDouble(MESSAGE_VALID_NUMBER, MESSAGE_YOU_ENTERED).intValue());
                                                     break;
 
                                                 case "5":
@@ -227,7 +231,7 @@ public class Product {
 
                                         case "1":
                                             System.out.println("\nPlease enter the product ID.");
-                                            choice = inputNumber().toString();
+                                            choice = InputValidationTools.inputDouble(MESSAGE_VALID_NUMBER, MESSAGE_YOU_ENTERED).toString();
                                             Date date = new Date();
                                             Calendar calendar = Calendar.getInstance();
                                             calendar.setTime(date);
@@ -268,7 +272,7 @@ public class Product {
                         System.out.println("\nPlease select one of the following options:\n" +
                                 "1) Create a product\n" +
                                 "2) List my products\n" +
-                                "3) Go back\n");
+                                "3) Exit\n");
                         choice = input.next();
 
                         switch (choice) {
@@ -283,7 +287,7 @@ public class Product {
                                 System.out.println("\nPlease select the product type.\n" +
                                         "The product types are the following:\n");
                                 ProductDatabase.getAllProductTypeDescription();
-                                product.setProductTypeId(inputNumber().intValue());
+                                product.setProductTypeId(InputValidationTools.inputDouble(MESSAGE_VALID_NUMBER, MESSAGE_YOU_ENTERED).intValue());
 
                                 System.out.println("\nPlease enter the description:\n" +
                                         "(e.g., \"Recommended for students\")\n");
@@ -294,15 +298,15 @@ public class Product {
 
                                 System.out.println("\nPlease enter the amount:\n" +
                                         "(e.g., \"3000\")\n");
-                                product.setProductAmount(inputNumber());
+                                product.setProductAmount(InputValidationTools.inputDouble(MESSAGE_VALID_NUMBER, MESSAGE_YOU_ENTERED));
 
                                 System.out.println("\nPlease enter the interest rate:\n" +
                                         "(e.g., \"3.5\")\n");
-                                product.setProductInterestRate(inputNumber());
+                                product.setProductInterestRate(InputValidationTools.inputDouble(MESSAGE_VALID_NUMBER, MESSAGE_YOU_ENTERED));
 
                                 System.out.println("\nPlease enter the number of payments:\n" +
                                         "(e.g., \"12\")\n");
-                                product.setProductNumberOfPayments(inputNumber().intValue());
+                                product.setProductNumberOfPayments(InputValidationTools.inputDouble(MESSAGE_VALID_NUMBER, MESSAGE_YOU_ENTERED).intValue());
 
                                 System.out.println("\nPlease enter the starting date:\n" +
                                         "(e.g., \"2018-05-30\")\n");
@@ -347,7 +351,7 @@ public class Product {
 
                                             case "1":
                                                 System.out.println("\nEnter the ID of the product:\n");
-                                                product.setProductId(inputNumber().intValue());
+                                                product.setProductId(InputValidationTools.inputDouble(MESSAGE_VALID_NUMBER, MESSAGE_YOU_ENTERED).intValue());
                                                 System.out.println("\nEnter the new description:\n");
                                                 input.nextLine();
                                                 product.setProductDescription(input.nextLine());
@@ -359,7 +363,7 @@ public class Product {
 
                                             case "2":
                                                 System.out.println("\nEnter the ID of the product:\n");
-                                                product.setProductId(inputNumber().intValue());
+                                                product.setProductId(InputValidationTools.inputDouble(MESSAGE_VALID_NUMBER, MESSAGE_YOU_ENTERED).intValue());
                                                 product.setProductActiveStatus(false);
                                                 product.setRepresentativeId(userId);
 
@@ -411,7 +415,7 @@ public class Product {
 
                 case "1":
                     System.out.println("\nEnter the ID of the product:\n");
-                    productIds.add(inputNumber().intValue());
+                    productIds.add(InputValidationTools.inputDouble(MESSAGE_VALID_NUMBER, MESSAGE_YOU_ENTERED).intValue());
                     System.out.println("\nCurrent IDs in the list:\n");
                     for (int i = 0; i < productIds.size(); i++) {
                         System.out.println((i + 1) + ") " + productIds.get(i));
@@ -427,18 +431,4 @@ public class Product {
         return productIds;
     }
 
-    public static Double inputNumber(){
-        Scanner userInput = new Scanner(System.in);
-        Double inputDouble;
-
-        do{
-            System.out.println("Please select a valid number: ");
-            while(!userInput.hasNextFloat()) {
-                System.out.println("That is not a valid selection");
-                userInput.next();
-            }
-            inputDouble = userInput.nextDouble();
-        } while(inputDouble < 0);
-        return inputDouble;
-    }
 }

@@ -53,8 +53,6 @@ public class Loan {
 
     public static void goMenuLoan(int userId, String userType) {
         try {
-            boolean isCustomer=false;
-            if (userType == App.USER_TYPE_CUSTOMER){isCustomer=true;}
             String choice;
             ArrayList<Integer> periods = new ArrayList<>();
 
@@ -68,7 +66,8 @@ public class Loan {
 
                 System.out.println("\nPlease select one of the following options:\n" +
                         "1) Display loans\n"+
-                        "2) Generate report\n");
+                        "2) Generate report\n" +
+                        "3) Exit\n");
                 choice = input.next();
 
                 switch (choice) {
@@ -78,31 +77,44 @@ public class Loan {
                         break;
 
                     case "1":
-                        if (isCustomer==true){
-                            LoanDatabase.printCustomerLoans(userId);
-                        } else {
-                            LoanDatabase.printRepresentativeLoans(userId);
-                            System.out.println("Select one option:\n" +
-                                    "1) Edit loans\n" +
-                                    "2) Go back");
-                            String changeStatus=input.next();
-                            switch (changeStatus){
-                                case "1":
-                                    System.out.println("Enter the ID of the loan you want to edit\n");
-                                    String loanId=input.next();
-                                    System.out.println("Enter the ID of one of the following loan status\n");
-                                    LoanDatabase.printLoansStatus();
-                                    String loanIdStatus=input.next();
-                                    LoanDatabase.updateLoan(Integer.parseInt(loanId),Integer.parseInt(loanIdStatus));
-                                    break;
+                        switch (userType) {
+                            case App.USER_TYPE_CUSTOMER:
+                                LoanDatabase.printCustomerLoans(userId);
+                                break;
 
-                            }
+                            case App.USER_TYPE_REPRESENTATIVE:
+                                LoanDatabase.printRepresentativeLoans(userId);
+                                System.out.println("Select one option:\n" +
+                                        "1) Edit loans\n" +
+                                        "2) Go back");
+                                String changeStatus=input.next();
+                                switch (changeStatus){
+                                    case "1":
+                                        System.out.println("Enter the ID of the loan you want to edit\n");
+                                        String loanId=input.next();
+                                        System.out.println("Enter the ID of one of the following loan status\n");
+                                        LoanDatabase.printLoansStatus();
+                                        String loanIdStatus=input.next();
+                                        LoanDatabase.updateLoan(Integer.parseInt(loanId),Integer.parseInt(loanIdStatus));
+                                        break;
 
+                                }
+                                break;
                         }
-
                         break;
 
                     case "2":
+                        boolean isCustomer = true;
+                        switch (userType) {
+                            case App.USER_TYPE_CUSTOMER:
+                                isCustomer = true;
+                                break;
+
+                            case App.USER_TYPE_REPRESENTATIVE:
+                                isCustomer = false;
+                                break;
+                        }
+
                         System.out.println("\nPlease select one of the following options:\n" +
                                 "1) Generate complete report\n" +
                                 "2) Generate report from a period of time\n");
@@ -127,9 +139,9 @@ public class Loan {
                                         "10) October\n" +
                                         "11) November\n" +
                                         "12) December\n");
-                                periods.add(input.nextInt());
+                                periods.add(InputValidationTools.inputNumber(1,12));
                                 System.out.println("\nPlease enter the year of the starting period\n");
-                                periods.add(input.nextInt());
+                                periods.add(InputValidationTools.inputDouble("Please select a valid number: ", "You entered the number: ").intValue());
                                 System.out.println("\nPlease enter the month of the ending period\n" +
                                         "1) January\n" +
                                         "2) February\n" +
@@ -143,12 +155,15 @@ public class Loan {
                                         "10) October\n" +
                                         "11) November\n" +
                                         "12) December\n");
-                                periods.add(input.nextInt());
+                                periods.add(InputValidationTools.inputNumber(1,12));
                                 System.out.println("\nPlease enter the year of the ending period\n");
-                                periods.add(input.nextInt());
+                                periods.add(InputValidationTools.inputDouble("Please select a valid number: ", "You entered the number: ").intValue());
                                 LoanDatabase.generateReport(userId, isCustomer, periods);
                                 break;
                         }
+                        break;
+
+                    case "3":
                         break;
                 }
             } while (flagMenuLoan == true);
