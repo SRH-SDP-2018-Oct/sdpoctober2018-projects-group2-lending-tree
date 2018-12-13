@@ -97,14 +97,16 @@ public class PaymentHistory {
     public static void userPaymentHistory(int userId, String userType) {
 
         try {
-            boolean flag;
+
             if (userType == App.USER_TYPE_REPRESENTATIVE) {
+                boolean flag;
                 do {
 
                     System.out.println("Please select one of the following options:\n" +
                             "1) Display a specific customer's history\n" +
                             "2) Display the entire payment history");
                     choice = input.nextInt();
+                    flag = false;
                     switch (choice) {
                         case 1:
                             System.out.println("You chose to display a specific customer's history");
@@ -119,11 +121,13 @@ public class PaymentHistory {
                             PaymentHistoryDatabase.displayPaymentHistoryRepresentative(userId);
                             flag = false;
                             break;
-
+                        default:
+                            System.out.println(("Wrong input. Please try again!"));
+                            flag = false;
+                            break;
                     }
 
-
-                } while (flag = false);
+                } while (flag == false);
             } else if (userType == App.USER_TYPE_CUSTOMER) {
                 try {
                     System.out.println("Your records are as follows:");
@@ -139,9 +143,6 @@ public class PaymentHistory {
         }
 
     }
-
-
-
 
 
 }
