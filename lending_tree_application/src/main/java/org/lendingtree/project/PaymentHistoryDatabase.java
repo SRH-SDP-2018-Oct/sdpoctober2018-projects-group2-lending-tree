@@ -164,26 +164,9 @@ public abstract class PaymentHistoryDatabase {
             }
     }
 
-        public static void insertIntoPaymentHistory(PaymentHistory newPaymentHistory){
-            try {
-                String insertQuery = " INSERT INTO " + PAYMENT_HISTORY +
-                        " ( " + LOAN_ID + " , " + PAYMENT_AMOUNT +
-                        " , " + PAYMENT_DATE + " , " + PAYMENT_TYPE + " ) "+
-                        " VALUES( ?, ?, ?, ? ) ";
-                PreparedStatement dbPreparedStatement = databaseConnection.prepareStatement(insertQuery);
 
-                dbPreparedStatement.setInt(1, newPaymentHistory.getLoanID());
-                dbPreparedStatement.setDouble(2,newPaymentHistory.getPaymentAmount());
-                dbPreparedStatement.setDate(3, (Date) newPaymentHistory.getPaymentDate());
-                dbPreparedStatement.setString(4, newPaymentHistory.getPaymentType());
 
-                dbPreparedStatement.executeUpdate();
-
-            }catch (Exception exception){
-                exception.printStackTrace();
-            }
-
-    }
+    
 
 }
 

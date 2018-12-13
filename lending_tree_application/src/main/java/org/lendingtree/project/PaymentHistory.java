@@ -104,14 +104,16 @@ public class PaymentHistory {
 
                     System.out.println("Please select one of the following options:\n" +
                             "1) Display a specific customer's history\n" +
-                            "2) Display the entire payment history");
+                            "2) Display the entire payment history\n"+
+                            "3) Insert data into Payment History"+
+                            "3) Exit");
                     choice = input.nextInt();
                     flag = false;
                     switch (choice) {
                         case 1:
                             System.out.println("You chose to display a specific customer's history");
                             System.out.println(" Enter the customer ID =  ");
-                            inputCustomerId = input.nextInt();
+                            inputCustomerId = InputValidationTools.inputNumber();
                             PaymentHistoryDatabase.displayPaymentHistoryRepresentativeSort(userId, inputCustomerId);
                             flag = false;
                             break;
@@ -121,6 +123,12 @@ public class PaymentHistory {
                             PaymentHistoryDatabase.displayPaymentHistoryRepresentative(userId);
                             flag = false;
                             break;
+
+                        case 3:
+                            System.out.println(" You chose to exit");
+                            flag = true;
+                            break;
+
                         default:
                             System.out.println(("Wrong input. Please try again!"));
                             flag = false;
