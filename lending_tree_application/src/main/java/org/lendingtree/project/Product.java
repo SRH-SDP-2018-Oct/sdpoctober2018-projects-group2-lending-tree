@@ -306,7 +306,6 @@ public class Product {
 
                                 System.out.println("\nPlease enter the starting date:\n" +
                                         "(e.g., \"2018-05-30\")\n");
-                                input.nextLine();
                                 product.setProductAvailabilityFrom(input.nextLine());
 
                                 System.out.println("\nPlease enter the ending date:\n" +
