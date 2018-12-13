@@ -21,7 +21,7 @@ public class ProfileSettings {
                 do {
                     System.out.println("Please select one of the following options:\n" +
                             "1) Change Password\n" +
-                            "2) Change Email\n");
+                            "2) Change Email\n" + "3) Go back\n");
                     userChoice = input.nextInt();
                     flag = 0;
                     switch (userChoice) {
@@ -32,7 +32,7 @@ public class ProfileSettings {
                             System.out.println("Please Re-Enter New Password :");
                             confirmPassword = input.next();
                             if (newPassword.equals(confirmPassword)) {
-                                ProfileSettingsDatabase.updatePassword(userId, newPassword);
+                                ProfileSettingsDatabase.updatePassword(userId, EncryptionTools.encryptPassword(newPassword));
                                 break;
                             } else {
                                 System.out.println("Wrong Entry");
@@ -43,6 +43,8 @@ public class ProfileSettings {
                             System.out.println("Please enter new email id :");
                             newEmail = input.next();
                             ProfileSettingsDatabase.updateEmail(userId, newEmail);
+                            break;
+                        case 3:
                             break;
                         default:
                             System.out.println("Wrong Entry");
@@ -57,7 +59,8 @@ public class ProfileSettings {
                 do {
                     System.out.println("Please select one of the following options:\n" +
                             "1) Change Password\n" +
-                            "2) Change Email\n");
+                            "2) Change Email\n" + "3)Go back\n"
+                              );
                     userChoice = input.nextInt();
                     flag1 = 0;
                     switch (userChoice) {
@@ -67,7 +70,7 @@ public class ProfileSettings {
                             System.out.println("Please Re-Enter New Password :");
                             confirmPassword = input.next();
                             if (newPassword.equals(confirmPassword)) {
-                                ProfileSettingsDatabase.updateRepresentativePassword(userId, newPassword);
+                                ProfileSettingsDatabase.updateRepresentativePassword(userId, EncryptionTools.encryptPassword(newPassword));
                                 break;
                             } else {
                                 System.out.println("Wrong Entry");
@@ -79,6 +82,8 @@ public class ProfileSettings {
                             System.out.println("Please Enter New email id :");
                             newEmail = input.next();
                             ProfileSettingsDatabase.updateRepresentativeEmail(userId, newEmail);
+                            break;
+                        case 3:
                             break;
                         default:
                             System.out.println("Wrong Entry");
