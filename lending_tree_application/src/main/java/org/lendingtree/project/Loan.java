@@ -67,9 +67,8 @@ public class Loan {
                 Scanner input = new Scanner(System.in);
 
                 System.out.println("\nPlease select one of the following options:\n" +
-                        "1) Display loans\n" +
-                        "2) Edit loans\n" +
-                        "3) Generate report\n");
+                        "1) Display loans\n"+
+                        "2) Generate report\n");
                 choice = input.next();
 
                 switch (choice) {
@@ -83,18 +82,27 @@ public class Loan {
                             LoanDatabase.printCustomerLoans(userId);
                         } else {
                             LoanDatabase.printRepresentativeLoans(userId);
+                            System.out.println("Select one option:\n" +
+                                    "1) Edit loans\n" +
+                                    "2) Go back");
+                            String changeStatus=input.next();
+                            switch (changeStatus){
+                                case "1":
+                                    System.out.println("Enter the ID of the loan you want to edit\n");
+                                    String loanId=input.next();
+                                    System.out.println("Enter the ID of one of the following loan status\n");
+                                    LoanDatabase.printLoansStatus();
+                                    String loanIdStatus=input.next();
+                                    LoanDatabase.updateLoan(Integer.parseInt(loanId),Integer.parseInt(loanIdStatus));
+                                    break;
+
+                            }
+
                         }
+
                         break;
 
-
                     case "2":
-                        System.out.println("Enter the ID of the loan you want to edit\n");
-                        String loanId=input.next();
-                        System.out.println("Enter the ID of the loan status\n");
-                        String loanIdStatus=input.next();
-                        LoanDatabase.updateLoan(Integer.parseInt(loanId),Integer.parseInt(loanIdStatus));
-
-                    case "3":
                         System.out.println("\nPlease select one of the following options:\n" +
                                 "1) Generate complete report\n" +
                                 "2) Generate report from a period of time\n");
