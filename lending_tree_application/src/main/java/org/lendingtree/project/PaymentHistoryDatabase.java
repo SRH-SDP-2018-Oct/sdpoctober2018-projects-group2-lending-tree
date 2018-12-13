@@ -2,7 +2,7 @@ package org.lendingtree.project;
 
 import java.sql.*;
 
-public class PaymentHistoryDatabase {
+public abstract class PaymentHistoryDatabase {
 
     private static final String CUSTOMER_ID = "customer_id";
     private static final String PAYMENT_AMOUNT = "payment_amount";
@@ -22,7 +22,7 @@ public class PaymentHistoryDatabase {
 
     protected static Connection databaseConnection = ConnectMSSQLServer.getConnection();
 
-        public static void displayPaymentHistoryRepresentative(int inputRepresentativeID){
+        public static void displayPaymentHistoryRepresentative(int userId){
 
             PaymentHistory newPaymentHistory = new PaymentHistory();
             try {
@@ -35,10 +35,10 @@ public class PaymentHistoryDatabase {
                                                  +REPRESENTATIVE+ " ON " +PRODUCT+ " . " +REPRESENTATIVE_ID+ " = "
                                                  +REPRESENTATIVE+ " . " +REPRESENTATIVE_ID+ " INNER JOIN " +CUSTOMER+ " ON "
                                                  +LOAN+ " . " +CUSTOMER_ID+ " = " +CUSTOMER+ " . " +CUSTOMER_ID+
-                                                 " WHERE " +PRODUCT+
+                                                 " WHERE " +REPRESENTATIVE+
                                                  " . " +REPRESENTATIVE_ID+ " = ? " ;
                 PreparedStatement dbPreparedStatement = databaseConnection.prepareStatement(getPaymentHistoryForAll);
-                dbPreparedStatement.setInt(1, inputRepresentativeID);
+                dbPreparedStatement.setInt(1, userId);
                 Boolean availableData = false;
                 int loopCount =0;
                 ResultSet dbResultSet = dbPreparedStatement.executeQuery();
@@ -51,6 +51,7 @@ public class PaymentHistoryDatabase {
                     newPaymentHistory.setPaymentDate(dbResultSet.getDate(PAYMENT_DATE));
                     newPaymentHistory.setPaymentType(dbResultSet.getString(PAYMENT_TYPE));
                     newPaymentHistory.setPaymentHistoryId(dbResultSet.getShort(PAYMENT_HISTORY_ID));
+                    newPaymentHistory.setPaymentHistoryId(dbResultSet.getInt(PRODUCT_ID));
 
                     loopCount++;
 
@@ -58,10 +59,11 @@ public class PaymentHistoryDatabase {
                     System.out.println("CUSTOMER ID: " + "" + dbResultSet.getInt(CUSTOMER_ID));
                     System.out.println("CUSTOMER LAST NAME: " + "" + dbResultSet.getString (CUSTOMER_LAST_NAME));
                     System.out.println("CUSTOMER FIRST NAME: " + "" +dbResultSet.getString (CUSTOMER_FIRST_NAME) );
-                    System.out.println("PAYMENT AMOUNT: " + "" + dbResultSet.getDouble(PAYMENT_AMOUNT));
+                    System.out.println("PAYMENT AMOUNT (in Euros): " + "" + dbResultSet.getDouble(PAYMENT_AMOUNT));
                     System.out.println("PAYMENT DATE: " + "" + dbResultSet.getDate(PAYMENT_DATE));
                     System.out.println("PAYMENT TYPE: " + "" + dbResultSet.getString(PAYMENT_TYPE));
                     System.out.println("PAYMENT HISTORY ID: " + "" + dbResultSet.getString (PAYMENT_HISTORY_ID));
+                    System.out.println("PRODUCT ID: " + "" + dbResultSet.getInt(PRODUCT_ID));
                     System.out.println("----------" + loopCount + "----------\n");
                     availableData = true;
                 }
@@ -101,16 +103,18 @@ public class PaymentHistoryDatabase {
                     newPaymentHistory.setPaymentDate(dbResultSet.getDate(PAYMENT_DATE));
                     newPaymentHistory.setPaymentType(dbResultSet.getString(PAYMENT_TYPE));
                     newPaymentHistory.setPaymentHistoryId(dbResultSet.getShort(PAYMENT_HISTORY_ID));
+                    newPaymentHistory.setPaymentHistoryId(dbResultSet.getInt(PRODUCT_ID));
 
                     loopCount++;
                     System.out.println("----------" + loopCount + "----------");
                     System.out.println("CUSTOMER ID: " + "" + dbResultSet.getInt(CUSTOMER_ID));
                     System.out.println("CUSTOMER LAST NAME: " + "" + dbResultSet.getString(CUSTOMER_LAST_NAME));
                     System.out.println("CUSTOMER FIRST NAME: " + "" + dbResultSet.getString(CUSTOMER_FIRST_NAME));
-                    System.out.println("PAYMENT AMOUNT: " + "" + dbResultSet.getDouble(PAYMENT_AMOUNT));
+                    System.out.println("PAYMENT AMOUNT (in Euros): " + "" + dbResultSet.getDouble(PAYMENT_AMOUNT));
                     System.out.println("PAYMENT DATE: " + "" + dbResultSet.getDate(PAYMENT_DATE));
                     System.out.println("PAYMENT TYPE: " + "" + dbResultSet.getString(PAYMENT_TYPE));
                     System.out.println("PAYMENT HISTORY ID: " + "" + dbResultSet.getString(PAYMENT_HISTORY_ID));
+                    System.out.println("PRODUCT ID: " + "" + dbResultSet.getInt(PRODUCT_ID));
                     System.out.println("----------" + loopCount + "----------\n");
                     availableData = true;
 
@@ -142,7 +146,7 @@ public class PaymentHistoryDatabase {
                     System.out.println("----------" + loopCount + "----------");
                     System.out.println("CUSTOMER LAST NAME: " + "" + dbResultSet.getString(CUSTOMER_LAST_NAME));
                     System.out.println("CUSTOMER FIRST NAME: " + "" + dbResultSet.getString(CUSTOMER_FIRST_NAME));
-                    System.out.println("PAYMENT AMOUNT: " + "" + dbResultSet.getDouble(PAYMENT_AMOUNT));
+                    System.out.println("PAYMENT AMOUNT (in Euros): " + "" + dbResultSet.getDouble(PAYMENT_AMOUNT));
                     System.out.println("PAYMENT DATE: " + "" + dbResultSet.getDate(PAYMENT_DATE));
                     System.out.println("PAYMENT TYPE: " + "" + dbResultSet.getString(PAYMENT_TYPE));
                     System.out.println("PAYMENT HISTORY ID: " + "" + dbResultSet.getString(PAYMENT_HISTORY_ID));

@@ -16,9 +16,9 @@ public class PaymentHistoryTest {
     }
 
     @Test
-    public void getPaymentHistoryTwo() {
+    public void getPaymentHistorySort() {
         int userId = 2;
-        int inputCustomerId = 2;
+        int inputCustomerId = 5;
 
 
         try {
